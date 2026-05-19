@@ -1,0 +1,33 @@
+title: 'Looped SSMs: Depth-Recurrence and Input Reshaping for Time Series Classification'
+authors:
+- Mónika Farsang
+- Ramin Hasani
+- Daniela Rus
+- Radu Grosu
+year: 2026
+published_date: '2026-05-15'
+added_date: '2026-05-18'
+venue: arXiv
+category: designs
+mechanism_tags:
+- flat-loop
+domain_tags:
+- sequence-modeling
+- efficiency
+- scaling
+tags:
+- depth-recurrent
+- shared-weight-recurrence
+focus_tags:
+- architecture
+- inference-algorithm
+desc: Extends looped-transformer depth recurrence to state-space models by reusing
+  the same SSM block across depth and adding input reshaping, showing tied-depth SSMs
+  match or beat untied SSMs on six time-series benchmarks despite fewer parameters.
+links:
+  arxiv: https://arxiv.org/abs/2605.16048
+citations: 0
+citation_sources:
+  opencitations: 0
+citation_source_best: opencitations
+metrics_updated: '2026-05-19'
