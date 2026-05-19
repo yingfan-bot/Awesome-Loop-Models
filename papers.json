@@ -1,11 +1,11 @@
 {
   "meta": {
-    "total": 76,
-    "paper_total": 70,
+    "total": 77,
+    "paper_total": 71,
     "blog_total": 6,
-    "briefing_total": 8,
-    "latest_briefing_date": "2026-05-14",
-    "generated": "2026-05-18T06:39:20.757305+00:00",
+    "briefing_total": 9,
+    "latest_briefing_date": "2026-05-18",
+    "generated": "2026-05-19T01:33:48.211989+00:00",
     "generated_local_date": "2026-05-18",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -3815,6 +3815,55 @@
       "arxiv_id": "2605.12578"
     },
     {
+      "title": "Looped SSMs: Depth-Recurrence and Input Reshaping for Time Series Classification",
+      "authors": "Mónika Farsang, Ramin Hasani, Daniela Rus, Radu Grosu",
+      "year": 2026,
+      "published_date": "2026-05-15",
+      "added_date": "2026-05-18",
+      "venue": "arXiv",
+      "category": "designs",
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "sequence-modeling",
+        "efficiency",
+        "scaling"
+      ],
+      "tags": [
+        "depth-recurrent",
+        "shared-weight-recurrence"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "desc": "Extends looped-transformer depth recurrence to state-space models by reusing the same SSM block across depth and adding input reshaping, showing tied-depth SSMs match or beat untied SSMs on six time-series benchmarks despite fewer parameters.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.16048",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.16048"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "metrics_updated": "2026-05-19",
+      "id": "2605.16048",
+      "source_file": "2605.16048.yaml",
+      "source_path": "papers/2605.16048.yaml",
+      "entry_type": "paper",
+      "foundation": false,
+      "authors_list": [
+        "Mónika Farsang",
+        "Ramin Hasani",
+        "Daniela Rus",
+        "Radu Grosu"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.16048"
+    },
+    {
       "title": "ChainGPT: Dual-Reasoning Model with Recurrent Depth and Multi-Rank State Updates",
       "authors": "Yunao Zheng, Xiaojie Wang, Lei Ren, Chen Wei",
       "year": 2026,
@@ -4124,6 +4173,46 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-05-18",
+      "title": "Daily Loop-Model Briefing — 2026-05-18",
+      "status": "added",
+      "summary": "One newly announced high-confidence loop-model paper was added: Looped SSMs extends depth-recurrence from looped transformers to state-space models by reusing the same SSM block across depth. Same-day latent-reasoning and coding-agent hits were kept out because they do not clearly reuse a learned internal block/operator within one forward process; an older LoopQ paper remains a separate backfill candidate.",
+      "highlights": [
+        "Included: Looped SSMs explicitly studies depth-recurrence — reusing the same SSM block repeatedly across layers — and is therefore a direct flat-loop design paper.",
+        "Main result: looped SSMs with k parameters iterated L times match or outperform k·L-parameter untied SSMs across four SSM architectures and six time-series classification benchmarks; input reshaping adds another 1–6% accuracy gain.",
+        "Not added: ATLAS and LaMR are useful latent/agent-reasoning signals, but their abstracts describe functional tokens, CRFs, or agent context pruning rather than same-forward reused learned layers or fixed-point operators.",
+        "Backlog note: LoopQ is a high-confidence LoopLM quantization paper, but it was submitted on 2026-05-08 and is left for separate historical review instead of being mixed into this daily intake."
+      ],
+      "candidates": [
+        {
+          "id": "2605.16048",
+          "title": "Looped SSMs: Depth-Recurrence and Input Reshaping for Time Series Classification",
+          "url": "https://arxiv.org/abs/2605.16048",
+          "verdict": "included — explicitly reuses the same SSM block repeatedly across depth and analyzes the effect as a flat-loop architectural design"
+        },
+        {
+          "id": "2605.15198",
+          "title": "ATLAS: Agentic or Latent Visual Reasoning? One Word is Enough for Both",
+          "url": "https://arxiv.org/abs/2605.15198",
+          "verdict": "near-miss — functional tokens internalize visual operations, but the abstract does not show repeated reuse of a learned internal layer, block, or operator"
+        },
+        {
+          "id": "2605.15315",
+          "title": "Context Pruning for Coding Agents via Multi-Rubric Latent Reasoning",
+          "url": "https://arxiv.org/abs/2605.15315",
+          "verdict": "near-miss — multi-rubric CRF pruning for coding-agent context is useful structured inference, but it is not a loop-model forward process under the repo definition"
+        },
+        {
+          "id": "2605.16343",
+          "title": "LoopQ: Quantization for Recursive Transformers",
+          "url": "https://arxiv.org/abs/2605.16343",
+          "verdict": "backlog candidate — clearly studies LoopLMs that recursively reuse Transformer blocks, but the paper was submitted on 2026-05-08 and should be handled in a separate backfill review"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing — 2026-05-18\n\n## Outcome\n\nOne high-confidence paper from the 2026-05-18 arXiv watch was added to the main collection: **Looped SSMs: Depth-Recurrence and Input Reshaping for Time Series Classification** (`2605.16048`). The inclusion evidence is explicit: the paper studies **depth-recurrence** in state-space models by reusing the same SSM block repeatedly across layers.\n\n## Added to the collection\n\n### Looped SSMs: Depth-Recurrence and Input Reshaping for Time Series Classification\n\nState-space models are already recurrent along the sequence dimension, but this paper separates that from depth recurrence. It asks what happens when an SSM block with `k` parameters is iterated `L` times across depth instead of replacing it with `L` independently parameterized blocks. The authors test the idea across LRU, S5, LinOSS, and LrcSSM variants and combine it with input reshaping for low- and high-dimensional time-series inputs.\n\nWhy it is in scope: the loop is not a solver wrapper or repeated full-model call. The abstract explicitly says the model reuses the same block repeatedly across layers, making it a flat-loop architecture under the repository definition.\n\nMain reader takeaway: despite having a strictly smaller hypothesis space than the untied `k · L`-parameter model, looped SSMs consistently match or outperform the untied baselines across six time-series classification benchmarks. The paper argues that depth parameter sharing acts as a beneficial inductive bias for optimization, and reports an additional 1–6% accuracy gain from input reshaping across all tested models.\n\n## Checked but not added\n\n### ATLAS: Agentic or Latent Visual Reasoning? One Word is Enough for Both\n\nATLAS introduces functional tokens that serve as both agentic operations and latent visual reasoning units while remaining ordinary vocabulary tokens trainable with standard SFT/RL pipelines.\n\nWhy it was not added: the abstract describes token-level latent/agentic operations, not a reused learned internal layer, block, module, or fixed-point operator applied multiple times within one model forward process.\n\n### Context Pruning for Coding Agents via Multi-Rubric Latent Reasoning\n\nLaMR decomposes code-context relevance into semantic-evidence and dependency-support rubrics, models them with dedicated CRFs, and fuses them with a gating network for coding-agent context pruning.\n\nWhy it was not added: this is structured context pruning for agent workflows. The repeated/structured computation is not a loop-model architecture under the repo’s same-forward reused-operator rule.\n\n## Backlog note\n\n**LoopQ: Quantization for Recursive Transformers** (`2605.16343`) looks like a high-confidence LoopLM paper: it directly studies looped language models that recursively reuse Transformer blocks and introduces loop-aware post-training quantization. It was submitted on 2026-05-08, so it is kept out of this daily intake and should be considered separately as a historical/backfill candidate if the maintainer wants a broader catch-up pass.",
+      "source_path": "briefings/2026/05/2026-05-18.md"
+    },
     {
       "date": "2026-05-14",
       "title": "Daily Loop-Model Briefing — 2026-05-14",
