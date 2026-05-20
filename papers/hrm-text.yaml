@@ -1,0 +1,42 @@
+title: 'HRM-Text: Efficient Pretraining Beyond Scaling'
+authors:
+- Guan Wang
+- Changling Liu
+- Chenyu Wang
+- Cai Zhou
+- Yuhao Sun
+- Yifei Wu
+- Shuai Zhen
+- Luca Scimeca
+- Yasin Abbasi Yadkori
+year: 2026
+published_date: '2026-05-18'
+added_date: '2026-05-20'
+venue: Preprint
+category: designs
+foundation: false
+mechanism_tags:
+- hierarchical-loop
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- efficiency
+tags:
+- HRM
+- HRM-Text
+- PrefixLM
+focus_tags:
+- architecture
+- training-algorithm
+- objective-loss
+- data
+desc: Introduces HRM-Text, a 1B Hierarchical Recurrent Model language model that
+  combines dual-timescale recurrent Transformer modules with MagicNorm, warmup deep
+  credit assignment, PrefixLM masking, and task-completion pretraining for efficient
+  training from 40B unique tokens.
+links:
+  paper: https://sapientinc.github.io/HRM-Text/assets/HRM_Text.pdf
+  project: https://sapientinc.github.io/HRM-Text/
+  github: https://github.com/sapientinc/HRM-Text
+  hf: https://huggingface.co/sapientinc/HRM-Text-1B
