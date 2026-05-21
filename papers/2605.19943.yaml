@@ -1,0 +1,35 @@
+title: 'Probabilistic Tiny Recursive Model'
+authors:
+- Amin Sghaier
+- Ali Parviz
+- Alexia Jolicoeur-Martineau
+year: 2026
+published_date: '2026-05-19'
+added_date: '2026-05-21'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- hierarchical-loop
+- flat-loop
+- parallel-loop
+domain_tags:
+- reasoning
+- algorithmic-reasoning
+- efficiency
+tags:
+- TRM
+- PTRM
+- stochastic-rollouts
+focus_tags:
+- inference-algorithm
+desc: Introduces PTRM, an inference-time scaling framework for Tiny Recursive Models
+  that injects Gaussian noise into recursive latent updates, runs parallel trajectories,
+  and selects the final answer with the model's Q head without retraining.
+links:
+  arxiv: https://arxiv.org/abs/2605.19943
+citations: 0
+citation_sources:
+  opencitations: 0
+citation_source_best: opencitations
+metrics_updated: '2026-05-21'
