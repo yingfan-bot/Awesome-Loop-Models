@@ -51,7 +51,6 @@ Observed browser-facing domain tags currently used across the repo.
 - `compositional-reasoning` (1)
 - `FLOPs-efficiency` (1)
 - `hyperspectral-imaging` (1)
-- `neuroscience` (1)
 - `rl-control` (1)
 - `robotics-vla` (1)
 - `tabular-data` (1)

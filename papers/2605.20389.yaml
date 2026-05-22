@@ -13,7 +13,6 @@ foundation: false
 mechanism_tags:
 - implicit-layer
 domain_tags:
-- neuroscience
 - sequence-modeling
 focus_tags:
 - architecture
