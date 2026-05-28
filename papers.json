@@ -1,12 +1,12 @@
 {
   "meta": {
-    "total": 87,
-    "paper_total": 81,
+    "total": 92,
+    "paper_total": 86,
     "blog_total": 6,
-    "briefing_total": 12,
-    "latest_briefing_date": "2026-05-21",
-    "generated": "2026-05-25T06:49:21.067829+00:00",
-    "generated_local_date": "2026-05-25",
+    "briefing_total": 14,
+    "latest_briefing_date": "2026-05-27",
+    "generated": "2026-05-28T05:27:10.097487+00:00",
+    "generated_local_date": "2026-05-27",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -3715,6 +3715,60 @@
       "arxiv_id": "2605.09226"
     },
     {
+      "title": "LoopUS: Recasting Pretrained LLMs into Looped Latent Refinement Models",
+      "authors": "Taekhyun Park, Yongjae Lee, Dohee Kim, Hyerim Bae",
+      "year": 2026,
+      "published_date": "2026-05-10",
+      "added_date": "2026-05-27",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "efficiency",
+        "scaling"
+      ],
+      "tags": [
+        "LoopUS",
+        "looped-depth-up-scaling",
+        "latent-refinement"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm",
+        "inference-algorithm"
+      ],
+      "desc": "Converts pretrained LLMs into encoder, looped reasoning block, and decoder components, using selective gating, random deep supervision, and adaptive early exiting to stabilize latent looping without training recurrent models from scratch.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.11011",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.11011",
+        "project": "https://thrillcrazyer.github.io/LoopUS"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "openalex",
+      "metrics_updated": "2026-05-28",
+      "id": "2605.11011",
+      "source_file": "2605.11011.yaml",
+      "source_path": "papers/2605.11011.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Taekhyun Park",
+        "Yongjae Lee",
+        "Dohee Kim",
+        "Hyerim Bae"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.11011"
+    },
+    {
       "title": "Solve the Loop: Attractor Models for Language and Reasoning",
       "authors": "Jacob Fein-Ashley, Paria Rashidinejad",
       "year": 2026,
@@ -3963,6 +4017,62 @@
       ],
       "venueClass": "venue-arxiv",
       "arxiv_id": "2605.18464"
+    },
+    {
+      "title": "Simply Stabilizing the Loop via Fully Looped Transformer",
+      "authors": "Rao Fu, Zixuan Yang, Jiankun Zhang, Jing Ma, Hechang Chen, Yu Li, Yi Chang",
+      "year": 2026,
+      "published_date": "2026-05-11",
+      "added_date": "2026-05-26",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "scaling",
+        "efficiency"
+      ],
+      "tags": [
+        "looped-transformer",
+        "fully-looped-transformer"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm",
+        "inference-algorithm"
+      ],
+      "desc": "Stabilizes looped transformers with parameter-free fully looped signal routing and attention injection, enabling stable training at higher loop counts while preserving test-time loop-depth control.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.18797",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.18797"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-05-28",
+      "id": "2605.18797",
+      "source_file": "2605.18797.yaml",
+      "source_path": "papers/2605.18797.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Rao Fu",
+        "Zixuan Yang",
+        "Jiankun Zhang",
+        "Jing Ma",
+        "Hechang Chen",
+        "Yu Li",
+        "Yi Chang"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.18797"
     },
     {
       "title": "Generative Recursive Reasoning",
@@ -4318,6 +4428,171 @@
       ],
       "venueClass": "venue-icml",
       "arxiv_id": "2605.21488"
+    },
+    {
+      "title": "Training-Free Looped Transformers",
+      "authors": "Lizhang Chen, Jonathan Li, Chen Liang, Ni Lao, Qiang Liu",
+      "year": 2026,
+      "published_date": "2026-05-22",
+      "added_date": "2026-05-27",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "efficiency",
+        "scaling"
+      ],
+      "tags": [
+        "looped-transformer",
+        "training-free-looping",
+        "test-time-compute"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "desc": "Retrofits frozen pretrained transformers with a training-free inference wrapper that repeatedly applies a contiguous mid-stack layer block as damped refinement sub-steps, improving several QA and reasoning benchmarks without fine-tuning.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.23872",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.23872"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-05-28",
+      "id": "2605.23872",
+      "source_file": "2605.23872.yaml",
+      "source_path": "papers/2605.23872.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Lizhang Chen",
+        "Jonathan Li",
+        "Chen Liang",
+        "Ni Lao",
+        "Qiang Liu"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.23872"
+    },
+    {
+      "title": "Looped Diffusion Language Models",
+      "authors": "Sanghyun Lee, Chunsan Hong, Seungryong Kim, Jonghyun Lee, Jongho Park, Dongmin Park",
+      "year": 2026,
+      "published_date": "2026-05-25",
+      "added_date": "2026-05-27",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "efficiency",
+        "scaling"
+      ],
+      "tags": [
+        "LoopMDM",
+        "masked-diffusion-language-model",
+        "looped-transformer"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm",
+        "inference-algorithm"
+      ],
+      "desc": "Introduces LoopMDM, selectively looping early-middle transformer layers in masked diffusion language models so training gains depth-scaling without extra parameters and inference can vary loop count for compute scaling.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.26106",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.26106"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-05-28",
+      "id": "2605.26106",
+      "source_file": "2605.26106.yaml",
+      "source_path": "papers/2605.26106.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Sanghyun Lee",
+        "Chunsan Hong",
+        "Seungryong Kim",
+        "Jonghyun Lee",
+        "Jongho Park",
+        "Dongmin Park"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.26106"
+    },
+    {
+      "title": "Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models",
+      "authors": "Xiao-Wen Yang, Ziyu Han, Xi-Hua Zhang, Wen-Da Wei, Jie-Jing Shao, Lan-Zhe Guo, Yu-Feng Li",
+      "year": 2026,
+      "published_date": "2026-05-26",
+      "added_date": "2026-05-27",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "theory",
+        "scaling"
+      ],
+      "tags": [
+        "LoopLM",
+        "STARS",
+        "recurrent-scaling",
+        "stability-analysis"
+      ],
+      "focus_tags": [
+        "training-algorithm",
+        "inference-algorithm"
+      ],
+      "desc": "Analyzes why Looped Language Models can collapse at larger recurrence depths and proposes STARS, a spectral-radius-regularized training framework that pushes latent dynamics toward stable fixed points for reliable test-time scaling.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.26733",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.26733"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "metrics_updated": "2026-05-28",
+      "id": "2605.26733",
+      "source_file": "2605.26733.yaml",
+      "source_path": "papers/2605.26733.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Xiao-Wen Yang",
+        "Ziyu Han",
+        "Xi-Hua Zhang",
+        "Wen-Da Wei",
+        "Jie-Jing Shao",
+        "Lan-Zhe Guo",
+        "Yu-Feng Li"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.26733"
     },
     {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
@@ -4688,6 +4963,79 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-05-27",
+      "title": "Daily Loop-Model Briefing — 2026-05-27",
+      "status": "added",
+      "summary": "Four loop-model papers were added: training-free transformer looping, LoopMDM, STARS for stable LoopLM recurrence, and LoopUS for converting pretrained LLMs into looped latent refiners.",
+      "highlights": [
+        "Included: Training-Free Looped Transformers loops a contiguous mid-stack transformer block of a frozen checkpoint at inference time, using damped repeated application rather than fine-tuning.",
+        "Included: LoopMDM shows that selectively looping early-middle transformer layers improves masked diffusion language models and enables test-time loop-count scaling.",
+        "Included: STARS analyzes LoopLM recurrence collapse and regularizes Jacobian spectral radius so deeper latent recurrence remains stable.",
+        "Included: LoopUS recasts a pretrained LLM into encoder, looped reasoning block, and decoder components, then stabilizes the loop with gating, deep supervision, and early exit."
+      ],
+      "candidates": [
+        {
+          "id": "2605.23872",
+          "title": "Training-Free Looped Transformers",
+          "url": "https://arxiv.org/abs/2605.23872",
+          "verdict": "included — a learned transformer layer block is explicitly reused inside inference as a looped refinement operator"
+        },
+        {
+          "id": "2605.26106",
+          "title": "Looped Diffusion Language Models",
+          "url": "https://arxiv.org/abs/2605.26106",
+          "verdict": "included — LoopMDM loops early-middle transformer layers, so the model gains depth scaling without new parameters"
+        },
+        {
+          "id": "2605.26733",
+          "title": "Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models",
+          "url": "https://arxiv.org/abs/2605.26733",
+          "verdict": "included — the paper directly studies and regularizes depth recurrence in Looped Language Models"
+        },
+        {
+          "id": "2605.11011",
+          "title": "LoopUS: Recasting Pretrained LLMs into Looped Latent Refinement Models",
+          "url": "https://arxiv.org/abs/2605.11011",
+          "verdict": "included — the method turns a pretrained LLM into an encoder, reused looped reasoning block, and decoder"
+        },
+        {
+          "id": "2605.26797",
+          "title": "Latent Recurrent Transformer",
+          "url": "https://arxiv.org/abs/2605.26797",
+          "verdict": "near miss — recurrent memory is carried across token positions rather than a reused internal learned block within one forward process"
+        },
+        {
+          "id": "2605.26401",
+          "title": "Reverse Martingale Recurrent Neural Network for Precipitation Forecasting",
+          "url": "https://arxiv.org/abs/2605.26401",
+          "verdict": "not added — ordinary sequence recurrence for forecasting is outside the strict loop-model scope"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing — 2026-05-27\n\n## Outcome\n\nFour papers were added to the collection. They cover a tight cluster around looped transformers and looped language models: how to retrofit recurrence onto frozen transformers, how selective transformer-layer looping behaves in masked diffusion language models, how to stabilize recurrent latent dynamics for test-time scaling, and how to convert pretrained LLMs into looped latent refinement systems.\n\n## Added to the collection\n\n### Training-Free Looped Transformers\n\nThis paper asks whether a pretrained transformer can be made looped without continued training. The answer is a lightweight inference wrapper that repeatedly applies a contiguous mid-stack block of layers in a frozen checkpoint. Naively reapplying blocks can hurt, so the method treats pre-norm transformer blocks like forward-Euler steps and turns one large update into smaller damped refinement sub-steps.\n\nWhy it was added: the loop is an explicit reuse of learned transformer layers inside one inference process. It is a design paper because the contribution is an inference-time architecture wrapper for test-time compute scaling.\n\nMain reader takeaway: the authors report gains across dense, sparse MoE, and MLA+MoE model families, including improvements on MMLU-Pro, CommonsenseQA, and OpenBookQA, without fine-tuning or architectural retraining.\n\n### Looped Diffusion Language Models\n\nLoopMDM brings selective layer looping into masked diffusion language models. The paper loops early-middle transformer layers during training to get a depth-scaling effect without adding parameters, then varies the number of loops at inference time for flexible compute scaling.\n\nWhy it was added: diffusion-style iterative generation alone would not be enough for this repository, but here the central mechanism is explicit reuse of internal transformer layers. The paper belongs in architecture and algorithm designs because it proposes a concrete looped model variant.\n\nMain reader takeaway: the abstract reports that LoopMDM can match same-size masked diffusion language models with up to 3.3 fewer training FLOPs, improve reasoning benchmarks by up to 8.5 points on GSM8K, and outperform deeper non-looped MDMs trained with comparable per-step compute.\n\n### Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models\n\nThis paper studies a failure mode of Looped Language Models: adding more recurrence at test time can improve performance up to a point, then collapse. The authors analyze latent dynamics and frame useful recurrence as convergence toward stable fixed points while preserving task effectiveness.\n\nWhy it was added: the subject is directly the stability of depth recurrence in LoopLMs. It is categorized as analysis because the main contribution is understanding and regularizing recurrent dynamics, although the STARS training framework is also practically useful.\n\nMain reader takeaway: STARS uses Jacobian spectral-radius regularization with random loop sampling to make recurrence more stable. The abstract reports reliable test-time scaling on arithmetic tasks and less performance degradation at higher recurrence depths on complex mathematical reasoning.\n\n### LoopUS: Recasting Pretrained LLMs into Looped Latent Refinement Models\n\nLoopUS converts a standard pretrained LLM into an encoder, a looped reasoning block, and a decoder. It uses staged block decomposition, an input-dependent selective gate, random deep supervision, and a confidence head for adaptive early exit so latent recurrence can be learned without training a recurrent model from scratch.\n\nWhy it was added: a learned reasoning block is reused as a latent refinement loop, and that reuse is the central architectural move. It is a design paper because it gives a post-training recipe for turning an existing non-looped LLM into a looped model.\n\nMain reader takeaway: the method targets reasoning-oriented gains from stable latent looping without extending generated traces or requiring full recurrent pretraining.\n\n## Checked but not added\n\n- **Latent Recurrent Transformer** (`2605.26797`) is adjacent but not included. Its recurrence stores state across token positions while preserving standard depth and KV-cache behavior, so it is closer to sequence-time recurrence than same-forward learned-block reuse.\n- **Reverse Martingale Recurrent Neural Network for Precipitation Forecasting** (`2605.26401`) is a recurrent forecasting model, but ordinary sequence recurrence is outside the repository's strict loop-model scope.",
+      "source_path": "briefings/2026/05/2026-05-27.md"
+    },
+    {
+      "date": "2026-05-26",
+      "title": "Daily Loop-Model Briefing — 2026-05-26",
+      "status": "added",
+      "summary": "One high-confidence backfill was added: Fully Looped Transformer directly targets looped-transformer training instability and keeps the same repeated-block test-time compute knob.",
+      "highlights": [
+        "Included: Fully Looped Transformer explicitly studies Looped Transformer models that iteratively reuse the same Transformer blocks.",
+        "Included: the paper identifies gradient oscillation and residual explosion as loop-depth stability bottlenecks, then proposes parameter-free architecture changes to stabilize higher loop counts.",
+        "Result signal: the authors report stable training up to 12 loop iterations, while baseline looped models collapse in that regime, plus up to 13.2% average downstream-task improvement in milder settings."
+      ],
+      "candidates": [
+        {
+          "id": "2605.18797",
+          "title": "Simply Stabilizing the Loop via Fully Looped Transformer",
+          "url": "https://arxiv.org/abs/2605.18797",
+          "verdict": "included — same Transformer blocks are reused across loop iterations inside the model, with architecture changes focused on stabilizing that loop"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing — 2026-05-26\n\n## Outcome\n\nOne high-confidence backfill was added to the collection: **Simply Stabilizing the Loop via Fully Looped Transformer** (`2605.18797`). It was previously noted as a backlog candidate because it predates the same-day watch window, but it is squarely inside the repository scope and should not be left out.\n\n## Added to the collection\n\n### Simply Stabilizing the Loop via Fully Looped Transformer\n\nThis paper targets a core failure mode of looped transformers: increasing the number of loop iterations can destabilize training even though the architecture is attractive because it reuses the same Transformer blocks and allows test-time compute to be adjusted by changing the loop count. The authors trace the instability to gradient oscillation and residual explosion.\n\nTheir Fully Looped Transformer adds two parameter-free changes. Fully Looped Architecture distributes inter-loop signals across all layers to reduce residual explosion, and Attention Injection reuses existing attention blocks to suppress gradient oscillation. The reported result is stable training up to 12 loop iterations where baseline looped models collapse, and up to 13.2% average downstream-task improvement in easier regimes where baseline looped transformers still train.\n\nWhy it was added: the repeated reuse of Transformer blocks is explicit and central, and the contribution is a design paper about making that internal loop stable and useful under different test-time compute budgets.",
+      "source_path": "briefings/2026/05/2026-05-26.md"
+    },
     {
       "date": "2026-05-21",
       "title": "Daily Loop-Model Briefing — 2026-05-21",

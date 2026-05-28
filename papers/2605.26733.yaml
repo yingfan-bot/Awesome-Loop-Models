@@ -1,0 +1,42 @@
+title: Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped
+  Language Models
+authors:
+- Xiao-Wen Yang
+- Ziyu Han
+- Xi-Hua Zhang
+- Wen-Da Wei
+- Jie-Jing Shao
+- Lan-Zhe Guo
+- Yu-Feng Li
+year: 2026
+published_date: '2026-05-26'
+added_date: '2026-05-27'
+venue: arXiv
+category: analysis
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- theory
+- scaling
+tags:
+- LoopLM
+- STARS
+- recurrent-scaling
+- stability-analysis
+focus_tags:
+- training-algorithm
+- inference-algorithm
+desc: Analyzes why Looped Language Models can collapse at larger recurrence depths
+  and proposes STARS, a spectral-radius-regularized training framework that pushes
+  latent dynamics toward stable fixed points for reliable test-time scaling.
+links:
+  arxiv: https://arxiv.org/abs/2605.26733
+  alphaxiv: https://www.alphaxiv.org/abs/2605.26733
+citations: 0
+citation_sources:
+  opencitations: 0
+citation_source_best: opencitations
+metrics_updated: '2026-05-28'
