@@ -1,0 +1,42 @@
+title: Looped Diffusion Language Models
+authors:
+- Sanghyun Lee
+- Chunsan Hong
+- Seungryong Kim
+- Jonghyun Lee
+- Jongho Park
+- Dongmin Park
+year: 2026
+published_date: '2026-05-25'
+added_date: '2026-05-27'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- efficiency
+- scaling
+tags:
+- LoopMDM
+- masked-diffusion-language-model
+- looped-transformer
+focus_tags:
+- architecture
+- training-algorithm
+- inference-algorithm
+desc: Introduces LoopMDM, selectively looping early-middle transformer layers in masked
+  diffusion language models so training gains depth-scaling without extra parameters
+  and inference can vary loop count for compute scaling.
+links:
+  arxiv: https://arxiv.org/abs/2605.26106
+  alphaxiv: https://www.alphaxiv.org/abs/2605.26106
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-05-28'

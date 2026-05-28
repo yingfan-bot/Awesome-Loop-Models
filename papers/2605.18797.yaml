@@ -1,0 +1,41 @@
+title: Simply Stabilizing the Loop via Fully Looped Transformer
+authors:
+- Rao Fu
+- Zixuan Yang
+- Jiankun Zhang
+- Jing Ma
+- Hechang Chen
+- Yu Li
+- Yi Chang
+year: 2026
+published_date: '2026-05-11'
+added_date: '2026-05-26'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- scaling
+- efficiency
+tags:
+- looped-transformer
+- fully-looped-transformer
+focus_tags:
+- architecture
+- training-algorithm
+- inference-algorithm
+desc: Stabilizes looped transformers with parameter-free fully looped signal routing
+  and attention injection, enabling stable training at higher loop counts while preserving
+  test-time loop-depth control.
+links:
+  arxiv: https://arxiv.org/abs/2605.18797
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-05-28'

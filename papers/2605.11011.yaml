@@ -1,0 +1,40 @@
+title: 'LoopUS: Recasting Pretrained LLMs into Looped Latent Refinement Models'
+authors:
+- Taekhyun Park
+- Yongjae Lee
+- Dohee Kim
+- Hyerim Bae
+year: 2026
+published_date: '2026-05-10'
+added_date: '2026-05-27'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- efficiency
+- scaling
+tags:
+- LoopUS
+- looped-depth-up-scaling
+- latent-refinement
+focus_tags:
+- architecture
+- training-algorithm
+- inference-algorithm
+desc: Converts pretrained LLMs into encoder, looped reasoning block, and decoder components,
+  using selective gating, random deep supervision, and adaptive early exiting to stabilize
+  latent looping without training recurrent models from scratch.
+links:
+  arxiv: https://arxiv.org/abs/2605.11011
+  alphaxiv: https://www.alphaxiv.org/abs/2605.11011
+  project: https://thrillcrazyer.github.io/LoopUS
+citations: 0
+citation_sources:
+  openalex: 0
+  opencitations: 0
+citation_source_best: openalex
+metrics_updated: '2026-05-28'

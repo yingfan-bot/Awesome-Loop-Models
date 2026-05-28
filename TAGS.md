@@ -18,7 +18,7 @@ This file is auto-generated from `papers/*.yaml` and `blogs/*.yaml` by `scripts/
 Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, `flat-loop`, `parallel-loop`, or `implicit-layer`.
 
 - `hierarchical-loop` (16)
-- `flat-loop` (72)
+- `flat-loop` (77)
 - `parallel-loop` (4)
 - `implicit-layer` (14)
 
@@ -27,21 +27,21 @@ Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, 
 Controlled vocabulary. The build validates these values, and the interactive browser uses them as filter chips.
 
 - `objective-loss` (7)
-- `training-algorithm` (38)
-- `architecture` (75)
+- `training-algorithm` (42)
+- `architecture` (79)
 - `data` (3)
-- `inference-algorithm` (56)
+- `inference-algorithm` (61)
 
 ## domain_tags
 
 Observed browser-facing domain tags currently used across the repo.
 
-- `reasoning` (49)
-- `language-modeling` (48)
-- `efficiency` (33)
+- `reasoning` (54)
+- `language-modeling` (53)
+- `efficiency` (37)
 - `algorithmic-reasoning` (20)
-- `scaling` (10)
-- `theory` (9)
+- `scaling` (15)
+- `theory` (10)
 - `sequence-modeling` (5)
 - `vision` (5)
 - `MoE` (4)
@@ -59,7 +59,7 @@ Observed browser-facing domain tags currently used across the repo.
 
 Observed alias tags currently used across the repo. These do not appear as browser filter chips, but contributors should still prefer existing spellings.
 
-- `looped-transformer` (14)
+- `looped-transformer` (17)
 - `ACT` (6)
 - `TRM` (6)
 - `DEQ` (5)
@@ -74,6 +74,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `adaptive-computation-time` (2)
 - `adaptive-latent-iteration` (2)
 - `depth-scaling` (2)
+- `LoopLM` (2)
 - `LoRA` (2)
 - `MoR` (2)
 - `mythos` (2)
@@ -98,6 +99,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `ELT` (1)
 - `Exact-ZOH` (1)
 - `fixed-point-analysis` (1)
+- `fully-looped-transformer` (1)
 - `generalist-processor` (1)
 - `GRAM` (1)
 - `halting` (1)
@@ -113,12 +115,16 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `isoFLOPs` (1)
 - `kv-cache-sharing` (1)
 - `latent-cot` (1)
+- `latent-refinement` (1)
 - `latent-thoughts` (1)
 - `latent-trajectories` (1)
+- `looped-depth-up-scaling` (1)
 - `looped-gpt` (1)
 - `LoopFormer` (1)
-- `LoopLM` (1)
+- `LoopMDM` (1)
 - `LoopRPT` (1)
+- `LoopUS` (1)
+- `masked-diffusion-language-model` (1)
 - `MDEQ` (1)
 - `MELT` (1)
 - `memory-banks` (1)
@@ -136,6 +142,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `programmable-computer` (1)
 - `PTRM` (1)
 - `RD-VLA` (1)
+- `recurrent-scaling` (1)
 - `recursive-reasoning` (1)
 - `RecursiveVLM` (1)
 - `reverse-residual` (1)
@@ -145,8 +152,12 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `scaling-laws` (1)
 - `silent-thinking` (1)
 - `SpiralFormer` (1)
+- `stability-analysis` (1)
+- `STARS` (1)
 - `stochastic-rollouts` (1)
 - `TaH` (1)
+- `test-time-compute` (1)
 - `Think-at-Hard` (1)
 - `timestep-encoding` (1)
+- `training-free-looping` (1)
 - `URM` (1)
