@@ -18,7 +18,7 @@ This file is auto-generated from `papers/*.yaml` and `blogs/*.yaml` by `scripts/
 Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, `flat-loop`, `parallel-loop`, or `implicit-layer`.
 
 - `hierarchical-loop` (16)
-- `flat-loop` (77)
+- `flat-loop` (78)
 - `parallel-loop` (4)
 - `implicit-layer` (14)
 
@@ -28,24 +28,24 @@ Controlled vocabulary. The build validates these values, and the interactive bro
 
 - `objective-loss` (7)
 - `training-algorithm` (42)
-- `architecture` (79)
+- `architecture` (80)
 - `data` (3)
-- `inference-algorithm` (61)
+- `inference-algorithm` (62)
 
 ## domain_tags
 
 Observed browser-facing domain tags currently used across the repo.
 
-- `reasoning` (54)
-- `language-modeling` (53)
+- `reasoning` (55)
+- `language-modeling` (54)
 - `efficiency` (37)
 - `algorithmic-reasoning` (20)
 - `scaling` (15)
-- `theory` (10)
+- `theory` (11)
 - `sequence-modeling` (5)
 - `vision` (5)
+- `memory-efficiency` (4)
 - `MoE` (4)
-- `memory-efficiency` (3)
 - `RL` (2)
 - `alignment` (1)
 - `compositional-reasoning` (1)
@@ -59,7 +59,7 @@ Observed browser-facing domain tags currently used across the repo.
 
 Observed alias tags currently used across the repo. These do not appear as browser filter chips, but contributors should still prefer existing spellings.
 
-- `looped-transformer` (17)
+- `looped-transformer` (18)
 - `ACT` (6)
 - `TRM` (6)
 - `DEQ` (5)
@@ -89,9 +89,11 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `attention-mixture` (1)
 - `BPTD` (1)
 - `BPTT` (1)
+- `chain-of-thought` (1)
 - `ChainGPT` (1)
 - `checkpointing` (1)
 - `CoLa` (1)
+- `complexity-separation` (1)
 - `compositional-generalization` (1)
 - `compute-bounded-policy` (1)
 - `CoTFormer` (1)
@@ -128,6 +130,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `MDEQ` (1)
 - `MELT` (1)
 - `memory-banks` (1)
+- `memory-budget` (1)
 - `memory-tokens` (1)
 - `MoDr` (1)
 - `MoEUT` (1)

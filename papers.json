@@ -1,11 +1,11 @@
 {
   "meta": {
-    "total": 92,
-    "paper_total": 86,
+    "total": 93,
+    "paper_total": 87,
     "blog_total": 6,
-    "briefing_total": 14,
-    "latest_briefing_date": "2026-05-27",
-    "generated": "2026-06-01T06:57:57.371982+00:00",
+    "briefing_total": 15,
+    "latest_briefing_date": "2026-06-01",
+    "generated": "2026-06-02T00:11:03.558552+00:00",
     "generated_local_date": "2026-06-01",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -4607,6 +4607,50 @@
       "arxiv_id": "2605.26733"
     },
     {
+      "title": "Chain-of-Thought and Compressed Looped Transformers: A Memory-Budget Separation",
+      "authors": "Haozhou Zhang",
+      "year": 2026,
+      "published_date": "2026-05-29",
+      "added_date": "2026-06-01",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "theory",
+        "memory-efficiency"
+      ],
+      "tags": [
+        "looped-transformer",
+        "chain-of-thought",
+        "memory-budget",
+        "complexity-separation"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "desc": "Compares chain-of-thought scratchpads with compressed looped Transformers, arguing that looped hidden-state recurrence is bounded by its persistent memory budget even when more recurrent computation is applied.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2605.30757",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2605.30757"
+      },
+      "citations": 0,
+      "id": "2605.30757",
+      "source_file": "2605.30757.yaml",
+      "source_path": "papers/2605.30757.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Haozhou Zhang"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2605.30757"
+    },
+    {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
       "authors": "Guan Wang, Changling Liu, Chenyu Wang, Cai Zhou, Yuhao Sun, Yifei Wu, Shuai Zhen, Luca Scimeca, Yasin Abbasi Yadkori",
       "year": 2026,
@@ -4980,6 +5024,39 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-06-01",
+      "title": "Daily Loop-Model Briefing — 2026-06-01",
+      "status": "added",
+      "summary": "One loop-model analysis paper was added: a memory-budget separation between chain-of-thought scratchpads and compressed looped Transformers.",
+      "highlights": [
+        "Included: Chain-of-Thought and Compressed Looped Transformers studies what recurrent hidden-state loops can and cannot remember compared with token scratchpads.",
+        "Near miss: Reasoning in Memory uses fixed memory-token blocks and answer refinement, but the abstract does not establish reused learned internal blocks within a single forward process.",
+        "Near miss: AdaState introduces recurrence into streaming video generation through adaptive diffusion state and KV-cache transitions, which stays outside the repo's strict loop-model scope."
+      ],
+      "candidates": [
+        {
+          "id": "2605.30757",
+          "title": "Chain-of-Thought and Compressed Looped Transformers: A Memory-Budget Separation",
+          "url": "https://arxiv.org/abs/2605.30757",
+          "verdict": "included — the paper is directly about looped Transformers and analyzes limits of compressed recurrent hidden-state loops"
+        },
+        {
+          "id": "2605.30343",
+          "title": "Unlocking the Working Memory of Large Language Models for Latent Reasoning",
+          "url": "https://arxiv.org/abs/2605.30343",
+          "verdict": "near miss — memory blocks are fixed special-token sequences, not explicit reuse of a learned internal layer/block/operator"
+        },
+        {
+          "id": "2605.30349",
+          "title": "AdaState: Self-Evolving Anchors for Streaming Video Generation",
+          "url": "https://arxiv.org/abs/2605.30349",
+          "verdict": "not added — the recurrence is a diffusion-video adaptive state/KV-cache transition rather than central learned block reuse in the repo sense"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing — 2026-06-01\n\n## Outcome\n\nOne paper was added to the collection. It is a theory-oriented analysis paper about the memory limits of compressed looped Transformers compared with chain-of-thought scratchpads.\n\n## Added to the collection\n\n### Chain-of-Thought and Compressed Looped Transformers: A Memory-Budget Separation\n\nThis paper compares two ways a fixed model can spend extra test-time computation: external chain-of-thought tokens and internal looped Transformer recurrence. Its core claim is that these mechanisms differ in what they remember. Chain-of-thought can grow a token scratchpad, while a compressed looped Transformer carries only a bounded recurrent hidden state.\n\nWhy it was added: the paper is directly about looped Transformers and analyzes recurrent hidden activations as the model's persistent mutable memory. It belongs in analysis because the main contribution is a memory-budget separation, not a new looped architecture.\n\nMain reader takeaway: running a compressed loop for more steps adds computation, but does not by itself create an expanding scratchpad. The paper argues that this matters for reasoning tasks whose working-memory demand exceeds the loop's persistent state budget.\n\n## Checked but not added\n\n- **Unlocking the Working Memory of Large Language Models for Latent Reasoning** (`2605.30343`) remains adjacent but outside the strict collection scope. RiM uses fixed memory-token blocks and final-answer refinement, but the abstract does not make reused learned internal layers or blocks central.\n- **AdaState: Self-Evolving Anchors for Streaming Video Generation** (`2605.30349`) introduces a recurrent adaptive state for streaming video generation. It was not added because the recurrence is tied to diffusion-video state and KV-cache transitions rather than reused learned block/operator recurrence in the loop-model sense.",
+      "source_path": "briefings/2026/06/2026-06-01.md"
+    },
     {
       "date": "2026-05-27",
       "title": "Daily Loop-Model Briefing — 2026-05-27",
