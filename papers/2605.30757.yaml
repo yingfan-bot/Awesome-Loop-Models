@@ -16,9 +16,6 @@ domain_tags:
 - memory-efficiency
 tags:
 - looped-transformer
-- chain-of-thought
-- memory-budget
-- complexity-separation
 focus_tags:
 - architecture
 - inference-algorithm
