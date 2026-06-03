@@ -19,10 +19,16 @@ tags:
 focus_tags:
 - architecture
 - inference-algorithm
-desc: Compares chain-of-thought scratchpads with compressed looped Transformers,
-  arguing that looped hidden-state recurrence is bounded by its persistent memory
-  budget even when more recurrent computation is applied.
+desc: Compares chain-of-thought scratchpads with compressed looped Transformers, arguing
+  that looped hidden-state recurrence is bounded by its persistent memory budget even
+  when more recurrent computation is applied.
 links:
   arxiv: https://arxiv.org/abs/2605.30757
   alphaxiv: https://www.alphaxiv.org/abs/2605.30757
 citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-03'
