@@ -27,9 +27,9 @@ desc: Measures the parameter value of recurrence in looped language models with 
   and training compute.
 links:
   arxiv: https://arxiv.org/abs/2604.21106
-citations: 5
+citations: 6
 citation_sources:
-  semantic_scholar: 5
+  semantic_scholar: 6
   openalex: 0
   opencitations: 0
 citation_source_best: semantic_scholar
