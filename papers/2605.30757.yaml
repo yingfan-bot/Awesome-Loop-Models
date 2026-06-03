@@ -1,0 +1,28 @@
+title: 'Chain-of-Thought and Compressed Looped Transformers: A Memory-Budget Separation'
+authors:
+- Haozhou Zhang
+year: 2026
+published_date: '2026-05-29'
+added_date: '2026-06-01'
+venue: arXiv
+category: analysis
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- theory
+- memory-efficiency
+tags:
+- looped-transformer
+focus_tags:
+- architecture
+- inference-algorithm
+desc: Compares chain-of-thought scratchpads with compressed looped Transformers,
+  arguing that looped hidden-state recurrence is bounded by its persistent memory
+  budget even when more recurrent computation is applied.
+links:
+  arxiv: https://arxiv.org/abs/2605.30757
+  alphaxiv: https://www.alphaxiv.org/abs/2605.30757
+citations: 0

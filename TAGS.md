@@ -45,7 +45,6 @@ Observed browser-facing domain tags currently used across the repo.
 - `vision` (8)
 - `sequence-modeling` (5)
 - `MoE` (4)
-- `memory-efficiency` (3)
 - `RL` (2)
 - `alignment` (1)
 - `compositional-reasoning` (1)
