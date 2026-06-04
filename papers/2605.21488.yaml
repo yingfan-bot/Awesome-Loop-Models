@@ -27,6 +27,7 @@ desc: Formalizes Equilibrium Reasoners as learned latent dynamical systems whose
   test-time scaling for reasoning.
 links:
   arxiv: https://arxiv.org/abs/2605.21488
+  github: https://github.com/locuslab/eqr
 citations: 0
 citation_sources:
   semantic_scholar: 0

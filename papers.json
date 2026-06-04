@@ -5,7 +5,7 @@
     "blog_total": 6,
     "briefing_total": 16,
     "latest_briefing_date": "2026-06-02",
-    "generated": "2026-06-03T21:24:59.967009+00:00",
+    "generated": "2026-06-04T00:30:18.647352+00:00",
     "generated_local_date": "2026-06-03",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -4417,6 +4417,7 @@
       "desc": "Formalizes Equilibrium Reasoners as learned latent dynamical systems whose repeated update rule converges toward task-conditioned attractors, enabling depth and breadth test-time scaling for reasoning.",
       "links": {
         "arxiv": "https://arxiv.org/abs/2605.21488",
+        "github": "https://github.com/locuslab/eqr",
         "alphaxiv": "https://www.alphaxiv.org/abs/2605.21488"
       },
       "citations": 0,
