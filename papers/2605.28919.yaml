@@ -1,5 +1,5 @@
-title: 'CosmicFish-HRM: Adaptive Reasoning via Hierarchical Recurrent Mechanisms
-  in Compact Language Models'
+title: 'CosmicFish-HRM: Adaptive Reasoning via Hierarchical Recurrent Mechanisms in
+  Compact Language Models'
 authors:
 - Venkat Akhil Lakkapragada
 year: 2026
@@ -27,3 +27,13 @@ links:
   alphaxiv: https://www.alphaxiv.org/abs/2605.28919
   github: https://github.com/MistyozAI/CosmicFish-HRM
 citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+github_stars: 2
+star_sources:
+  github_api: 2
+star_source_best: github_api
+metrics_updated: '2026-06-05'

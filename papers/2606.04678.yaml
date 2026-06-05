@@ -1,4 +1,4 @@
-title: 'Test-Time Compute Scaling for ASR with Depth-Conditioned Looped Transformers'
+title: Test-Time Compute Scaling for ASR with Depth-Conditioned Looped Transformers
 authors:
 - Yacouba Kaloga
 - Shashi Kumar
@@ -25,9 +25,14 @@ focus_tags:
 - architecture
 - inference-algorithm
 desc: Introduces LARM, a depth-conditioned looped Transformer for automatic speech
-  recognition that reuses a shared acoustic-encoder block recurrently and scales
-  recognition quality by increasing inference-time loop count.
+  recognition that reuses a shared acoustic-encoder block recurrently and scales recognition
+  quality by increasing inference-time loop count.
 links:
   arxiv: https://arxiv.org/abs/2606.04678
   alphaxiv: https://www.alphaxiv.org/abs/2606.04678
 citations: 0
+citation_sources:
+  semantic_scholar: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-05'

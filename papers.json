@@ -5,8 +5,8 @@
     "blog_total": 6,
     "briefing_total": 17,
     "latest_briefing_date": "2026-06-04",
-    "generated": "2026-06-05T00:14:07.098672+00:00",
-    "generated_local_date": "2026-06-04",
+    "generated": "2026-06-05T01:06:22.383120+00:00",
+    "generated_local_date": "2026-06-05",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -126,14 +126,14 @@
         "arxiv": "https://arxiv.org/abs/1603.08983",
         "alphaxiv": "https://www.alphaxiv.org/abs/1603.08983"
       },
-      "citations": 745,
+      "citations": 747,
       "citation_sources": {
-        "semantic_scholar": 745,
+        "semantic_scholar": 747,
         "openalex": 361,
         "opencitations": 1
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "1603.08983",
       "source_file": "1603.08983.yaml",
       "source_path": "papers/1603.08983.yaml",
@@ -229,9 +229,9 @@
         "paper": "https://proceedings.neurips.cc/paper/2019/hash/01386bd6d8e091c2ab4c7c7de644d37b-Abstract.html",
         "github": "https://github.com/locuslab/deq"
       },
-      "citations": 891,
+      "citations": 893,
       "citation_sources": {
-        "semantic_scholar": 891,
+        "semantic_scholar": 893,
         "openalex": 246,
         "opencitations": 0
       },
@@ -241,7 +241,7 @@
         "github_api": 802
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "1909.01377",
       "source_file": "1909.01377.yaml",
       "source_path": "papers/1909.01377.yaml",
@@ -435,14 +435,14 @@
         "arxiv": "https://arxiv.org/abs/2301.13196",
         "alphaxiv": "https://www.alphaxiv.org/abs/2301.13196"
       },
-      "citations": 201,
+      "citations": 202,
       "citation_sources": {
-        "semantic_scholar": 201,
+        "semantic_scholar": 202,
         "openalex": 3,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2301.13196",
       "source_file": "2301.13196.yaml",
       "source_path": "papers/2301.13196.yaml",
@@ -774,14 +774,14 @@
         "arxiv": "https://arxiv.org/abs/2410.20672",
         "alphaxiv": "https://www.alphaxiv.org/abs/2410.20672"
       },
-      "citations": 44,
+      "citations": 45,
       "citation_sources": {
-        "semantic_scholar": 44,
+        "semantic_scholar": 45,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2410.20672",
       "source_file": "2410.20672.yaml",
       "source_path": "papers/2410.20672.yaml",
@@ -838,19 +838,19 @@
         "github": "https://github.com/seal-rg/recurrent-pretraining",
         "alphaxiv": "https://www.alphaxiv.org/abs/2502.05171"
       },
-      "citations": 248,
+      "citations": 249,
       "citation_sources": {
-        "semantic_scholar": 248,
+        "semantic_scholar": 249,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 889,
+      "github_stars": 890,
       "star_sources": {
-        "github_api": 889
+        "github_api": 890
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2502.05171",
       "source_file": "2502.05171.yaml",
       "source_path": "papers/2502.05171.yaml",
@@ -966,14 +966,14 @@
         "arxiv": "https://arxiv.org/abs/2502.17416",
         "alphaxiv": "https://www.alphaxiv.org/abs/2502.17416"
       },
-      "citations": 141,
+      "citations": 142,
       "citation_sources": {
-        "semantic_scholar": 141,
+        "semantic_scholar": 142,
         "openalex": 1,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2502.17416",
       "source_file": "2502.17416.yaml",
       "source_path": "papers/2502.17416.yaml",
@@ -1028,14 +1028,14 @@
         "arxiv": "https://arxiv.org/abs/2506.21734",
         "alphaxiv": "https://www.alphaxiv.org/abs/2506.21734"
       },
-      "citations": 107,
+      "citations": 108,
       "citation_sources": {
-        "semantic_scholar": 107,
+        "semantic_scholar": 108,
         "openalex": 2,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2506.21734",
       "source_file": "2506.21734.yaml",
       "source_path": "papers/2506.21734.yaml",
@@ -1192,13 +1192,13 @@
         "github": "https://github.com/raymin0223/mixture_of_recursions",
         "alphaxiv": "https://www.alphaxiv.org/abs/2507.10524"
       },
-      "citations": 76,
+      "citations": 77,
       "citation_sources": {
-        "semantic_scholar": 76,
+        "semantic_scholar": 77,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "github_stars": 574,
       "star_sources": {
         "github_api": 574
@@ -1472,13 +1472,13 @@
         "hf": "https://huggingface.co/ByteDance/Ouro-1.4B",
         "alphaxiv": "https://www.alphaxiv.org/abs/2510.25741"
       },
-      "citations": 73,
+      "citations": 74,
       "citation_sources": {
-        "semantic_scholar": 73,
+        "semantic_scholar": 74,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2510.25741",
       "source_file": "2510.25741.yaml",
       "source_path": "papers/2510.25741.yaml",
@@ -1560,9 +1560,9 @@
         "hf": "https://huggingface.co/collections/tomg-group-umd/retrofitting-recurrence",
         "alphaxiv": "https://www.alphaxiv.org/abs/2511.07384"
       },
-      "citations": 21,
+      "citations": 22,
       "citation_sources": {
-        "semantic_scholar": 21,
+        "semantic_scholar": 22,
         "openalex": 0,
         "opencitations": 0
       },
@@ -1572,7 +1572,7 @@
         "github_api": 65
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2511.07384",
       "source_file": "2511.07384.yaml",
       "source_path": "papers/2511.07384.yaml",
@@ -2128,9 +2128,9 @@
         "github": "https://github.com/armenjeddi/loopformer",
         "alphaxiv": "https://www.alphaxiv.org/abs/2602.11451"
       },
-      "citations": 15,
+      "citations": 16,
       "citation_sources": {
-        "semantic_scholar": 15,
+        "semantic_scholar": 16,
         "openalex": 0,
         "opencitations": 0
       },
@@ -2140,7 +2140,7 @@
         "github_api": 23
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-05",
       "id": "2602.11451",
       "source_file": "2602.11451.yaml",
       "source_path": "papers/2602.11451.yaml",
@@ -4588,14 +4588,14 @@
         "arxiv": "https://arxiv.org/abs/2605.26733",
         "alphaxiv": "https://www.alphaxiv.org/abs/2605.26733"
       },
-      "citations": 0,
+      "citations": 1,
       "citation_sources": {
-        "semantic_scholar": 0,
+        "semantic_scholar": 1,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-01",
+      "metrics_updated": "2026-06-05",
       "id": "2605.26733",
       "source_file": "2605.26733.yaml",
       "source_path": "papers/2605.26733.yaml",
@@ -4643,6 +4643,18 @@
         "github": "https://github.com/MistyozAI/CosmicFish-HRM"
       },
       "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "github_stars": 2,
+      "star_sources": {
+        "github_api": 2
+      },
+      "star_source_best": "github_api",
+      "metrics_updated": "2026-06-05",
       "id": "2605.28919",
       "source_file": "2605.28919.yaml",
       "source_path": "papers/2605.28919.yaml",
@@ -4993,6 +5005,12 @@
         "alphaxiv": "https://www.alphaxiv.org/abs/2606.04438"
       },
       "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-06-05",
       "id": "2606.04438",
       "source_file": "2606.04438.yaml",
       "source_path": "papers/2606.04438.yaml",
@@ -5039,6 +5057,12 @@
         "alphaxiv": "https://www.alphaxiv.org/abs/2606.04678"
       },
       "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-06-05",
       "id": "2606.04678",
       "source_file": "2606.04678.yaml",
       "source_path": "papers/2606.04678.yaml",
@@ -5090,12 +5114,12 @@
         "github": "https://github.com/sapientinc/HRM-Text",
         "hf": "https://huggingface.co/sapientinc/HRM-Text-1B"
       },
-      "github_stars": 1017,
+      "github_stars": 1040,
       "star_sources": {
-        "github_api": 1017
+        "github_api": 1040
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-04",
+      "metrics_updated": "2026-06-05",
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0

@@ -33,3 +33,8 @@ links:
   arxiv: https://arxiv.org/abs/2606.04438
   alphaxiv: https://www.alphaxiv.org/abs/2606.04438
 citations: 0
+citation_sources:
+  semantic_scholar: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-05'
