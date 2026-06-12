@@ -1,0 +1,32 @@
+title: 'When to Re-Plan: Subgoal Persistence in Hierarchical Latent Reasoning'
+authors:
+- Ayushi Chadha
+year: 2026
+published_date: '2026-06-02'
+added_date: '2026-06-11'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- hierarchical-loop
+domain_tags:
+- reasoning
+- algorithmic-reasoning
+tags:
+- HRM
+focus_tags:
+- architecture
+- training-algorithm
+desc: Extends hierarchical latent reasoning with a slow manager module whose directional
+  subgoal persists across several low-level hidden-state update steps, making subgoal
+  duration a central design knob.
+links:
+  arxiv: https://arxiv.org/abs/2606.03741
+  alphaxiv: https://www.alphaxiv.org/abs/2606.03741
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-12'
