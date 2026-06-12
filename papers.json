@@ -1,12 +1,12 @@
 {
   "meta": {
-    "total": 106,
+    "total": 105,
     "paper_total": 99,
-    "blog_total": 7,
+    "blog_total": 6,
     "briefing_total": 18,
     "latest_briefing_date": "2026-06-11",
-    "generated": "2026-06-12T00:22:30.626323+00:00",
-    "generated_local_date": "2026-06-11",
+    "generated": "2026-06-12T00:36:19.189438+00:00",
+    "generated_local_date": "2026-06-12",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -126,14 +126,14 @@
         "arxiv": "https://arxiv.org/abs/1603.08983",
         "alphaxiv": "https://www.alphaxiv.org/abs/1603.08983"
       },
-      "citations": 748,
+      "citations": 752,
       "citation_sources": {
-        "semantic_scholar": 748,
+        "semantic_scholar": 752,
         "openalex": 361,
         "opencitations": 1
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "1603.08983",
       "source_file": "1603.08983.yaml",
       "source_path": "papers/1603.08983.yaml",
@@ -171,14 +171,14 @@
         "openreview": "https://openreview.net/forum?id=HyzdRiR9Y7",
         "alphaxiv": "https://www.alphaxiv.org/abs/1807.03819"
       },
-      "citations": 942,
+      "citations": 945,
       "citation_sources": {
-        "semantic_scholar": 942,
+        "semantic_scholar": 945,
         "openalex": 396,
         "opencitations": 3
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "1807.03819",
       "source_file": "1807.03819.yaml",
       "source_path": "papers/1807.03819.yaml",
@@ -229,9 +229,9 @@
         "paper": "https://proceedings.neurips.cc/paper/2019/hash/01386bd6d8e091c2ab4c7c7de644d37b-Abstract.html",
         "github": "https://github.com/locuslab/deq"
       },
-      "citations": 895,
+      "citations": 898,
       "citation_sources": {
-        "semantic_scholar": 895,
+        "semantic_scholar": 898,
         "openalex": 246,
         "opencitations": 0
       },
@@ -241,7 +241,7 @@
         "github_api": 804
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "1909.01377",
       "source_file": "1909.01377.yaml",
       "source_path": "papers/1909.01377.yaml",
@@ -435,14 +435,14 @@
         "arxiv": "https://arxiv.org/abs/2301.13196",
         "alphaxiv": "https://www.alphaxiv.org/abs/2301.13196"
       },
-      "citations": 203,
+      "citations": 205,
       "citation_sources": {
-        "semantic_scholar": 203,
+        "semantic_scholar": 205,
         "openalex": 3,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "2301.13196",
       "source_file": "2301.13196.yaml",
       "source_path": "papers/2301.13196.yaml",
@@ -545,9 +545,9 @@
         "github": "https://github.com/Leiay/looped_transformer",
         "alphaxiv": "https://www.alphaxiv.org/abs/2311.12424"
       },
-      "citations": 95,
+      "citations": 96,
       "citation_sources": {
-        "semantic_scholar": 95,
+        "semantic_scholar": 96,
         "openalex": 0,
         "opencitations": 0
       },
@@ -557,7 +557,7 @@
         "github_api": 46
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-01",
+      "metrics_updated": "2026-06-12",
       "id": "2311.12424",
       "source_file": "2311.12424.yaml",
       "source_path": "papers/2311.12424.yaml",
@@ -774,14 +774,14 @@
         "arxiv": "https://arxiv.org/abs/2410.20672",
         "alphaxiv": "https://www.alphaxiv.org/abs/2410.20672"
       },
-      "citations": 45,
+      "citations": 46,
       "citation_sources": {
-        "semantic_scholar": 45,
+        "semantic_scholar": 46,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-05",
+      "metrics_updated": "2026-06-12",
       "id": "2410.20672",
       "source_file": "2410.20672.yaml",
       "source_path": "papers/2410.20672.yaml",
@@ -845,12 +845,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 891,
+      "github_stars": 894,
       "star_sources": {
-        "github_api": 891
+        "github_api": 894
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "2502.05171",
       "source_file": "2502.05171.yaml",
       "source_path": "papers/2502.05171.yaml",
@@ -966,14 +966,14 @@
         "arxiv": "https://arxiv.org/abs/2502.17416",
         "alphaxiv": "https://www.alphaxiv.org/abs/2502.17416"
       },
-      "citations": 142,
+      "citations": 144,
       "citation_sources": {
-        "semantic_scholar": 142,
+        "semantic_scholar": 144,
         "openalex": 1,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-05",
+      "metrics_updated": "2026-06-12",
       "id": "2502.17416",
       "source_file": "2502.17416.yaml",
       "source_path": "papers/2502.17416.yaml",
@@ -1031,11 +1031,11 @@
       "citations": 109,
       "citation_sources": {
         "semantic_scholar": 109,
-        "openalex": 2,
+        "openalex": 3,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "2506.21734",
       "source_file": "2506.21734.yaml",
       "source_path": "papers/2506.21734.yaml",
@@ -1130,14 +1130,14 @@
         "arxiv": "https://arxiv.org/abs/2507.07996",
         "alphaxiv": "https://www.alphaxiv.org/abs/2507.07996"
       },
-      "citations": 7,
+      "citations": 8,
       "citation_sources": {
-        "semantic_scholar": 7,
+        "semantic_scholar": 8,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-05-18",
+      "metrics_updated": "2026-06-12",
       "id": "2507.07996",
       "source_file": "2507.07996.yaml",
       "source_path": "papers/2507.07996.yaml",
@@ -1192,13 +1192,13 @@
         "github": "https://github.com/raymin0223/mixture_of_recursions",
         "alphaxiv": "https://www.alphaxiv.org/abs/2507.10524"
       },
-      "citations": 78,
+      "citations": 80,
       "citation_sources": {
-        "semantic_scholar": 78,
+        "semantic_scholar": 80,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "github_stars": 575,
       "star_sources": {
         "github_api": 575
@@ -1472,13 +1472,13 @@
         "hf": "https://huggingface.co/ByteDance/Ouro-1.4B",
         "alphaxiv": "https://www.alphaxiv.org/abs/2510.25741"
       },
-      "citations": 75,
+      "citations": 76,
       "citation_sources": {
-        "semantic_scholar": 75,
+        "semantic_scholar": 76,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "2510.25741",
       "source_file": "2510.25741.yaml",
       "source_path": "papers/2510.25741.yaml",
@@ -1567,12 +1567,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 66,
+      "github_stars": 67,
       "star_sources": {
-        "github_api": 66
+        "github_api": 67
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "id": "2511.07384",
       "source_file": "2511.07384.yaml",
       "source_path": "papers/2511.07384.yaml",
@@ -2024,14 +2024,14 @@
         "arxiv": "https://arxiv.org/abs/2602.09080",
         "alphaxiv": "https://www.alphaxiv.org/abs/2602.09080"
       },
-      "citations": 1,
+      "citations": 2,
       "citation_sources": {
-        "semantic_scholar": 1,
+        "semantic_scholar": 2,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-05-18",
+      "metrics_updated": "2026-06-12",
       "id": "2602.09080",
       "source_file": "2602.09080.yaml",
       "source_path": "papers/2602.09080.yaml",
@@ -2182,14 +2182,14 @@
         "arxiv": "https://arxiv.org/abs/2602.11698",
         "alphaxiv": "https://www.alphaxiv.org/abs/2602.11698"
       },
-      "citations": 5,
+      "citations": 6,
       "citation_sources": {
-        "semantic_scholar": 5,
+        "semantic_scholar": 6,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-03",
+      "metrics_updated": "2026-06-12",
       "id": "2602.11698",
       "source_file": "2602.11698.yaml",
       "source_path": "papers/2602.11698.yaml",
@@ -2854,14 +2854,14 @@
         "twitter": "https://x.com/HughBlayney/status/2046558050882899995?s=20",
         "alphaxiv": "https://www.alphaxiv.org/abs/2604.11791"
       },
-      "citations": 9,
+      "citations": 10,
       "citation_sources": {
-        "semantic_scholar": 9,
+        "semantic_scholar": 10,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-01",
+      "metrics_updated": "2026-06-12",
       "id": "2604.11791",
       "source_file": "2604.11791.yaml",
       "source_path": "papers/2604.11791.yaml",
@@ -4427,10 +4427,10 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-08",
-      "github_stars": 36,
+      "metrics_updated": "2026-06-12",
+      "github_stars": 38,
       "star_sources": {
-        "github_api": 36
+        "github_api": 38
       },
       "star_source_best": "github_api",
       "id": "2605.21488",
@@ -5307,12 +5307,12 @@
         "github": "https://github.com/sapientinc/HRM-Text",
         "hf": "https://huggingface.co/sapientinc/HRM-Text-1B"
       },
-      "github_stars": 1087,
+      "github_stars": 1200,
       "star_sources": {
-        "github_api": 1087
+        "github_api": 1200
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-08",
+      "metrics_updated": "2026-06-12",
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0
@@ -5637,45 +5637,6 @@
       "id": "2026-04-29-exact-input-writes-parcae",
       "source_file": "2026-04-29-exact-input-writes-parcae.yaml",
       "source_path": "blogs/2026-04-29-exact-input-writes-parcae.yaml",
-      "entry_type": "blog",
-      "authors_list": [
-        "Benhao Huang"
-      ],
-      "venueClass": "venue-other"
-    },
-    {
-      "title": "Rethinking Hierarchy in Iterative Reasoning Models",
-      "authors": "Benhao Huang",
-      "year": 2026,
-      "published_date": "2026-05-23",
-      "added_date": "2026-06-06",
-      "venue": "X Article",
-      "mechanism_tags": [
-        "hierarchical-loop",
-        "flat-loop"
-      ],
-      "domain_tags": [
-        "reasoning",
-        "algorithmic-reasoning"
-      ],
-      "tags": [
-        "HRM",
-        "TRM",
-        "ACT",
-        "halting",
-        "weight-tying"
-      ],
-      "focus_tags": [
-        "architecture",
-        "inference-algorithm"
-      ],
-      "desc": "Interprets HRM/TRM-style two-level iteration through value-policy-like coupled dynamics, then reports preliminary evidence that low-level latent states can be better ACT halting inputs than answer-proximal high-level states.\n",
-      "links": {
-        "blog": "https://x.com/huskydogewoof/status/2058082328744993013?s=20"
-      },
-      "id": "2026-05-23-rethinking-hierarchy-iterative-reasoning-models",
-      "source_file": "2026-05-23-rethinking-hierarchy-iterative-reasoning-models.yaml",
-      "source_path": "blogs/2026-05-23-rethinking-hierarchy-iterative-reasoning-models.yaml",
       "entry_type": "blog",
       "authors_list": [
         "Benhao Huang"

@@ -17,8 +17,8 @@ This file is auto-generated from `papers/*.yaml` and `blogs/*.yaml` by `scripts/
 
 Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, `flat-loop`, `parallel-loop`, or `implicit-layer`.
 
-- `hierarchical-loop` (19)
-- `flat-loop` (87)
+- `hierarchical-loop` (18)
+- `flat-loop` (86)
 - `parallel-loop` (5)
 - `implicit-layer` (15)
 
@@ -28,18 +28,18 @@ Controlled vocabulary. The build validates these values, and the interactive bro
 
 - `objective-loss` (7)
 - `training-algorithm` (48)
-- `architecture` (93)
+- `architecture` (92)
 - `data` (3)
-- `inference-algorithm` (71)
+- `inference-algorithm` (70)
 
 ## domain_tags
 
 Observed browser-facing domain tags currently used across the repo.
 
-- `reasoning` (60)
 - `language-modeling` (59)
+- `reasoning` (59)
 - `efficiency` (46)
-- `algorithmic-reasoning` (23)
+- `algorithmic-reasoning` (22)
 - `scaling` (19)
 - `theory` (12)
 - `vision` (9)
@@ -61,11 +61,11 @@ Observed browser-facing domain tags currently used across the repo.
 Observed alias tags currently used across the repo. These do not appear as browser filter chips, but contributors should still prefer existing spellings.
 
 - `looped-transformer` (24)
-- `ACT` (7)
-- `TRM` (7)
+- `ACT` (6)
 - `DEQ` (6)
-- `HRM` (6)
 - `looped-llm` (6)
+- `TRM` (6)
+- `HRM` (5)
 - `recursive-transformer` (5)
 - `shared-weight-recurrence` (5)
 - `Ouro` (4)
@@ -74,10 +74,8 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `depth-recurrent` (3)
 - `depth-scaling` (3)
 - `mechanistic-analysis` (3)
-- `weight-tying` (3)
 - `adaptive-computation-time` (2)
 - `adaptive-latent-iteration` (2)
-- `halting` (2)
 - `hyper-connections` (2)
 - `LoopLM` (2)
 - `LoRA` (2)
@@ -86,6 +84,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `Parcae` (2)
 - `test-time-compute` (2)
 - `universal-transformer` (2)
+- `weight-tying` (2)
 - `activation-compression` (1)
 - `AdaPonderLM` (1)
 - `AlgoFormer` (1)
@@ -106,6 +105,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `fully-looped-transformer` (1)
 - `generalist-processor` (1)
 - `GRAM` (1)
+- `halting` (1)
 - `hierarchical-recurrence` (1)
 - `HRM-Text` (1)
 - `Huginn` (1)
