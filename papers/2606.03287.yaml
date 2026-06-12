@@ -1,0 +1,35 @@
+title: 'BA-T: An Iterative Transformer for Two-View Bundle Adjustment'
+authors:
+- Ganlin Zhang
+- Weirong Chen
+- Daniel Cremers
+- Xi Wang
+year: 2026
+published_date: '2026-06-02'
+added_date: '2026-06-11'
+venue: arXiv
+category: applications
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- vision
+- efficiency
+tags:
+- recursive-transformer
+focus_tags:
+- architecture
+- inference-algorithm
+desc: Implements bundle-adjustment-style 3D reconstruction updates as a repeatable
+  lightweight Transformer layer in implicit token space, improving pose and reconstruction
+  estimates across iterations.
+links:
+  arxiv: https://arxiv.org/abs/2606.03287
+  alphaxiv: https://www.alphaxiv.org/abs/2606.03287
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-12'

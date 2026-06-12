@@ -1,0 +1,31 @@
+title: 'MPCoT: Reward-Guided Multi-Path Latent Reasoning for Test-Time Scalable Vision-Language-Action'
+authors:
+- Boyang Zhang
+- Lianlei Shan
+year: 2026
+published_date: '2026-06-04'
+added_date: '2026-06-11'
+venue: arXiv
+category: applications
+foundation: false
+mechanism_tags:
+- parallel-loop
+domain_tags:
+- robotics-vla
+- reasoning
+focus_tags:
+- architecture
+- training-algorithm
+- inference-algorithm
+desc: Introduces a VLA latent-reasoning policy that initializes multiple latent hypotheses,
+  refines them for K weight-tied steps, and aggregates them before action decoding.
+links:
+  arxiv: https://arxiv.org/abs/2606.06245
+  alphaxiv: https://www.alphaxiv.org/abs/2606.06245
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-06-12'
