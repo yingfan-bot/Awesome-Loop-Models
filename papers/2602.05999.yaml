@@ -23,10 +23,8 @@ desc: Formalizes compute-bounded RL policies and introduces a minimal variable-c
   longer-horizon generalization across 31 online and offline RL tasks.
 links:
   arxiv: https://arxiv.org/abs/2602.05999
-citations: 1
+citations: 0
 citation_sources:
-  semantic_scholar: 1
   openalex: 0
-  opencitations: 0
-citation_source_best: semantic_scholar
-metrics_updated: '2026-05-18'
+citation_source_best: openalex
+metrics_updated: '2026-06-16'

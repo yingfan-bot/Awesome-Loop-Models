@@ -5,7 +5,7 @@ year: 2025
 published_date: '2025-10-06'
 added_date: '2026-04-20'
 venue: arXiv
-category: "designs"
+category: designs
 mechanism_tags:
 - hierarchical-loop
 - flat-loop
@@ -25,6 +25,5 @@ links:
 citations: 4
 citation_sources:
   openalex: 4
-  opencitations: 0
 citation_source_best: openalex
-metrics_updated: '2026-04-21'
+metrics_updated: '2026-06-16'

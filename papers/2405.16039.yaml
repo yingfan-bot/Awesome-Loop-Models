@@ -30,10 +30,8 @@ desc: Introduces MoEUT, a mixture-of-experts Universal Transformer that combines
   compute and memory than comparable baselines.
 links:
   arxiv: https://arxiv.org/abs/2405.16039
-citations: 42
+citations: 1
 citation_sources:
-  semantic_scholar: 42
   openalex: 1
-  opencitations: 0
-citation_source_best: semantic_scholar
-metrics_updated: '2026-06-15'
+citation_source_best: openalex
+metrics_updated: '2026-06-16'

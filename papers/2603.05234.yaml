@@ -8,7 +8,7 @@ authors:
 year: 2026
 published_date: '2026-03-05'
 venue: arXiv
-category: "designs"
+category: designs
 mechanism_tags:
 - hierarchical-loop
 domain_tags:
@@ -19,7 +19,9 @@ tags:
 focus_tags:
 - architecture
 - inference-algorithm
-desc: Introduces Recursive Inference Machines, a recurrent reasoning framework that casts TRMs as a special case and improves ARC-AGI, Sudoku, and tabular classification by reweighting the history of loop states.
+desc: Introduces Recursive Inference Machines, a recurrent reasoning framework that
+  casts TRMs as a special case and improves ARC-AGI, Sudoku, and tabular classification
+  by reweighting the history of loop states.
 links:
   arxiv: https://arxiv.org/abs/2603.05234
   comment:
@@ -27,8 +29,6 @@ links:
     url: https://x.com/huskydogewoof/status/2033283214664515642?s=20
 citations: 0
 citation_sources:
-  semantic_scholar: 0
   openalex: 0
-  opencitations: 0
-citation_source_best: semantic_scholar
-metrics_updated: '2026-04-14'
+citation_source_best: openalex
+metrics_updated: '2026-06-16'
