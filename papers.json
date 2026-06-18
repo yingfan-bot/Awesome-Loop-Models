@@ -5,7 +5,7 @@
     "blog_total": 7,
     "briefing_total": 21,
     "latest_briefing_date": "2026-06-17",
-    "generated": "2026-06-18T04:42:45.918176+00:00",
+    "generated": "2026-06-18T16:50:50.077729+00:00",
     "generated_local_date": "2026-06-18",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -1194,9 +1194,9 @@
       },
       "citations": 82,
       "metrics_updated": "2026-06-18",
-      "github_stars": 575,
+      "github_stars": 576,
       "star_sources": {
-        "github_api": 575
+        "github_api": 576
       },
       "star_source_best": "github_api",
       "citation_sources": {
@@ -5366,11 +5366,12 @@
         "alphaxiv": "https://www.alphaxiv.org/abs/2606.18023"
       },
       "citations": 0,
-      "metrics_updated": "2026-06-17",
+      "metrics_updated": "2026-06-18",
       "citation_sources": {
+        "openalex": 0,
         "opencitations": 0
       },
-      "citation_source_best": "opencitations",
+      "citation_source_best": "openalex",
       "id": "2606.18023",
       "source_file": "2606.18023.yaml",
       "source_path": "papers/2606.18023.yaml",
@@ -5429,9 +5430,10 @@
       },
       "citations": 0,
       "citation_sources": {
+        "openalex": 0,
         "opencitations": 0
       },
-      "citation_source_best": "opencitations",
+      "citation_source_best": "openalex",
       "github_stars": 1,
       "star_sources": {
         "github_api": 1
@@ -5484,10 +5486,11 @@
       },
       "citations": 0,
       "citation_sources": {
+        "openalex": 0,
         "opencitations": 0
       },
-      "citation_source_best": "opencitations",
-      "metrics_updated": "2026-06-17",
+      "citation_source_best": "openalex",
+      "metrics_updated": "2026-06-18",
       "id": "2606.18208",
       "source_file": "2606.18208.yaml",
       "source_path": "papers/2606.18208.yaml",
@@ -5616,9 +5619,9 @@
         "github": "https://github.com/sapientinc/HRM-Text",
         "hf": "https://huggingface.co/sapientinc/HRM-Text-1B"
       },
-      "github_stars": 1430,
+      "github_stars": 1443,
       "star_sources": {
-        "github_api": 1430
+        "github_api": 1443
       },
       "star_source_best": "github_api",
       "metrics_updated": "2026-06-18",

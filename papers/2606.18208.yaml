@@ -55,6 +55,7 @@ links:
   alphaxiv: https://www.alphaxiv.org/abs/2606.18208
 citations: 0
 citation_sources:
+  openalex: 0
   opencitations: 0
-citation_source_best: opencitations
-metrics_updated: '2026-06-17'
+citation_source_best: openalex
+metrics_updated: '2026-06-18'
