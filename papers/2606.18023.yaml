@@ -1,0 +1,53 @@
+title: 'LoopCoder-v2: Only Loop Once for Efficient Test-Time Computation Scaling'
+authors:
+- Jian Yang
+- Shawn Guo
+- Wei Zhang
+- Tianyu Zheng
+- Yaxin Du
+- Haau-Sing Li
+- Jiajun Wu
+- Yue Song
+- Yan Xing
+- Qingsong Cai
+- Zelong Huang
+- Chuan Hao
+- Ran Tao
+- Xianglong Liu
+- Wayne Xin Zhao
+- Mingjie Tang
+- Weifeng Lv
+- Ming Zhou
+- Bryan Dai
+year: 2026
+published_date: '2026-06-16'
+added_date: '2026-06-17'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+- parallel-loop
+domain_tags:
+- language-modeling
+- reasoning
+- efficiency
+- memory-efficiency
+focus_tags:
+- architecture
+- inference-algorithm
+tags:
+- looped-transformer
+- test-time-compute
+- kv-cache-sharing
+desc: Studies loop-count selection in Parallel Loop Transformers by training LoopCoder-v2
+  coder models with shared looped blocks, finding that two loops give the main productive
+  refinement while additional loops regress under cross-loop positional mismatch.
+links:
+  arxiv: https://arxiv.org/abs/2606.18023
+  alphaxiv: https://www.alphaxiv.org/abs/2606.18023
+citations: 0
+metrics_updated: '2026-06-17'
+citation_sources:
+  opencitations: 0
+citation_source_best: opencitations
