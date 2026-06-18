@@ -1,11 +1,11 @@
 {
   "meta": {
-    "total": 109,
-    "paper_total": 102,
+    "total": 111,
+    "paper_total": 104,
     "blog_total": 7,
     "briefing_total": 21,
     "latest_briefing_date": "2026-06-17",
-    "generated": "2026-06-17T20:56:43.582256+00:00",
+    "generated": "2026-06-18T03:49:21.922265+00:00",
     "generated_local_date": "2026-06-17",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -5333,6 +5333,73 @@
       "arxiv_id": "2606.14498"
     },
     {
+      "title": "LoopCoder-v2: Only Loop Once for Efficient Test-Time Computation Scaling",
+      "authors": "Jian Yang, Shawn Guo, Wei Zhang, Tianyu Zheng, Yaxin Du, Haau-Sing Li, Jiajun Wu, Yue Song, Yan Xing, Qingsong Cai, Zelong Huang, Chuan Hao, Ran Tao, Xianglong Liu, Wayne Xin Zhao, Mingjie Tang, Weifeng Lv, Ming Zhou, Bryan Dai",
+      "year": 2026,
+      "published_date": "2026-06-16",
+      "added_date": "2026-06-17",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop",
+        "parallel-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "efficiency",
+        "memory-efficiency"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "tags": [
+        "looped-transformer",
+        "test-time-compute",
+        "kv-cache-sharing"
+      ],
+      "desc": "Studies loop-count selection in Parallel Loop Transformers by training LoopCoder-v2 coder models with shared looped blocks, finding that two loops give the main productive refinement while additional loops regress under cross-loop positional mismatch.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2606.18023",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2606.18023"
+      },
+      "citations": 0,
+      "metrics_updated": "2026-06-17",
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "id": "2606.18023",
+      "source_file": "2606.18023.yaml",
+      "source_path": "papers/2606.18023.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Jian Yang",
+        "Shawn Guo",
+        "Wei Zhang",
+        "Tianyu Zheng",
+        "Yaxin Du",
+        "Haau-Sing Li",
+        "Jiajun Wu",
+        "Yue Song",
+        "Yan Xing",
+        "Qingsong Cai",
+        "Zelong Huang",
+        "Chuan Hao",
+        "Ran Tao",
+        "Xianglong Liu",
+        "Wayne Xin Zhao",
+        "Mingjie Tang",
+        "Weifeng Lv",
+        "Ming Zhou",
+        "Bryan Dai"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2606.18023"
+    },
+    {
       "title": "Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers",
       "authors": "Sajad Movahedi, Vera Milovanović, Shlomo Libo Feigin, Alexander Theus, Thomas Hofmann, Valentina Boeva, T. Konstantin Rusch, Antonio Orvieto",
       "year": 2026,
@@ -5461,6 +5528,57 @@
       ],
       "venueClass": "venue-arxiv",
       "arxiv_id": "2606.18208"
+    },
+    {
+      "title": "On the Residual Scaling of Looped Transformers: Stability and Transferability",
+      "authors": "Shaowen Wang, Bingrui Li, Ge Zhang, Wenhao Huang, Shen Yan, Jian Li",
+      "year": 2026,
+      "published_date": "2026-06-16",
+      "added_date": "2026-06-17",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "theory",
+        "scaling"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm"
+      ],
+      "tags": [
+        "looped-transformer",
+        "depth-scaling"
+      ],
+      "desc": "Analyzes residual scaling in looped weight-tied Transformers, showing that correlated shared-block updates require stronger 1/N residual scaling across loop count and enable hyperparameter transfer from small to large recurrent depths.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2606.18524",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2606.18524"
+      },
+      "citations": 0,
+      "metrics_updated": "2026-06-17",
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "id": "2606.18524",
+      "source_file": "2606.18524.yaml",
+      "source_path": "papers/2606.18524.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Shaowen Wang",
+        "Bingrui Li",
+        "Ge Zhang",
+        "Wenhao Huang",
+        "Shen Yan",
+        "Jian Li"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2606.18524"
     },
     {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
@@ -5879,9 +5997,11 @@
       "date": "2026-06-17",
       "title": "Daily Loop-Model Briefing — 2026-06-17",
       "status": "added",
-      "summary": "Fixed-Point Reasoners was added as a high-confidence looped Transformer design paper, and the Equilibrium Reasoners entry was updated with its announcement thread.",
+      "summary": "Fixed-Point Reasoners, residual-scaling analysis for looped Transformers, and LoopCoder-v2 were added; Equilibrium Reasoners was updated with its announcement thread.",
       "highlights": [
         "Fixed-Point Reasoners turns convergence of a looped Transformer block into an end-to-end adaptive halting signal.",
+        "Residual-scaling analysis explains why looped weight-tied Transformers need stronger 1/N scaling across recurrent depth.",
+        "LoopCoder-v2 studies practical loop-count selection for Parallel Loop Transformers in code generation.",
         "Equilibrium Reasoners now includes Benhao Huang's announcement thread as a reader-facing community comment."
       ],
       "candidates": [
@@ -5892,13 +6012,25 @@
           "url": "https://arxiv.org/abs/2606.18206"
         },
         {
+          "id": "2606.18524",
+          "title": "On the Residual Scaling of Looped Transformers: Stability and Transferability",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2606.18524"
+        },
+        {
+          "id": "2606.18023",
+          "title": "LoopCoder-v2: Only Loop Once for Efficient Test-Time Computation Scaling",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2606.18023"
+        },
+        {
           "id": "2605.21488",
           "title": "Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning",
           "verdict": "updated links",
           "url": "https://arxiv.org/abs/2605.21488"
         }
       ],
-      "content": "# Daily Loop-Model Briefing — 2026-06-17\n\n## Outcome\n\nOne high-confidence paper was added to the collection, and one existing entry was updated with a reader-facing announcement thread. The new addition is **Fixed-Point Reasoners** (`2606.18206`), a looped Transformer design paper that makes convergence itself the adaptive halting signal.\n\n## Added to the collection\n\n### Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers\n\nFixed-Point Reasoners addresses a core problem for looped reasoning models: increasing effective depth can improve compositional reasoning, but long recurrent unrolls can destabilize signal propagation and make halting difficult. The paper proposes FPRM, a Transformer-based Fixed-Point Reasoning Model, using pre-norm layers and residual scaling to support stable looped computation.\n\nWhy it was added: the abstract explicitly describes a looped architecture and uses fixed-point convergence as an end-to-end halting mechanism. This is same-forward reuse of a learned Transformer reasoning block, not repeated full-model calls or generic iterative prompting.\n\nMain reader takeaway: FPRM treats test-time compute as an adaptive loop depth selected by convergence. The paper reports effectiveness on Sudoku, Maze, state-tracking, and ARC-AGI benchmarks, making it a direct architecture/design addition for looped reasoning.\n\n## Updated links\n\n### Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning\n\nThe existing Equilibrium Reasoners entry now links Benhao Huang's announcement thread. This helps readers connect the paper's core idea, task-conditioned neural attractors, with the author's short public summary and headline benchmark claims.",
+      "content": "# Daily Loop-Model Briefing — 2026-06-17\n\n## Outcome\n\nThree high-confidence papers were added to the collection, and one existing entry was updated with a reader-facing announcement thread. The additions strengthen today's looped-Transformer coverage from three angles: adaptive fixed-point halting, residual-scaling theory, and practical loop-count selection for large coder models.\n\n## Added to the collection\n\n### Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers\n\nFixed-Point Reasoners addresses a core problem for looped reasoning models: increasing effective depth can improve compositional reasoning, but long recurrent unrolls can destabilize signal propagation and make halting difficult. The paper proposes FPRM, a Transformer-based Fixed-Point Reasoning Model, using pre-norm layers and residual scaling to support stable looped computation.\n\nWhy it was added: the abstract explicitly describes a looped architecture and uses fixed-point convergence as an end-to-end halting mechanism. This is same-forward reuse of a learned Transformer reasoning block, not repeated full-model calls or generic iterative prompting.\n\nMain reader takeaway: FPRM treats test-time compute as an adaptive loop depth selected by convergence. The paper reports effectiveness on Sudoku, Maze, state-tracking, and ARC-AGI benchmarks, making it a direct architecture/design addition for looped reasoning.\n\n### On the Residual Scaling of Looped Transformers: Stability and Transferability\n\nThis analysis paper studies a basic stability issue in looped weight-tied Transformers. Ordinary residual-depth scaling is not enough when the same residual block is reused many times, because updates are correlated across loop iterations. The paper derives stronger loop-aware scaling, including a factored parameterization for multi-layer blocks.\n\nWhy it was added: the abstract explicitly defines looped Transformers as applying the same residual block repeatedly, then analyzes the consequences of that weight sharing. This is directly about the mechanics of same-forward reused learned blocks.\n\nMain reader takeaway: the proposed 1/N loop scaling gives a practical recipe for stabilizing larger recurrent depths and transferring hyperparameters from smaller loop counts without retuning.\n\n### LoopCoder-v2: Only Loop Once for Efficient Test-Time Computation Scaling\n\nLoopCoder-v2 studies Parallel Loop Transformers for code generation. It trains 7B coder models with different loop counts and analyzes the trade-off between extra latent refinement and the positional mismatch introduced across loop boundaries.\n\nWhy it was added: the paper is explicitly about looped Transformers that repeatedly apply shared blocks, with Parallel Loop Transformers making the loop count a central architectural and test-time compute choice.\n\nMain reader takeaway: more looping is not automatically better. The two-loop variant delivers the main productive refinement, while three or more loops regress, giving the collection a useful large-model counterpoint to papers that treat additional loop depth as monotonic scaling.\n\n## Updated links\n\n### Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning\n\nThe existing Equilibrium Reasoners entry now links Benhao Huang's announcement thread. This helps readers connect the paper's core idea, task-conditioned neural attractors, with the author's short public summary and headline benchmark claims.\n\n## Checked but not added\n\n- **Ghost Attractor Networks** (`2606.18315`) uses learned attractor dynamics for closed-loop sequential generation, but the abstract does not make same-forward reuse of a learned layer, block, module, or operator the central architectural mechanism.\n- **Starter-Iterator Neural Operator** (`2606.18305`) is adjacent because it borrows iterative-method structure for operator learning, but the abstract does not clearly identify a reused learned internal operator as the fixed computation loop.\n- **Root-Selecting Fixed-Point Inversion for Rectified Flows** (`2606.17584`) is a fixed-point inversion method for rectified flows; it is an inference/inversion procedure rather than a looped learned model architecture under the repo's strict scope.",
       "source_path": "briefings/2026/06/2026-06-17.md"
     },
     {
