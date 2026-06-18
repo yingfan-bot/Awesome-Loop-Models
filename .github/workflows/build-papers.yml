@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
 
 jobs:
@@ -165,6 +166,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add papers
-          git add -f papers.json README.md TAGS.md
+          git add -f papers.json README.md TAGS.md assets/cumulative-papers-by-added-date.svg
           git diff --cached --quiet || git commit -m "chore: update metrics and generated artifacts [skip ci]"
           git push
