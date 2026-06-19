@@ -1,11 +1,11 @@
 {
   "meta": {
-    "total": 111,
-    "paper_total": 104,
+    "total": 112,
+    "paper_total": 105,
     "blog_total": 7,
-    "briefing_total": 21,
-    "latest_briefing_date": "2026-06-17",
-    "generated": "2026-06-18T16:50:50.077729+00:00",
+    "briefing_total": 22,
+    "latest_briefing_date": "2026-06-18",
+    "generated": "2026-06-19T05:53:06.009257+00:00",
     "generated_local_date": "2026-06-18",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -5584,6 +5584,49 @@
       "arxiv_id": "2606.18524"
     },
     {
+      "title": "Recurrent neural networks approximate continuous functions",
+      "authors": "Valentin Abadie, Clemens Hutter, Helmut Bölcskei",
+      "year": 2026,
+      "published_date": "2026-06-18",
+      "added_date": "2026-06-18",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "theory",
+        "algorithmic-reasoning"
+      ],
+      "focus_tags": [
+        "inference-algorithm"
+      ],
+      "desc": "Proves that a single fixed-weight ReLU recurrent neural network with fixed hidden dimension can approximate any continuous function by running its shared recurrent dynamics longer, with runtime becoming the resource that improves accuracy.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2606.20325",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2606.20325"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "metrics_updated": "2026-06-19",
+      "id": "2606.20325",
+      "source_file": "2606.20325.yaml",
+      "source_path": "papers/2606.20325.yaml",
+      "entry_type": "paper",
+      "tags": [],
+      "authors_list": [
+        "Valentin Abadie",
+        "Clemens Hutter",
+        "Helmut Bölcskei"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2606.20325"
+    },
+    {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
       "authors": "Guan Wang, Changling Liu, Chenyu Wang, Cai Zhou, Yuhao Sun, Yifei Wu, Shuai Zhen, Luca Scimeca, Yasin Abbasi Yadkori",
       "year": 2026,
@@ -5996,6 +6039,16 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-06-18",
+      "title": "Daily Loop-Model Watch — 2026-06-18",
+      "status": "ok",
+      "summary": "",
+      "highlights": [],
+      "candidates": [],
+      "content": "# Daily Loop-Model Briefing — 2026-06-18\n\n## Outcome\n\nOne paper was added to the collection. It is a theory-forward recurrent-computation paper rather than a new Transformer architecture: the contribution is an approximation theorem showing that a fixed recurrent network can trade more runtime for more accuracy.\n\n## Added to the collection\n\n### Recurrent neural networks approximate continuous functions\n\nThis paper asks whether improving approximation accuracy always requires choosing a larger or newly parameterized neural network. Its answer is no: for every continuous function on `[-1,1]`, the authors prove that one fixed ReLU recurrent neural network with fixed hidden dimension can approximate the function uniformly, with better accuracy obtained by letting the same recurrent dynamics run longer.\n\nWhy it was added: the central object is a shared recurrent transition reused over time. The paper is not about repeated prompting, external agent loops, or autoregressive decoding; it treats the repeated application of one fixed-weight recurrent network as the computational resource. That makes it a theory-side flat-loop entry for the collection.\n\nMain reader takeaway: the result frames runtime as an unavoidable approximation resource in a fixed-network setting. This complements looped-transformer and recurrent-depth work by giving a clean theoretical example where repeated shared computation, rather than additional parameters, buys accuracy.\n\n## Checked but not added\n\n- **Learning to Refine Hidden States for Reliable LLM Reasoning** (`2606.17524`) is adjacent latent-refinement work, but the abstract does not clearly identify a reused learned internal layer, block, module, or operator as the central mechanism.\n- **What Makes Effective Supervision in Latent Chain-of-Thought: An Information-Theoretic Analysis** (`2606.20075`) analyzes latent reasoning supervision and mutual-information probes, but it is not a new looped or implicit-layer architecture intake.\n- **Probe-and-Refine Tuning of Repository Guidance for Coding Agents** (`2606.20512`) studies an external repository-guidance tuning loop for coding agents, so it is outside the same-forward internal loop-model scope.\n",
+      "source_path": "briefings/2026/06/2026-06-18.md"
+    },
     {
       "date": "2026-06-17",
       "title": "Daily Loop-Model Briefing — 2026-06-17",
