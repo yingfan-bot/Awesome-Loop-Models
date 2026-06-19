@@ -1,0 +1,29 @@
+title: Recurrent neural networks approximate continuous functions
+authors:
+- Valentin Abadie
+- Clemens Hutter
+- Helmut Bölcskei
+year: 2026
+published_date: '2026-06-18'
+added_date: '2026-06-18'
+venue: arXiv
+category: analysis
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- theory
+- algorithmic-reasoning
+focus_tags:
+- inference-algorithm
+desc: Proves that a single fixed-weight ReLU recurrent neural network with fixed hidden
+  dimension can approximate any continuous function by running its shared recurrent
+  dynamics longer, with runtime becoming the resource that improves accuracy.
+links:
+  arxiv: https://arxiv.org/abs/2606.20325
+  alphaxiv: https://www.alphaxiv.org/abs/2606.20325
+citations: 0
+citation_sources:
+  opencitations: 0
+citation_source_best: opencitations
+metrics_updated: '2026-06-19'
