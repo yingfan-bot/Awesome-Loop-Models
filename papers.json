@@ -3,10 +3,10 @@
     "total": 112,
     "paper_total": 105,
     "blog_total": 7,
-    "briefing_total": 22,
-    "latest_briefing_date": "2026-06-18",
-    "generated": "2026-06-19T07:03:44.786800+00:00",
-    "generated_local_date": "2026-06-19",
+    "briefing_total": 23,
+    "latest_briefing_date": "2026-06-21",
+    "generated": "2026-06-22T03:20:09.995366+00:00",
+    "generated_local_date": "2026-06-21",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -6039,6 +6039,39 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-06-21",
+      "title": "Daily Loop-Model Briefing — 2026-06-21",
+      "status": "watchlist",
+      "summary": "No new high-confidence loop-model paper was added; the strongest fresh signals were latent-CoT supervision, diffusion-reasoning transparency, and coding-agent guidance loops, all outside the strict reused-module boundary.",
+      "highlights": [
+        "Latent-CoT supervision work is relevant to hidden-state reasoning, but it studies supervision and information retention rather than a reused learned block.",
+        "DiffusionGemma transparency is useful context for latent computation, but diffusion denoising remains outside the collection's loop-model scope.",
+        "Probe-and-refine guidance tuning is an external coding-agent workflow, not same-forward model recurrence."
+      ],
+      "candidates": [
+        {
+          "id": "2606.20075",
+          "title": "What Makes Effective Supervision in Latent Chain-of-Thought: An Information-Theoretic Analysis",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.20075"
+        },
+        {
+          "id": "2606.20560",
+          "title": "How Transparent is DiffusionGemma?",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.20560"
+        },
+        {
+          "id": "2606.20512",
+          "title": "Probe-and-Refine Tuning of Repository Guidance for Coding Agents",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.20512"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing — 2026-06-21\n\n## Outcome\n\nNo new paper was added to the main collection today. The newest arXiv batch surfaced useful adjacent work on latent reasoning, diffusion-model transparency, and coding-agent guidance, but none crossed the repository's strict boundary: within one model forward process, a learned layer, block, module, or operator should be reused as the central computation.\n\n## Strongest watchlist signal\n\n### What Makes Effective Supervision in Latent Chain-of-Thought\n\nThis paper analyzes why latent Chain-of-Thought training can drift when only outcome supervision is available. It separates supervision into trajectory signals and latent-space structure, then introduces a probe for measuring how much information latent trajectories retain about explicit reasoning steps.\n\nWhy it was not added: the paper is about supervising and measuring latent reasoning traces. The abstract does not identify a looped, weight-tied, recurrent-depth, or fixed-point architecture that reuses a learned internal operator within a single forward process. It is good context for latent reasoning evaluation, not a conservative loop-model intake.\n\n## Other near-misses\n\n### How Transparent is DiffusionGemma?\n\nDiffusionGemma is relevant because it studies reasoning transparency when computation happens across denoising steps in continuous latent space. The paper asks whether intermediate denoising states can be made interpretable and reports that token-bottleneck mappings can reduce opaque serial depth without hurting downstream performance.\n\nWhy it was not added: the loop is diffusion denoising, where the model changes token predictions over sampling steps. The repo explicitly excludes diffusion or energy-style iterative inference unless the paper's central contribution is a reused learned internal loop-model operator.\n\n### Probe-and-Refine Tuning of Repository Guidance for Coding Agents\n\nThis paper tunes repository guidance files by running synthetic bug-fix probes and patching the guidance from the observed failures. It is practical context for agent workflows and instruction quality.\n\nWhy it was not added: the refinement happens outside the model as a coding-agent or prompt-guidance workflow. It is not a model architecture with same-forward reuse of a learned layer, block, module, or operator.",
+      "source_path": "briefings/2026/06/2026-06-21.md"
+    },
     {
       "date": "2026-06-18",
       "title": "Daily Loop-Model Watch — 2026-06-18",
