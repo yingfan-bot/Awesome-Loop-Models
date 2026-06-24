@@ -1,11 +1,11 @@
 {
   "meta": {
-    "total": 112,
-    "paper_total": 105,
+    "total": 113,
+    "paper_total": 106,
     "blog_total": 7,
-    "briefing_total": 24,
-    "latest_briefing_date": "2026-06-22",
-    "generated": "2026-06-23T03:27:57.823016+00:00",
+    "briefing_total": 25,
+    "latest_briefing_date": "2026-06-23",
+    "generated": "2026-06-24T03:20:49.563882+00:00",
     "generated_local_date": "2026-06-23",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -5629,6 +5629,52 @@
       "arxiv_id": "2606.20325"
     },
     {
+      "title": "Adaptive Recurrent Message Passing for Test Time Computing on Graphs",
+      "authors": "Junshu Sun, Wanxing Chang, Qingming Huang, Shuhui Wang",
+      "year": 2026,
+      "published_date": "2026-06-21",
+      "added_date": "2026-06-23",
+      "venue": "arXiv",
+      "category": "applications",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "graph-data",
+        "efficiency"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm",
+        "training-algorithm"
+      ],
+      "desc": "Introduces AdaR, an adaptive recurrent graph model that repeatedly applies learned recurrent message-passing updates with step conditioning, enabling flexible test-time compute on graph tasks without changing model parameters.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2606.22462",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2606.22462"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "opencitations": 0
+      },
+      "citation_source_best": "opencitations",
+      "metrics_updated": "2026-06-24",
+      "id": "2606.22462",
+      "source_file": "2606.22462.yaml",
+      "source_path": "papers/2606.22462.yaml",
+      "entry_type": "paper",
+      "tags": [],
+      "authors_list": [
+        "Junshu Sun",
+        "Wanxing Chang",
+        "Qingming Huang",
+        "Shuhui Wang"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2606.22462"
+    },
+    {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
       "authors": "Guan Wang, Changling Liu, Chenyu Wang, Cai Zhou, Yuhao Sun, Yifei Wu, Shuai Zhen, Luca Scimeca, Yasin Abbasi Yadkori",
       "year": 2026,
@@ -6041,6 +6087,51 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-06-23",
+      "title": "Daily Loop-Model Briefing - 2026-06-23",
+      "status": "added",
+      "summary": "One recurrent graph-model paper was added; the strongest near-misses used attractor-style output sampling, implicit memory retrieval, or single-pass latent planning rather than a reused internal loop.",
+      "highlights": [
+        "AdaR turns recurrent graph message passing into a test-time compute axis without changing model parameters.",
+        "Attractor-style reasoning and Gibbs-weighted path sampling are adjacent, but the loop is over sampled reasoning trajectories.",
+        "New implicit-memory and implicit-visual-CoT papers remain outside scope because they do not center a reused learned layer, block, module, or fixed-point operator."
+      ],
+      "candidates": [
+        {
+          "id": "2606.22462",
+          "title": "Adaptive Recurrent Message Passing for Test Time Computing on Graphs",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2606.22462"
+        },
+        {
+          "id": "2606.24543",
+          "title": "Reasoning as Attractor Dynamics: Latent Memory Retrieval via Gibbs-Weighted Energy Minimization",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.24543"
+        },
+        {
+          "id": "2606.21562",
+          "title": "Compressing Observation History into Agent Memory: Distilling Transformers into Recurrent Transformers",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.21562"
+        },
+        {
+          "id": "2606.23105",
+          "title": "Compression and Retrieval: Implicit Memory Retrieval for Video World Models",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.23105"
+        },
+        {
+          "id": "2606.24849",
+          "title": "IV-CoT: Implicit Visual Chain-of-Thought for Structure-Aware Text-to-Image Generation",
+          "verdict": "near-miss",
+          "url": "https://arxiv.org/abs/2606.24849"
+        }
+      ],
+      "content": "# Daily Loop-Model Briefing - 2026-06-23\n\n## Outcome\n\nOne paper was added to the collection. It is not a language-model looped Transformer, but it fits the same strict computational pattern: a learned recurrent update is applied repeatedly inside one model process, and the number of recurrence steps becomes a test-time compute knob.\n\n## Added to the collection\n\n### Adaptive Recurrent Message Passing for Test Time Computing on Graphs\n\nAdaR targets graph learning, where fixed-depth architectures can be too rigid across different graph tasks. The paper derives step dependence as the condition needed for adaptive convergence, then builds a recurrent graph model whose updates encode normalized step information and representation-target relations.\n\nWhy it was added: the central mechanism is recurrent learned message passing. AdaR runs repeated internal representation updates without changing model parameters, making recurrence depth a flexible test-time compute axis rather than an external agent loop or repeated full-model call.\n\nMain reader takeaway: this is a graph-domain example of loop-model compute scaling. The interesting part for this collection is the explicit recurrent update design and convergence supervision, not just better graph benchmark numbers.\n\n## Checked but not added\n\n- **Reasoning as Attractor Dynamics: Latent Memory Retrieval via Gibbs-Weighted Energy Minimization** (`2606.24543`) frames LLM reasoning as settling into attractor basins, but the operational mechanism samples multiple output reasoning paths and reweights them by an energy score. That is adjacent inference-time aggregation, not a reused learned internal module.\n- **Compressing Observation History into Agent Memory: Distilling Transformers into Recurrent Transformers** (`2606.21562`) is useful recurrent-memory work for streaming vision and robotics, but the abstract emphasizes sequence-memory compression over time rather than recurrent-depth reuse within one forward process.\n- **Compression and Retrieval: Implicit Memory Retrieval for Video World Models** (`2606.23105`) adds attention-driven implicit memory retrieval plus context compression for video world models. Retrieval over compressed context is not enough by itself to meet the strict loop-model criterion.\n- **IV-CoT: Implicit Visual Chain-of-Thought for Structure-Aware Text-to-Image Generation** (`2606.24849`) performs latent visual planning in a single forward pass, but the abstract does not identify a reused internal learned block or fixed-point computation.",
+      "source_path": "briefings/2026/06/2026-06-23.md"
+    },
     {
       "date": "2026-06-22",
       "title": "Daily Loop-Model Briefing - 2026-06-22",
