@@ -27,6 +27,7 @@ links:
   alphaxiv: https://www.alphaxiv.org/abs/2606.22462
 citations: 0
 citation_sources:
+  openalex: 0
   opencitations: 0
-citation_source_best: opencitations
-metrics_updated: '2026-06-24'
+citation_source_best: openalex
+metrics_updated: '2026-06-25'
