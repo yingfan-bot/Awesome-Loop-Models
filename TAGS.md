@@ -18,7 +18,7 @@ This file is auto-generated from `papers/*.yaml` and `blogs/*.yaml` by `scripts/
 Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, `flat-loop`, `parallel-loop`, or `implicit-layer`.
 
 - `hierarchical-loop` (19)
-- `flat-loop` (93)
+- `flat-loop` (94)
 - `parallel-loop` (6)
 - `implicit-layer` (17)
 
@@ -27,10 +27,10 @@ Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, 
 Controlled vocabulary. The build validates these values, and the interactive browser uses them as filter chips.
 
 - `objective-loss` (7)
-- `training-algorithm` (50)
+- `training-algorithm` (51)
 - `architecture` (99)
 - `data` (3)
-- `inference-algorithm` (77)
+- `inference-algorithm` (78)
 
 ## domain_tags
 
@@ -39,16 +39,16 @@ Observed browser-facing domain tags currently used across the repo.
 - `reasoning` (62)
 - `language-modeling` (61)
 - `efficiency` (50)
-- `algorithmic-reasoning` (25)
-- `scaling` (21)
+- `algorithmic-reasoning` (26)
+- `scaling` (22)
 - `theory` (14)
 - `vision` (9)
 - `memory-efficiency` (5)
 - `sequence-modeling` (5)
 - `MoE` (4)
+- `adaptive-compute` (2)
 - `RL` (2)
 - `robotics-vla` (2)
-- `adaptive-compute` (1)
 - `alignment` (1)
 - `compositional-reasoning` (1)
 - `FLOPs-efficiency` (1)
@@ -63,15 +63,15 @@ Observed browser-facing domain tags currently used across the repo.
 
 Observed alias tags currently used across the repo. These do not appear as browser filter chips, but contributors should still prefer existing spellings.
 
-- `looped-transformer` (26)
+- `looped-transformer` (27)
 - `ACT` (7)
 - `DEQ` (7)
 - `TRM` (7)
 - `HRM` (6)
 - `looped-llm` (6)
+- `depth-scaling` (5)
 - `recursive-transformer` (5)
 - `shared-weight-recurrence` (5)
-- `depth-scaling` (4)
 - `Ouro` (4)
 - `UT` (4)
 - `convergence` (3)
