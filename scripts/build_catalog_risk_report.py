@@ -35,7 +35,7 @@ UNSAFE_FINDING_CODES = frozenset(
 COMMIT_RE = re.compile(r"[0-9a-fA-F]{40}")
 GENERATOR_METADATA = {
     "path": "scripts/build_catalog_risk_report.py",
-    "version": 1,
+    "version": 2,
 }
 
 
@@ -207,7 +207,10 @@ def build_catalog_risk_report(
         for field in ("domain_tags", "tags")
         for tag in _string_tags(record, field)
     )
-    seeds = frozenset(manual_scope_review_seeds)
+    canonical_ids = frozenset(path.stem for path, _ in records)
+    seeds = frozenset(
+        paper_id for paper_id in manual_scope_review_seeds if paper_id in canonical_ids
+    )
     batches = {priority: [] for priority in PRIORITIES}
     rows = []
     for path, record in records:

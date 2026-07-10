@@ -2,14 +2,14 @@
   "schema_version": 1,
   "generator": {
     "path": "scripts/build_catalog_risk_report.py",
-    "version": 1
+    "version": 2
   },
   "generated_on": "2026-07-10",
-  "catalog_commit": "6b460f1cbd8d033fe0d356b9125bc40b18d1083f",
-  "paper_count": 112,
+  "catalog_commit": "82086af08e53421c3cb92b97e0b9d1acf40c2b4a",
+  "paper_count": 109,
   "finding_counts": {
-    "error": 2,
-    "warning": 6
+    "error": 0,
+    "warning": 8
   },
   "auditor_findings": [
     {
@@ -27,18 +27,11 @@
       "message": "year is 2019 but published_date starts with 2018."
     },
     {
-      "severity": "error",
-      "code": "missing-field",
-      "source": "papers/1909.01377.yaml",
-      "field": "domain_tags",
-      "message": "Required field is missing."
-    },
-    {
-      "severity": "error",
-      "code": "arxiv-id-mismatch",
-      "source": "papers/1909.01377.yaml",
-      "field": "links.arxiv",
-      "message": "Filename encodes arXiv ID 1909.01377, but links.arxiv is missing."
+      "severity": "warning",
+      "code": "year-date-mismatch",
+      "source": "papers/2310.10845.yaml",
+      "field": "year",
+      "message": "year is 2025 but published_date starts with 2023."
     },
     {
       "severity": "warning",
@@ -50,23 +43,30 @@
     {
       "severity": "warning",
       "code": "year-date-mismatch",
+      "source": "papers/2402.13572.yaml",
+      "field": "year",
+      "message": "year is 2025 but published_date starts with 2024."
+    },
+    {
+      "severity": "warning",
+      "code": "year-date-mismatch",
+      "source": "papers/2410.01405.yaml",
+      "field": "year",
+      "message": "year is 2025 but published_date starts with 2024."
+    },
+    {
+      "severity": "warning",
+      "code": "year-date-mismatch",
       "source": "papers/2410.20672.yaml",
       "field": "year",
       "message": "year is 2025 but published_date starts with 2024."
     },
     {
       "severity": "warning",
-      "code": "desc-multiple-sentences",
-      "source": "papers/2510.25741.yaml",
-      "field": "desc",
-      "message": "Description appears to contain more than one sentence."
-    },
-    {
-      "severity": "warning",
-      "code": "desc-multiple-sentences",
-      "source": "papers/2602.11451.yaml",
-      "field": "desc",
-      "message": "Description appears to contain more than one sentence."
+      "code": "year-date-mismatch",
+      "source": "papers/2511.08577.yaml",
+      "field": "year",
+      "message": "year is 2026 but published_date starts with 2025."
     }
   ],
   "priority_rules": {
@@ -75,62 +75,50 @@
     "P2": "Paper is not P0 or P1 and either has an auditor warning or uses a domain_tags or tags value whose exact full-catalog frequency is one.",
     "P3": "Paper does not match P0, P1, or P2.",
     "manual_scope_review_seeds": [
-      "2510.03206",
       "2601.21582",
       "2604.27981",
-      "2605.17811",
-      "2606.20325"
+      "2605.17811"
     ],
-    "singleton_frequency": "Exact, case-sensitive tag values counted in one combined domain_tags plus tags frequency table across all 112 canonical paper records.",
+    "singleton_frequency": "Exact, case-sensitive tag values counted in one combined domain_tags plus tags frequency table across all 109 canonical paper records.",
     "reason_order": "Reasons are unique and sorted lexicographically."
   },
   "batches": {
-    "P0": [
-      "1909.01377"
-    ],
+    "P0": [],
     "P1": [
-      "2006.08656",
-      "2405.16039",
       "2506.21734",
-      "2510.03206",
-      "2510.04871",
       "2510.24824",
       "2601.21582",
       "2603.08082",
-      "2604.07822",
       "2604.14442",
-      "2604.15259",
       "2604.27981",
       "2605.07277",
       "2605.12466",
       "2605.17811",
       "2605.19376",
-      "2605.19943",
+      "2605.20613",
       "2605.20784",
       "2605.21488",
       "2606.18023",
-      "2606.18206",
-      "2606.20325",
-      "2606.31779",
-      "hrm-text"
+      "2606.18206"
     ],
     "P2": [
       "1511.08228",
       "1807.03819",
+      "2006.08656",
       "2111.05177",
       "2209.11142",
       "2301.13196",
       "2310.10845",
       "2311.12424",
       "2402.13572",
+      "2405.16039",
       "2410.01405",
       "2410.20672",
-      "2502.05171",
       "2502.07827",
       "2502.17416",
       "2507.02199",
       "2507.07996",
-      "2510.25741",
+      "2507.10524",
       "2511.08577",
       "2512.14693",
       "2602.05999",
@@ -146,64 +134,70 @@
       "2603.08391",
       "2603.19714",
       "2603.21676",
+      "2604.07822",
       "2604.09168",
       "2604.09870",
       "2604.11279",
       "2604.12946",
-      "2604.17224",
+      "2604.15259",
+      "2604.18839",
       "2604.21106",
       "2604.21254",
       "2604.21999",
       "2604.25551",
       "2605.06510",
       "2605.07721",
+      "2605.09226",
       "2605.11011",
+      "2605.18464",
       "2605.18797",
+      "2605.19705",
+      "2605.19943",
+      "2605.20389",
       "2605.23872",
       "2605.26106",
       "2605.26733",
+      "2605.30215",
+      "2605.31215",
+      "2606.01495",
+      "2606.03287",
+      "2606.04438",
       "2606.04678",
+      "2606.06245",
+      "2606.06574",
+      "2606.14498",
       "2606.18208",
       "2606.22462",
       "2606.26488",
+      "2606.31779",
+      "2606.31796",
+      "2607.00341",
+      "2607.02491",
       "openreview-chaingpt",
       "openreview-modr"
     ],
     "P3": [
       "1603.08983",
-      "2507.10524",
+      "1909.01377",
+      "2502.05171",
       "2509.23314",
+      "2510.04871",
+      "2510.25741",
       "2511.07384",
-      "2602.05970",
       "2604.11791",
-      "2604.18839",
+      "2604.17224",
       "2605.06609",
       "2605.09165",
-      "2605.09226",
       "2605.12578",
       "2605.16048",
-      "2605.18464",
-      "2605.19705",
-      "2605.20389",
       "2605.20670",
       "2605.28919",
-      "2605.30215",
       "2605.30757",
-      "2605.31215",
       "2606.00114",
       "2606.00605",
-      "2606.01495",
-      "2606.03287",
       "2606.03741",
-      "2606.04438",
-      "2606.06245",
-      "2606.06574",
-      "2606.14498",
       "2606.18524",
-      "2606.29983",
-      "2606.31796",
-      "2607.00341",
-      "2607.02491"
+      "2606.29983"
     ]
   },
   "papers": [
@@ -233,18 +227,14 @@
     {
       "paper_id": "1909.01377",
       "source_path": "papers/1909.01377.yaml",
-      "priority": "P0",
-      "reasons": [
-        "auditor:arxiv-id-mismatch",
-        "auditor:missing-field"
-      ]
+      "priority": "P3",
+      "reasons": []
     },
     {
       "paper_id": "2006.08656",
       "source_path": "papers/2006.08656.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
         "singleton-alias-tag:MDEQ"
       ]
     },
@@ -277,6 +267,7 @@
       "source_path": "papers/2310.10845.yaml",
       "priority": "P2",
       "reasons": [
+        "auditor:year-date-mismatch",
         "singleton-alias-tag:CoTFormer"
       ]
     },
@@ -293,15 +284,15 @@
       "source_path": "papers/2402.13572.yaml",
       "priority": "P2",
       "reasons": [
+        "auditor:year-date-mismatch",
         "singleton-alias-tag:AlgoFormer"
       ]
     },
     {
       "paper_id": "2405.16039",
       "source_path": "papers/2405.16039.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
         "singleton-alias-tag:MoEUT"
       ]
     },
@@ -310,6 +301,8 @@
       "source_path": "papers/2410.01405.yaml",
       "priority": "P2",
       "reasons": [
+        "auditor:year-date-mismatch",
+        "singleton-alias-tag:TMLT",
         "singleton-alias-tag:timestep-encoding"
       ]
     },
@@ -324,10 +317,8 @@
     {
       "paper_id": "2502.05171",
       "source_path": "papers/2502.05171.yaml",
-      "priority": "P2",
-      "reasons": [
-        "singleton-alias-tag:Huginn"
-      ]
+      "priority": "P3",
+      "reasons": []
     },
     {
       "paper_id": "2502.07827",
@@ -372,8 +363,10 @@
     {
       "paper_id": "2507.10524",
       "source_path": "papers/2507.10524.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:MoR"
+      ]
     },
     {
       "paper_id": "2509.23314",
@@ -382,20 +375,10 @@
       "reasons": []
     },
     {
-      "paper_id": "2510.03206",
-      "source_path": "papers/2510.03206.yaml",
-      "priority": "P1",
-      "reasons": [
-        "manual-scope-review-seed"
-      ]
-    },
-    {
       "paper_id": "2510.04871",
       "source_path": "papers/2510.04871.yaml",
-      "priority": "P1",
-      "reasons": [
-        "multiple-mechanism-tags"
-      ]
+      "priority": "P3",
+      "reasons": []
     },
     {
       "paper_id": "2510.24824",
@@ -408,10 +391,8 @@
     {
       "paper_id": "2510.25741",
       "source_path": "papers/2510.25741.yaml",
-      "priority": "P2",
-      "reasons": [
-        "auditor:desc-multiple-sentences"
-      ]
+      "priority": "P3",
+      "reasons": []
     },
     {
       "paper_id": "2511.07384",
@@ -424,8 +405,10 @@
       "source_path": "papers/2511.08577.yaml",
       "priority": "P2",
       "reasons": [
+        "auditor:year-date-mismatch",
         "singleton-alias-tag:TaH",
-        "singleton-alias-tag:Think-at-Hard"
+        "singleton-alias-tag:Think-at-Hard",
+        "singleton-alias-tag:adaptive-latent-iteration"
       ]
     },
     {
@@ -442,21 +425,15 @@
       "priority": "P1",
       "reasons": [
         "manual-scope-review-seed",
-        "multiple-mechanism-tags",
-        "singleton-alias-tag:attention-mixture"
+        "singleton-alias-tag:Dreamer"
       ]
-    },
-    {
-      "paper_id": "2602.05970",
-      "source_path": "papers/2602.05970.yaml",
-      "priority": "P3",
-      "reasons": []
     },
     {
       "paper_id": "2602.05999",
       "source_path": "papers/2602.05999.yaml",
       "priority": "P2",
       "reasons": [
+        "singleton-alias-tag:IRU",
         "singleton-alias-tag:compute-bounded-policy",
         "singleton-domain-tag:rl-control"
       ]
@@ -483,7 +460,7 @@
       "priority": "P2",
       "reasons": [
         "singleton-alias-tag:RecursiveVLM",
-        "singleton-alias-tag:multimodal"
+        "singleton-domain-tag:multimodal"
       ]
     },
     {
@@ -499,7 +476,6 @@
       "source_path": "papers/2602.11451.yaml",
       "priority": "P2",
       "reasons": [
-        "auditor:desc-multiple-sentences",
         "singleton-alias-tag:LoopFormer"
       ]
     },
@@ -557,7 +533,8 @@
       "source_path": "papers/2603.19714.yaml",
       "priority": "P2",
       "reasons": [
-        "singleton-alias-tag:LoopRPT"
+        "singleton-alias-tag:LoopRPT",
+        "singleton-domain-tag:RL"
       ]
     },
     {
@@ -573,9 +550,8 @@
     {
       "paper_id": "2604.07822",
       "source_path": "papers/2604.07822.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
         "singleton-alias-tag:implicit-reasoning"
       ]
     },
@@ -602,6 +578,7 @@
       "source_path": "papers/2604.11279.yaml",
       "priority": "P2",
       "reasons": [
+        "singleton-alias-tag:DEQ-Unmix",
         "singleton-domain-tag:hyperspectral-imaging"
       ]
     },
@@ -633,25 +610,24 @@
     {
       "paper_id": "2604.15259",
       "source_path": "papers/2604.15259.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
         "singleton-alias-tag:fixed-point-analysis"
       ]
     },
     {
       "paper_id": "2604.17224",
       "source_path": "papers/2604.17224.yaml",
-      "priority": "P2",
-      "reasons": [
-        "singleton-alias-tag:activation-compression"
-      ]
+      "priority": "P3",
+      "reasons": []
     },
     {
       "paper_id": "2604.18839",
       "source_path": "papers/2604.18839.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:DRM"
+      ]
     },
     {
       "paper_id": "2604.21106",
@@ -684,8 +660,7 @@
       "source_path": "papers/2604.25551.yaml",
       "priority": "P2",
       "reasons": [
-        "singleton-alias-tag:RGNN",
-        "singleton-alias-tag:halting"
+        "singleton-alias-tag:RGNN"
       ]
     },
     {
@@ -701,7 +676,7 @@
       "source_path": "papers/2605.06510.yaml",
       "priority": "P2",
       "reasons": [
-        "singleton-domain-tag:tabular-data"
+        "singleton-alias-tag:nanoTabPFNlooped"
       ]
     },
     {
@@ -736,8 +711,11 @@
     {
       "paper_id": "2605.09226",
       "source_path": "papers/2605.09226.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:QDEQ",
+        "singleton-domain-tag:quantum-machine-learning"
+      ]
     },
     {
       "paper_id": "2605.11011",
@@ -745,7 +723,6 @@
       "priority": "P2",
       "reasons": [
         "singleton-alias-tag:LoopUS",
-        "singleton-alias-tag:latent-refinement",
         "singleton-alias-tag:looped-depth-up-scaling"
       ]
     },
@@ -781,8 +758,10 @@
     {
       "paper_id": "2605.18464",
       "source_path": "papers/2605.18464.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:PERL"
+      ]
     },
     {
       "paper_id": "2605.18797",
@@ -798,32 +777,42 @@
       "priority": "P1",
       "reasons": [
         "multiple-mechanism-tags",
-        "singleton-alias-tag:GRAM",
-        "singleton-alias-tag:latent-trajectories",
-        "singleton-alias-tag:recursive-reasoning"
+        "singleton-alias-tag:GRAM"
       ]
     },
     {
       "paper_id": "2605.19705",
       "source_path": "papers/2605.19705.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:i-DEQ"
+      ]
     },
     {
       "paper_id": "2605.19943",
       "source_path": "papers/2605.19943.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
-        "singleton-alias-tag:PTRM",
-        "singleton-alias-tag:stochastic-rollouts"
+        "singleton-alias-tag:PTRM"
       ]
     },
     {
       "paper_id": "2605.20389",
       "source_path": "papers/2605.20389.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-domain-tag:neuroscience"
+      ]
+    },
+    {
+      "paper_id": "2605.20613",
+      "source_path": "papers/2605.20613.yaml",
+      "priority": "P1",
+      "reasons": [
+        "multiple-mechanism-tags",
+        "singleton-alias-tag:HRM-Text",
+        "singleton-alias-tag:PrefixLM"
+      ]
     },
     {
       "paper_id": "2605.20670",
@@ -844,7 +833,8 @@
       "source_path": "papers/2605.21488.yaml",
       "priority": "P1",
       "reasons": [
-        "multiple-mechanism-tags"
+        "multiple-mechanism-tags",
+        "singleton-alias-tag:EqR"
       ]
     },
     {
@@ -883,8 +873,10 @@
     {
       "paper_id": "2605.30215",
       "source_path": "papers/2605.30215.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:DVLT"
+      ]
     },
     {
       "paper_id": "2605.30757",
@@ -895,8 +887,11 @@
     {
       "paper_id": "2605.31215",
       "source_path": "papers/2605.31215.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:CoFRe",
+        "singleton-alias-tag:FP-MGM"
+      ]
     },
     {
       "paper_id": "2606.00114",
@@ -913,14 +908,18 @@
     {
       "paper_id": "2606.01495",
       "source_path": "papers/2606.01495.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:CART"
+      ]
     },
     {
       "paper_id": "2606.03287",
       "source_path": "papers/2606.03287.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:BA-T"
+      ]
     },
     {
       "paper_id": "2606.03741",
@@ -931,41 +930,52 @@
     {
       "paper_id": "2606.04438",
       "source_path": "papers/2606.04438.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:LoopMoE"
+      ]
     },
     {
       "paper_id": "2606.04678",
       "source_path": "papers/2606.04678.yaml",
       "priority": "P2",
       "reasons": [
+        "singleton-alias-tag:LARM",
         "singleton-domain-tag:speech-recognition"
       ]
     },
     {
       "paper_id": "2606.06245",
       "source_path": "papers/2606.06245.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:MPCoT"
+      ]
     },
     {
       "paper_id": "2606.06574",
       "source_path": "papers/2606.06574.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:PoLar"
+      ]
     },
     {
       "paper_id": "2606.14498",
       "source_path": "papers/2606.14498.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:HamEvo",
+        "singleton-domain-tag:electronic-structure"
+      ]
     },
     {
       "paper_id": "2606.18023",
       "source_path": "papers/2606.18023.yaml",
       "priority": "P1",
       "reasons": [
-        "multiple-mechanism-tags"
+        "multiple-mechanism-tags",
+        "singleton-alias-tag:LoopCoder-v2"
       ]
     },
     {
@@ -981,6 +991,7 @@
       "source_path": "papers/2606.18208.yaml",
       "priority": "P2",
       "reasons": [
+        "singleton-alias-tag:LoopWM",
         "singleton-domain-tag:world-modeling"
       ]
     },
@@ -991,19 +1002,11 @@
       "reasons": []
     },
     {
-      "paper_id": "2606.20325",
-      "source_path": "papers/2606.20325.yaml",
-      "priority": "P1",
-      "reasons": [
-        "manual-scope-review-seed"
-      ]
-    },
-    {
       "paper_id": "2606.22462",
       "source_path": "papers/2606.22462.yaml",
       "priority": "P2",
       "reasons": [
-        "singleton-domain-tag:graph-data"
+        "singleton-alias-tag:AdaR"
       ]
     },
     {
@@ -1023,37 +1026,35 @@
     {
       "paper_id": "2606.31779",
       "source_path": "papers/2606.31779.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags"
+        "singleton-alias-tag:LOTUS"
       ]
     },
     {
       "paper_id": "2606.31796",
       "source_path": "papers/2606.31796.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:CHERRY",
+        "singleton-alias-tag:MoEE"
+      ]
     },
     {
       "paper_id": "2607.00341",
       "source_path": "papers/2607.00341.yaml",
-      "priority": "P3",
-      "reasons": []
+      "priority": "P2",
+      "reasons": [
+        "singleton-alias-tag:DiscoLoop"
+      ]
     },
     {
       "paper_id": "2607.02491",
       "source_path": "papers/2607.02491.yaml",
-      "priority": "P3",
-      "reasons": []
-    },
-    {
-      "paper_id": "hrm-text",
-      "source_path": "papers/hrm-text.yaml",
-      "priority": "P1",
+      "priority": "P2",
       "reasons": [
-        "multiple-mechanism-tags",
-        "singleton-alias-tag:HRM-Text",
-        "singleton-alias-tag:PrefixLM"
+        "singleton-alias-tag:G-RRM",
+        "singleton-alias-tag:SE-RRM"
       ]
     },
     {
@@ -1069,8 +1070,7 @@
       "source_path": "papers/openreview-modr.yaml",
       "priority": "P2",
       "reasons": [
-        "singleton-alias-tag:MoDr",
-        "singleton-alias-tag:MoUT"
+        "singleton-alias-tag:MoDr"
       ]
     }
   ]

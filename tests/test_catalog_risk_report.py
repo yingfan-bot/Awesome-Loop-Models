@@ -154,7 +154,7 @@ class CatalogRiskReportTests(unittest.TestCase):
         self.assertEqual(report["paper_count"], 4)
         self.assertEqual(
             report["generator"],
-            {"path": "scripts/build_catalog_risk_report.py", "version": 1},
+            {"path": "scripts/build_catalog_risk_report.py", "version": 2},
         )
         self.assertEqual(len(row_ids), len(set(row_ids)))
         self.assertEqual(sorted(row_ids), sorted(batch_ids))
@@ -162,6 +162,25 @@ class CatalogRiskReportTests(unittest.TestCase):
             "all 4 canonical paper records",
             report["priority_rules"]["singleton_frequency"],
         )
+
+    def test_manual_scope_seeds_only_include_canonical_papers(self):
+        """Removed or unknown seed IDs should not leak into a fresh report."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_paper(root, "2601.00001", valid_paper("2601.00001"))
+            report = build_catalog_risk_report.build_catalog_risk_report(
+                root=root,
+                findings=audit_catalog.audit_catalog(root),
+                generated_on="2026-07-10",
+                catalog_commit=SNAPSHOT_COMMIT,
+                manual_scope_review_seeds={"2601.00001", "removed-paper"},
+            )
+
+        self.assertEqual(
+            report["priority_rules"]["manual_scope_review_seeds"],
+            ["2601.00001"],
+        )
+        self.assertEqual(report["batches"]["P1"], ["2601.00001"])
 
     def test_markdown_is_rendered_from_report_counts_and_batch_ids(self):
         """Markdown counts and coverage IDs should agree with the JSON report dict."""
@@ -176,7 +195,7 @@ class CatalogRiskReportTests(unittest.TestCase):
         self.assertIn("- 2601.00003", markdown)
         self.assertIn("### P3 — 1 papers", markdown)
         self.assertIn("- 2601.00004", markdown)
-        self.assertIn("Generator: scripts/build_catalog_risk_report.py v1", markdown)
+        self.assertIn("Generator: scripts/build_catalog_risk_report.py v2", markdown)
 
     def test_markdown_escapes_every_dynamic_table_cell(self):
         """Pipes, backslashes, and newlines must not corrupt Markdown tables."""
