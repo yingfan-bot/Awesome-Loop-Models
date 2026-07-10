@@ -155,6 +155,10 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: python3 scripts/build.py
 
+      - name: Check static asset budgets
+        if: ${{ github.event_name != 'pull_request' }}
+        run: python3 scripts/check_asset_budgets.py
+
       - name: Run unit tests
         if: ${{ github.event_name != 'pull_request' }}
         run: python3 -m unittest discover -s tests -t . -p 'test_*.py'

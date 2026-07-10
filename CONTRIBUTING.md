@@ -260,6 +260,32 @@ If you want searchable existing-tag selectors before opening GitHub, use the sub
 
 ---
 
+## Static Site Asset Budgets
+
+After regenerating the canonical site artifacts, run the deterministic, offline budget check:
+
+```bash
+python3 scripts/build.py
+python3 scripts/check_asset_budgets.py
+```
+
+The checker reports every measured value alongside its limit and lists all violations in one run. Current budgets are:
+
+| Asset or schema contract | Limit |
+|---|---:|
+| `papers.json` raw size | 260,000 bytes |
+| `papers.json` deterministic gzip size (`mtime=0`) | 60,000 bytes |
+| `papers.json.briefings` | At most 1 item |
+| `content` fields in browser briefings | 0 |
+| `submission-meta.json` raw size | 20,000 bytes |
+| `assets/favicon.png` raw size | 10,000 bytes |
+
+Missing files, malformed JSON, and invalid generated JSON schemas also fail the check. CI runs the checker immediately after canonical generation, so do not evaluate it against stale generated files.
+
+If a budget must change intentionally, first confirm that payload or image reduction is not practical. Then explain the measured change and rationale in the pull request, and update the checker constant, its contract tests, and this table together. Budget increases require maintainer review; do not raise a limit only to make CI green.
+
+---
+
 ## Writing Good Entries
 
 Please keep entries:
