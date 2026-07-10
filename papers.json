@@ -1,12 +1,12 @@
 {
   "meta": {
-    "total": 118,
-    "paper_total": 111,
+    "total": 119,
+    "paper_total": 112,
     "blog_total": 7,
-    "briefing_total": 31,
-    "latest_briefing_date": "2026-07-01",
-    "generated": "2026-07-02T06:51:01.684026+00:00",
-    "generated_local_date": "2026-07-02",
+    "briefing_total": 32,
+    "latest_briefing_date": "2026-07-02",
+    "generated": "2026-07-06T06:48:38.516094+00:00",
+    "generated_local_date": "2026-07-06",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -129,11 +129,11 @@
       "citations": 769,
       "citation_sources": {
         "semantic_scholar": 769,
-        "openalex": 361,
+        "openalex": 360,
         "opencitations": 1
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-03",
       "id": "1603.08983",
       "source_file": "1603.08983.yaml",
       "source_path": "papers/1603.08983.yaml",
@@ -171,14 +171,14 @@
         "openreview": "https://openreview.net/forum?id=HyzdRiR9Y7",
         "alphaxiv": "https://www.alphaxiv.org/abs/1807.03819"
       },
-      "citations": 963,
+      "citations": 965,
       "citation_sources": {
-        "semantic_scholar": 963,
+        "semantic_scholar": 965,
         "openalex": 396,
         "opencitations": 3
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-06",
       "id": "1807.03819",
       "source_file": "1807.03819.yaml",
       "source_path": "papers/1807.03819.yaml",
@@ -229,9 +229,9 @@
         "paper": "https://proceedings.neurips.cc/paper/2019/hash/01386bd6d8e091c2ab4c7c7de644d37b-Abstract.html",
         "github": "https://github.com/locuslab/deq"
       },
-      "citations": 918,
+      "citations": 922,
       "citation_sources": {
-        "semantic_scholar": 918,
+        "semantic_scholar": 922,
         "openalex": 246,
         "opencitations": 0
       },
@@ -241,7 +241,7 @@
         "github_api": 804
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-03",
       "id": "1909.01377",
       "source_file": "1909.01377.yaml",
       "source_path": "papers/1909.01377.yaml",
@@ -328,14 +328,14 @@
         "paper": "https://proceedings.neurips.cc/paper/2021/hash/b0083e1a03ff2a5b6a0a2c4e0b1c3f0a-Abstract.html",
         "alphaxiv": "https://www.alphaxiv.org/abs/2111.05177"
       },
-      "citations": 100,
+      "citations": 101,
       "citation_sources": {
-        "semantic_scholar": 100,
+        "semantic_scholar": 101,
         "openalex": 13,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-29",
+      "metrics_updated": "2026-07-06",
       "id": "2111.05177",
       "source_file": "2111.05177.yaml",
       "source_path": "papers/2111.05177.yaml",
@@ -545,9 +545,9 @@
         "github": "https://github.com/Leiay/looped_transformer",
         "alphaxiv": "https://www.alphaxiv.org/abs/2311.12424"
       },
-      "citations": 103,
+      "citations": 104,
       "citation_sources": {
-        "semantic_scholar": 103,
+        "semantic_scholar": 104,
         "openalex": 0,
         "opencitations": 0
       },
@@ -557,7 +557,7 @@
         "github_api": 47
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-06",
       "id": "2311.12424",
       "source_file": "2311.12424.yaml",
       "source_path": "papers/2311.12424.yaml",
@@ -774,14 +774,14 @@
         "arxiv": "https://arxiv.org/abs/2410.20672",
         "alphaxiv": "https://www.alphaxiv.org/abs/2410.20672"
       },
-      "citations": 51,
+      "citations": 52,
       "citation_sources": {
-        "semantic_scholar": 51,
+        "semantic_scholar": 52,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2410.20672",
       "source_file": "2410.20672.yaml",
       "source_path": "papers/2410.20672.yaml",
@@ -838,9 +838,9 @@
         "github": "https://github.com/seal-rg/recurrent-pretraining",
         "alphaxiv": "https://www.alphaxiv.org/abs/2502.05171"
       },
-      "citations": 269,
+      "citations": 272,
       "citation_sources": {
-        "semantic_scholar": 269,
+        "semantic_scholar": 272,
         "openalex": 0,
         "opencitations": 0
       },
@@ -850,7 +850,7 @@
         "github_api": 896
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-06",
       "id": "2502.05171",
       "source_file": "2502.05171.yaml",
       "source_path": "papers/2502.05171.yaml",
@@ -966,14 +966,14 @@
         "arxiv": "https://arxiv.org/abs/2502.17416",
         "alphaxiv": "https://www.alphaxiv.org/abs/2502.17416"
       },
-      "citations": 162,
+      "citations": 163,
       "citation_sources": {
-        "semantic_scholar": 162,
+        "semantic_scholar": 163,
         "openalex": 2,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2502.17416",
       "source_file": "2502.17416.yaml",
       "source_path": "papers/2502.17416.yaml",
@@ -1028,14 +1028,14 @@
         "arxiv": "https://arxiv.org/abs/2506.21734",
         "alphaxiv": "https://www.alphaxiv.org/abs/2506.21734"
       },
-      "citations": 115,
+      "citations": 116,
       "citation_sources": {
-        "semantic_scholar": 115,
+        "semantic_scholar": 116,
         "openalex": 3,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-06",
       "id": "2506.21734",
       "source_file": "2506.21734.yaml",
       "source_path": "papers/2506.21734.yaml",
@@ -1133,11 +1133,10 @@
       "citations": 8,
       "citation_sources": {
         "semantic_scholar": 8,
-        "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-17",
+      "metrics_updated": "2026-07-06",
       "id": "2507.07996",
       "source_file": "2507.07996.yaml",
       "source_path": "papers/2507.07996.yaml",
@@ -1192,15 +1191,15 @@
         "github": "https://github.com/raymin0223/mixture_of_recursions",
         "alphaxiv": "https://www.alphaxiv.org/abs/2507.10524"
       },
-      "citations": 87,
-      "metrics_updated": "2026-07-02",
-      "github_stars": 580,
+      "citations": 88,
+      "metrics_updated": "2026-07-06",
+      "github_stars": 579,
       "star_sources": {
-        "github_api": 580
+        "github_api": 579
       },
       "star_source_best": "github_api",
       "citation_sources": {
-        "semantic_scholar": 87,
+        "semantic_scholar": 88,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
@@ -1472,10 +1471,10 @@
         "hf": "https://huggingface.co/ByteDance/Ouro-1.4B",
         "alphaxiv": "https://www.alphaxiv.org/abs/2510.25741"
       },
-      "citations": 88,
-      "metrics_updated": "2026-07-02",
+      "citations": 89,
+      "metrics_updated": "2026-07-03",
       "citation_sources": {
-        "semantic_scholar": 88,
+        "semantic_scholar": 89,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
@@ -1567,12 +1566,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 67,
+      "github_stars": 68,
       "star_sources": {
-        "github_api": 67
+        "github_api": 68
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-06",
       "id": "2511.07384",
       "source_file": "2511.07384.yaml",
       "source_path": "papers/2511.07384.yaml",
@@ -1911,12 +1910,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 38,
+      "github_stars": 39,
       "star_sources": {
-        "github_api": 38
+        "github_api": 39
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-06-29",
+      "metrics_updated": "2026-07-06",
       "id": "2602.07845",
       "source_file": "2602.07845.yaml",
       "source_path": "papers/2602.07845.yaml",
@@ -2128,9 +2127,9 @@
         "github": "https://github.com/armenjeddi/loopformer",
         "alphaxiv": "https://www.alphaxiv.org/abs/2602.11451"
       },
-      "citations": 22,
+      "citations": 23,
       "citation_sources": {
-        "semantic_scholar": 22,
+        "semantic_scholar": 23,
         "openalex": 0,
         "opencitations": 0
       },
@@ -2140,7 +2139,7 @@
         "github_api": 28
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2602.11451",
       "source_file": "2602.11451.yaml",
       "source_path": "papers/2602.11451.yaml",
@@ -2368,7 +2367,7 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-17",
+      "metrics_updated": "2026-07-06",
       "id": "2603.05234",
       "source_file": "2603.05234.yaml",
       "source_path": "papers/2603.05234.yaml",
@@ -2596,11 +2595,10 @@
       "citations": 5,
       "citation_sources": {
         "semantic_scholar": 5,
-        "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-06",
       "id": "2603.21676",
       "source_file": "2603.21676.yaml",
       "source_path": "papers/2603.21676.yaml",
@@ -2639,14 +2637,14 @@
         "arxiv": "https://arxiv.org/abs/2604.07822",
         "alphaxiv": "https://www.alphaxiv.org/abs/2604.07822"
       },
-      "citations": 11,
+      "citations": 12,
       "citation_sources": {
-        "semantic_scholar": 11,
+        "semantic_scholar": 12,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2604.07822",
       "source_file": "2604.07822.yaml",
       "source_path": "papers/2604.07822.yaml",
@@ -2809,10 +2807,11 @@
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0,
+        "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2604.11279",
       "source_file": "2604.11279.yaml",
       "source_path": "papers/2604.11279.yaml",
@@ -4488,14 +4487,14 @@
         "arxiv": "https://arxiv.org/abs/2605.23872",
         "alphaxiv": "https://www.alphaxiv.org/abs/2605.23872"
       },
-      "citations": 2,
+      "citations": 3,
       "citation_sources": {
-        "semantic_scholar": 2,
+        "semantic_scholar": 3,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-03",
       "id": "2605.23872",
       "source_file": "2605.23872.yaml",
       "source_path": "papers/2605.23872.yaml",
@@ -5428,19 +5427,19 @@
         "alphaxiv": "https://www.alphaxiv.org/abs/2606.18206",
         "github": "https://github.com/nilskiKonjIzDunava/fprm"
       },
-      "citations": 1,
+      "citations": 2,
       "citation_sources": {
-        "semantic_scholar": 1,
+        "semantic_scholar": 2,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 15,
+      "github_stars": 16,
       "star_sources": {
-        "github_api": 15
+        "github_api": 16
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-01",
+      "metrics_updated": "2026-07-03",
       "id": "2606.18206",
       "source_file": "2606.18206.yaml",
       "source_path": "papers/2606.18206.yaml",
@@ -5817,10 +5816,11 @@
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0,
+        "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2606.31779",
       "source_file": "2606.31779.yaml",
       "source_path": "papers/2606.31779.yaml",
@@ -5867,10 +5867,11 @@
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0,
+        "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-03",
       "id": "2606.31796",
       "source_file": "2606.31796.yaml",
       "source_path": "papers/2606.31796.yaml",
@@ -5914,10 +5915,12 @@
       },
       "citations": 0,
       "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
         "opencitations": 0
       },
-      "citation_source_best": "opencitations",
-      "metrics_updated": "2026-07-02",
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-06",
       "id": "2607.00341",
       "source_file": "2607.00341.yaml",
       "source_path": "papers/2607.00341.yaml",
@@ -5934,6 +5937,55 @@
       ],
       "venueClass": "venue-arxiv",
       "arxiv_id": "2607.00341"
+    },
+    {
+      "title": "G-RRM: Guiding Symbolic Solvers with Recurrent Reasoning Models",
+      "authors": "Timo Bertram, Sidhant Bhavnani, Richard Freinschlag, Erich Kobler, Andreas Mayr, Günter Klambauer",
+      "year": 2026,
+      "published_date": "2026-07-02",
+      "added_date": "2026-07-02",
+      "venue": "arXiv",
+      "category": "applications",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "reasoning",
+        "algorithmic-reasoning"
+      ],
+      "focus_tags": [
+        "inference-algorithm",
+        "architecture"
+      ],
+      "desc": "Integrates symbol-equivariant Recurrent Reasoning Models with symbolic solvers, showing that neural solution proposals can cut Sudoku and SAT-style search when the downstream solver can overwrite imperfect recurrent-model hints.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.02491",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.02491"
+      },
+      "citations": 0,
+      "metrics_updated": "2026-07-06",
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "id": "2607.02491",
+      "source_file": "2607.02491.yaml",
+      "source_path": "papers/2607.02491.yaml",
+      "entry_type": "paper",
+      "tags": [],
+      "authors_list": [
+        "Timo Bertram",
+        "Sidhant Bhavnani",
+        "Richard Freinschlag",
+        "Erich Kobler",
+        "Andreas Mayr",
+        "Günter Klambauer"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.02491"
     },
     {
       "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
@@ -5971,12 +6023,12 @@
         "github": "https://github.com/sapientinc/HRM-Text",
         "hf": "https://huggingface.co/sapientinc/HRM-Text-1B"
       },
-      "github_stars": 1597,
+      "github_stars": 1625,
       "star_sources": {
-        "github_api": 1597
+        "github_api": 1625
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-02",
+      "metrics_updated": "2026-07-06",
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0
@@ -6348,6 +6400,16 @@
     }
   ],
   "briefings": [
+    {
+      "date": "2026-07-02",
+      "title": "Daily Loop-Model Watch — 2026-07-02",
+      "status": "ok",
+      "summary": "",
+      "highlights": [],
+      "candidates": [],
+      "content": "# Daily Loop-Model Briefing - 2026-07-02\n\n## Outcome\n\nOne new paper was added today: **G-RRM: Guiding Symbolic Solvers with Recurrent Reasoning Models** (`2607.02491`). It is not a general-purpose language-model architecture paper. Its value for this collection is narrower and cleaner: it tests whether a recurrent neural reasoner can provide useful guidance to exact symbolic solvers on constraint satisfaction problems.\n\n## Added\n\n### G-RRM: Guiding Symbolic Solvers with Recurrent Reasoning Models (`2607.02491`)\n\nG-RRM uses symbol-equivariant Recurrent Reasoning Models (SE-RRMs) as neural solvers that generate full solution proposals, then passes those proposals as guidance to backtracking and SAT-style symbolic solvers. The paper reports that this works best when the symbolic solver has enough combinatorial search to benefit from hints and can dynamically overwrite bad branching choices.\n\nWhy it was added: SE-RRMs belong to the recurrent reasoning family this repository tracks: the learned solver repeatedly updates latent reasoning state rather than relying on an external prompt loop or plain autoregressive decoding. This paper is an applications-focused addition because the main result is about practical solver acceleration from that recurrent model, not a new base loop architecture.\n\nMain reader takeaway: on 9x9 Sudoku, where the SE-RRM solves 91.1% of instances directly, G-RRM reduces median conflict counts to zero and reports a 33.3x median speedup for backtracking plus a 1.70x median speedup for Glucose 4.1. CaDiCaL does not benefit in the same way, which makes the paper useful as a boundary result: recurrent neural hints only translate into wall-clock gains when the downstream symbolic search procedure can exploit and repair them.\n\n## Checked but not added\n\n- **ReContext: Recursive Evidence Replay as LLM Harness for Long-Context Reasoning** (`2607.02509`) is a training-free evidence replay method around an existing LLM. It uses model-internal relevance signals, but the loop is a context-selection and replay harness rather than a reused learned internal operator inside one forward process.\n- **A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets** (`2607.02303`) improves sequence-memory behavior for linear attention with a bounded exact KV cache. It is adjacent recurrent-state work, but the abstract is about token-prefix memory rather than recurrent depth or fixed-point loop-model computation.\n- **Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing** (`2607.01978`) is an online editing method with recursive updates and preconditioners. The recurrence is in the editing/update procedure, not the model's same-forward learned-module computation.\n- **Closed-loop, agentic, and human-in-the-loop papers** from today's feed were left out unless they exposed an internal reused learned operator. Their loops are control, planning, verification, data, or deployment workflows rather than loop-model mechanisms.\n",
+      "source_path": "briefings/2026/07/2026-07-02.md"
+    },
     {
       "date": "2026-07-01",
       "title": "Daily Loop-Model Watch — 2026-07-01",
