@@ -63,6 +63,47 @@ ARXIV_URL_RE = re.compile(
 Severity = Literal["error", "warning"]
 
 
+class _DuplicateYamlKeyError(yaml.YAMLError):
+    """Raised when a raw YAML mapping repeats an explicit key."""
+
+
+class _UniqueKeySafeLoader(yaml.SafeLoader):
+    """SafeLoader variant that rejects duplicate mapping keys."""
+
+
+def _construct_unique_mapping(
+    loader: _UniqueKeySafeLoader,
+    node: yaml.nodes.MappingNode,
+    deep: bool = False,
+) -> dict:
+    """Construct a mapping while rejecting keys that SafeLoader would overwrite."""
+    mapping: dict = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        try:
+            duplicate = key in mapping
+        except TypeError as exc:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping",
+                node.start_mark,
+                "found an unhashable key",
+                key_node.start_mark,
+            ) from exc
+        if duplicate:
+            line = key_node.start_mark.line + 1
+            raise _DuplicateYamlKeyError(
+                f"Duplicate YAML mapping key {key!r} at line {line}."
+            )
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+_UniqueKeySafeLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    _construct_unique_mapping,
+)
+
+
 @dataclass(frozen=True)
 class Finding:
     """One deterministic catalog finding suitable for human or JSON output."""
@@ -321,7 +362,10 @@ def _validate_dates(data: dict, source: str, findings: list[Finding]) -> None:
 
 def _valid_http_url(value: str) -> bool:
     """Return whether ``value`` is an absolute HTTP(S) URL."""
-    parsed = urlsplit(value)
+    try:
+        parsed = urlsplit(value)
+    except ValueError:
+        return False
     return parsed.scheme.lower() in {"http", "https"} and bool(parsed.netloc)
 
 
@@ -523,32 +567,51 @@ def _validate_description(data: dict, source: str, findings: list[Finding]) -> N
         )
 
 
-def _canonical_url(value: str) -> str:
-    """Normalize an HTTP URL for deterministic duplicate-source comparison."""
-    parsed = urlsplit(value.strip())
+def _canonical_url(value: str) -> str | None:
+    """Normalize an HTTP URL for comparison, returning None when parsing fails."""
+    try:
+        parsed = urlsplit(value.strip())
+    except ValueError:
+        return None
     query = urlencode(sorted(parse_qsl(parsed.query, keep_blank_values=True)))
     path = parsed.path.rstrip("/") or "/"
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), path, query, ""))
 
 
-def _primary_source_id(links: dict | None) -> str | None:
-    """Return a canonical arXiv/OpenReview/URL identity for a paper's primary source."""
-    if not links:
+def _source_identity(value: object) -> str | None:
+    """Return a canonical arXiv, OpenReview, or URL identity for one link."""
+    if not isinstance(value, str):
         return None
-    arxiv_id = _arxiv_id_from_url(links.get("arxiv"))
+    arxiv_id = _arxiv_id_from_url(value)
     if arxiv_id:
         return f"arxiv:{arxiv_id}"
-    for key in ("paper", "openreview"):
-        value = links.get(key)
-        if not isinstance(value, str) or not _valid_http_url(value.strip()):
-            continue
+    if not _valid_http_url(value.strip()):
+        return None
+    try:
         parsed = urlsplit(value.strip())
-        if parsed.netloc.lower().removeprefix("www.").endswith("openreview.net"):
-            openreview_id = dict(parse_qsl(parsed.query)).get("id")
-            if openreview_id:
-                return f"openreview:{openreview_id}"
-        return f"url:{_canonical_url(value)}"
-    return None
+    except ValueError:
+        return None
+    if parsed.netloc.lower().removeprefix("www.").endswith("openreview.net"):
+        openreview_id = dict(parse_qsl(parsed.query)).get("id")
+        if openreview_id:
+            return f"openreview:{openreview_id}"
+    canonical_url = _canonical_url(value)
+    return f"url:{canonical_url}" if canonical_url is not None else None
+
+
+def _primary_source_identities(links: dict | None) -> list[tuple[str, str]]:
+    """Return every unique populated primary-link identity with its field path."""
+    if not links:
+        return []
+    identities: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for key in PRIMARY_LINK_FIELDS:
+        identity = _source_identity(links.get(key))
+        if identity is None or identity in seen:
+            continue
+        seen.add(identity)
+        identities.append((f"links.{key}", identity))
+    return identities
 
 
 def _record_duplicates(
@@ -556,7 +619,7 @@ def _record_duplicates(
     links: dict | None,
     source: str,
     title_sources: dict[str, str],
-    primary_sources: dict[str, str],
+    primary_sources: dict[str, tuple[str, str]],
     findings: list[Finding],
 ) -> None:
     """Report normalized title and source duplicates against the first source."""
@@ -567,11 +630,20 @@ def _record_duplicates(
         if first_source != source:
             _add(findings, "error", "duplicate-title", source, "title", f"Normalized title conflicts with {first_source}.")
 
-    primary_id = _primary_source_id(links)
-    if primary_id:
-        first_source = primary_sources.setdefault(primary_id, source)
+    for field, primary_id in _primary_source_identities(links):
+        first_source, first_field = primary_sources.setdefault(
+            primary_id,
+            (source, field),
+        )
         if first_source != source:
-            _add(findings, "error", "duplicate-primary-source", source, "links", f"Canonical primary source {primary_id!r} conflicts with {first_source}.")
+            _add(
+                findings,
+                "error",
+                "duplicate-primary-source",
+                source,
+                field,
+                f"Canonical primary source {primary_id!r} conflicts with {first_source} {first_field}.",
+            )
 
 
 def audit_catalog(root: Path = REPO_ROOT) -> list[Finding]:
@@ -583,13 +655,26 @@ def audit_catalog(root: Path = REPO_ROOT) -> list[Finding]:
         return [Finding("error", "missing-papers-directory", "papers", "$", "Required papers directory is missing.")]
 
     title_sources: dict[str, str] = {}
-    primary_sources: dict[str, str] = {}
+    primary_sources: dict[str, tuple[str, str]] = {}
     for path in sorted(papers_dir.glob("*.yaml"), key=lambda item: item.name):
         if path.name.startswith("_template"):
             continue
         source = f"papers/{path.name}"
         try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+            data = yaml.load(
+                path.read_text(encoding="utf-8"),
+                Loader=_UniqueKeySafeLoader,
+            )
+        except _DuplicateYamlKeyError as exc:
+            _add(
+                findings,
+                "error",
+                "duplicate-yaml-key",
+                source,
+                "$",
+                str(exc),
+            )
+            continue
         except yaml.YAMLError:
             _add(findings, "error", "yaml-parse", source, "$", "YAML could not be parsed.")
             continue

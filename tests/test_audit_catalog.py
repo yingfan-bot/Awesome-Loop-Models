@@ -72,6 +72,32 @@ class CatalogAuditTests(unittest.TestCase):
             ],
         )
 
+    def test_duplicate_yaml_keys_are_rejected_at_top_level_and_in_links(self):
+        """Raw duplicate mapping keys should error instead of being silently overwritten."""
+        cases = (
+            ("title: First\ntitle: Second\n", "title"),
+            (
+                "links:\n"
+                "  arxiv: https://arxiv.org/abs/2601.00001\n"
+                "  arxiv: https://arxiv.org/abs/2601.00002\n",
+                "arxiv",
+            ),
+        )
+        for raw_yaml, duplicate_key in cases:
+            with self.subTest(duplicate_key=duplicate_key):
+                with TemporaryDirectory() as tmpdir:
+                    root = Path(tmpdir)
+                    path = root / "papers" / "duplicate.yaml"
+                    path.parent.mkdir(parents=True)
+                    path.write_text(raw_yaml, encoding="utf-8")
+
+                    findings = audit_catalog.audit_catalog(root)
+
+                self.assertEqual(len(findings), 1)
+                self.assertEqual(findings[0].code, "duplicate-yaml-key")
+                self.assertEqual(findings[0].field, "$")
+                self.assertIn(repr(duplicate_key), findings[0].message)
+
     def test_required_fields_types_unknown_fields_and_dates_are_checked(self):
         """The auditor should inspect raw required fields before build normalization."""
         with TemporaryDirectory() as tmpdir:
@@ -131,6 +157,21 @@ class CatalogAuditTests(unittest.TestCase):
         self.assertIn(("invalid-link-type", "links.project"), keys)
         self.assertIn(("missing-primary-link", "links"), keys)
 
+    def test_malformed_url_is_reported_instead_of_crashing(self):
+        """A URL parser ValueError should become a normal invalid-url finding."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            paper = valid_paper()
+            paper["links"]["project"] = "https://[::1"
+            write_paper(root, "2601.00001.yaml", paper)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        self.assertIn(
+            ("invalid-url", "links.project"),
+            {(item.code, item.field) for item in findings},
+        )
+
     def test_arxiv_filename_and_link_identifiers_must_match(self):
         """An arXiv-backed record should use the same ID in its filename and URL."""
         with TemporaryDirectory() as tmpdir:
@@ -169,6 +210,47 @@ class CatalogAuditTests(unittest.TestCase):
         for finding in duplicate_codes.values():
             self.assertEqual(finding.source, "papers/2601.00002.yaml")
             self.assertIn("papers/2601.00001.yaml", finding.message)
+
+    def test_all_primary_links_are_indexed_for_duplicate_sources(self):
+        """A shared OpenReview identity should collide despite distinct arXiv IDs."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            first = valid_paper("2601.00001")
+            first["title"] = "First paper"
+            first["links"]["paper"] = "https://openreview.net/forum?id=shared-id"
+            second = valid_paper("2601.00002")
+            second["title"] = "Second paper"
+            second["links"]["openreview"] = (
+                "https://openreview.net/forum?id=shared-id"
+            )
+            write_paper(root, "2601.00001.yaml", first)
+            write_paper(root, "2601.00002.yaml", second)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        duplicates = [
+            item for item in findings if item.code == "duplicate-primary-source"
+        ]
+        self.assertEqual(len(duplicates), 1)
+        self.assertEqual(duplicates[0].source, "papers/2601.00002.yaml")
+        self.assertEqual(duplicates[0].field, "links.openreview")
+        self.assertIn("papers/2601.00001.yaml", duplicates[0].message)
+        self.assertIn("links.paper", duplicates[0].message)
+
+    def test_same_entry_primary_links_with_one_identity_do_not_self_conflict(self):
+        """Equivalent arXiv links in two fields should be indexed once per paper."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            paper = valid_paper("2601.00001")
+            paper["links"]["paper"] = "https://arxiv.org/pdf/2601.00001v2.pdf"
+            write_paper(root, "2601.00001.yaml", paper)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        self.assertNotIn(
+            "duplicate-primary-source",
+            {item.code for item in findings},
+        )
 
     def test_tag_shape_duplicates_allowlists_and_cross_axis_collisions(self):
         """Raw tag arrays should retain shape and respect controlled vocabularies."""
