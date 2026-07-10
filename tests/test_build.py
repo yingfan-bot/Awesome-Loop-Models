@@ -476,6 +476,51 @@ class TagFilterUiTests(unittest.TestCase):
         self.assertIn("section-blogs", html)
         self.assertIn("blogs-grid", html)
 
+    def test_catalog_section_builders_create_empty_grid_shells(self):
+        """Keep section construction free of eager catalog card rendering."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        category_start = html.index("function createCategorySection(node, pathParts, depth) {")
+        category_end = html.index("function createBlogSection()", category_start)
+        category_builder = html[category_start:category_end]
+        blog_start = category_end
+        blog_end = html.index("function renderTreeInto(container)", blog_start)
+        blog_builder = html[blog_start:blog_end]
+        renderer_start = html.index("function renderAllGrids(q) {")
+        renderer_end = html.index("function updateDailyBriefingNotice()", renderer_start)
+        renderer = html[renderer_start:renderer_end]
+
+        self.assertIn('grid.dataset.nodeKey = getNodeKey(pathParts);', category_builder)
+        self.assertIn('grid.id = "grid-" + pathParts.join("__");', category_builder)
+        self.assertIn("grid.id = 'blogs-grid';", blog_builder)
+        for builder in (category_builder, blog_builder):
+            self.assertNotIn("grid.innerHTML", builder)
+            self.assertNotIn("renderCard(", builder)
+
+        self.assertIn(
+            "grid.innerHTML = papers.map(function(paper) { return renderCard(paper, query); }).join('');",
+            renderer,
+        )
+        self.assertIn(
+            "blogsGrid.innerHTML = blogs.map(function(blog) { return renderCard(blog, query); }).join('');",
+            renderer,
+        )
+        self.assertEqual(html.count("grid.innerHTML ="), 1)
+        self.assertEqual(html.count("blogsGrid.innerHTML ="), 1)
+
+    def test_table_rows_are_rendered_only_for_table_view_and_cleared_in_category_view(self):
+        """Preserve lazy table rendering when view modes change."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        renderer_start = html.index("function renderAllGrids(q) {")
+        renderer_end = html.index("function updateDailyBriefingNotice()", renderer_start)
+        renderer = html[renderer_start:renderer_end]
+
+        self.assertIn(
+            "if (CURRENT_VIEW === 'table') {\n    renderTableView(query, filteredPapers);\n  } else {",
+            renderer,
+        )
+        self.assertIn("if (tableBody && tableBody.children.length) tableBody.textContent = '';", renderer)
+        self.assertEqual(renderer.count("renderTableView(query, filteredPapers);"), 1)
+
     def test_daily_briefing_notice_exists_in_frontend(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         self.assertIn("let ALL_BRIEFINGS = [];", html)

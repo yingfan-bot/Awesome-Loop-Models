@@ -4084,13 +4084,12 @@ function createCategorySection(node, pathParts, depth) {
     if (childSection) body.appendChild(childSection);
   });
 
-  const directPapers = sortPapers(getDirectPapers(pathParts), CURRENT_SORT);
+  const directPapers = getDirectPapers(pathParts);
   if (directPapers.length) {
     const grid = document.createElement("div");
     grid.className = "papers-grid";
     grid.dataset.nodeKey = getNodeKey(pathParts);
     grid.id = "grid-" + pathParts.join("__");
-    grid.innerHTML = directPapers.map(function(paper) { return renderCard(paper); }).join("");
     body.appendChild(grid);
   }
 
@@ -4122,7 +4121,6 @@ function createBlogSection() {
   const grid = document.createElement('div');
   grid.className = 'papers-grid';
   grid.id = 'blogs-grid';
-  grid.innerHTML = sortPapers(ALL_BLOGS, CURRENT_SORT).map(function(blog) { return renderCard(blog); }).join('');
   body.appendChild(grid);
 
   section.appendChild(body);
