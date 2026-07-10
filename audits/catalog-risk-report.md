@@ -16,9 +16,9 @@ At this snapshot, scripts/audit_catalog.py reports **2 errors / 6 warnings**. Ev
 - **P1:** not P0, and either more than one mechanism_tags value or membership in the manual scope-review seed set.
 - **P2:** not P0/P1, and either an auditor warning or an exact domain_tags/tags value that occurs once in the full catalog.
 - **P3:** all remaining papers.
-- Reasons are deduplicated and sorted lexicographically. Singleton frequency is exact and case-sensitive across all 112 canonical records.
+- Reasons are deduplicated and sorted lexicographically. Singleton frequency uses one combined domain_tags plus tags table and is exact and case-sensitive across all 112 canonical records; the two axes are not counted separately.
 
-Batch sizes: **P0 1 / P1 24 / P2 54 / P3 33**.
+Batch sizes: **P0 1 / P1 24 / P2 53 / P3 34**.
 
 The manual scope-review seeds are scheduling inputs only, not findings or conclusions: 2510.03206, 2601.21582, 2604.27981, 2605.17811, 2606.20325. A seed paper may be accurate and in scope; the label only says to check the primary source early.
 
@@ -63,23 +63,23 @@ P1 reasons are review triggers, not evidence of an error. In particular, multipl
 
 ## P2 and P3 coverage
 
-### P2 — 54 papers
+### P2 — 53 papers
 
 Warnings and singleton vocabulary require human judgment. A singleton tag can be precise and valid; frequency alone is never a reason to rename or remove it.
 
 - 1511.08228, 1807.03819, 2111.05177, 2209.11142, 2301.13196, 2310.10845, 2311.12424, 2402.13572, 2410.01405, 2410.20672, 2502.05171, 2502.07827
 - 2502.17416, 2507.02199, 2507.07996, 2510.25741, 2511.08577, 2512.14693, 2602.05999, 2602.07845, 2602.08864, 2602.09080, 2602.10520, 2602.11451
 - 2602.11698, 2603.01914, 2603.04971, 2603.05234, 2603.08391, 2603.19714, 2603.21676, 2604.09168, 2604.09870, 2604.11279, 2604.12946, 2604.17224
-- 2604.21106, 2604.21254, 2604.21999, 2604.25551, 2605.06510, 2605.07721, 2605.11011, 2605.18797, 2605.23872, 2605.26106, 2605.26733, 2606.04438
+- 2604.21106, 2604.21254, 2604.21999, 2604.25551, 2605.06510, 2605.07721, 2605.11011, 2605.18797, 2605.23872, 2605.26106, 2605.26733
 - 2606.04678, 2606.18208, 2606.22462, 2606.26488, openreview-chaingpt, openreview-modr
 
-### P3 — 33 papers
+### P3 — 34 papers
 
 P3 is lower heuristic risk, not verified accuracy. These papers still need primary-source content and taxonomy review.
 
 - 1603.08983, 2507.10524, 2509.23314, 2511.07384, 2602.05970, 2604.11791, 2604.18839, 2605.06609, 2605.09165, 2605.09226, 2605.12578, 2605.16048
 - 2605.18464, 2605.19705, 2605.20389, 2605.20670, 2605.28919, 2605.30215, 2605.30757, 2605.31215, 2606.00114, 2606.00605, 2606.01495, 2606.03287
-- 2606.03741, 2606.06245, 2606.06574, 2606.14498, 2606.18524, 2606.29983, 2606.31796, 2607.00341, 2607.02491
+- 2606.03741, 2606.04438, 2606.06245, 2606.06574, 2606.14498, 2606.18524, 2606.29983, 2606.31796, 2607.00341, 2607.02491
 
 ## Review order and evidence requirement
 
