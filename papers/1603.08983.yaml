@@ -18,15 +18,15 @@ focus_tags:
 - architecture
 - training-algorithm
 - inference-algorithm
-desc: Introduces ACT, a deterministic differentiable halting algorithm that lets
-  an RNN learn a variable number of shared state transitions between receiving each
-  input and emitting an output.
+desc: Introduces ACT, a deterministic differentiable halting algorithm that lets an
+  RNN learn a variable number of shared state transitions between receiving each input
+  and emitting an output.
 links:
   arxiv: https://arxiv.org/abs/1603.08983
-citations: 769
+citations: 773
 citation_sources:
-  semantic_scholar: 769
+  semantic_scholar: 773
   openalex: 360
   opencitations: 1
 citation_source_best: semantic_scholar
-metrics_updated: '2026-07-03'
+metrics_updated: '2026-07-10'

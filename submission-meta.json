@@ -1,0 +1,272 @@
+{
+  "existing_paths": [
+    "blogs/2020-01-07-adaptive-computation-time-act-transformers.yaml",
+    "blogs/2026-01-12-looped-gpt.yaml",
+    "blogs/2026-04-02-loop-cost.yaml",
+    "blogs/2026-04-19-looped-transformers-controversy.yaml",
+    "blogs/2026-04-21-claude-mythos-looped-llm-depth-scaling-axis.yaml",
+    "blogs/2026-04-29-exact-input-writes-parcae.yaml",
+    "blogs/2026-05-23-rethinking-hierarchy-iterative-reasoning-models.yaml",
+    "papers/1511.08228.yaml",
+    "papers/1603.08983.yaml",
+    "papers/1807.03819.yaml",
+    "papers/1909.01377.yaml",
+    "papers/2006.08656.yaml",
+    "papers/2111.05177.yaml",
+    "papers/2209.11142.yaml",
+    "papers/2301.13196.yaml",
+    "papers/2310.10845.yaml",
+    "papers/2311.12424.yaml",
+    "papers/2402.13572.yaml",
+    "papers/2405.16039.yaml",
+    "papers/2410.01405.yaml",
+    "papers/2410.20672.yaml",
+    "papers/2502.05171.yaml",
+    "papers/2502.07827.yaml",
+    "papers/2502.17416.yaml",
+    "papers/2506.21734.yaml",
+    "papers/2507.02199.yaml",
+    "papers/2507.07996.yaml",
+    "papers/2507.10524.yaml",
+    "papers/2509.23314.yaml",
+    "papers/2510.04871.yaml",
+    "papers/2510.24824.yaml",
+    "papers/2510.25741.yaml",
+    "papers/2511.07384.yaml",
+    "papers/2511.08577.yaml",
+    "papers/2512.14693.yaml",
+    "papers/2601.21582.yaml",
+    "papers/2602.05999.yaml",
+    "papers/2602.07845.yaml",
+    "papers/2602.08864.yaml",
+    "papers/2602.09080.yaml",
+    "papers/2602.10520.yaml",
+    "papers/2602.11451.yaml",
+    "papers/2602.11698.yaml",
+    "papers/2603.01914.yaml",
+    "papers/2603.04971.yaml",
+    "papers/2603.05234.yaml",
+    "papers/2603.08082.yaml",
+    "papers/2603.08391.yaml",
+    "papers/2603.19714.yaml",
+    "papers/2603.21676.yaml",
+    "papers/2604.07822.yaml",
+    "papers/2604.09168.yaml",
+    "papers/2604.09870.yaml",
+    "papers/2604.11279.yaml",
+    "papers/2604.11791.yaml",
+    "papers/2604.12946.yaml",
+    "papers/2604.14442.yaml",
+    "papers/2604.15259.yaml",
+    "papers/2604.17224.yaml",
+    "papers/2604.18839.yaml",
+    "papers/2604.21106.yaml",
+    "papers/2604.21254.yaml",
+    "papers/2604.21999.yaml",
+    "papers/2604.25551.yaml",
+    "papers/2604.27981.yaml",
+    "papers/2605.06510.yaml",
+    "papers/2605.06609.yaml",
+    "papers/2605.07277.yaml",
+    "papers/2605.07721.yaml",
+    "papers/2605.09165.yaml",
+    "papers/2605.09226.yaml",
+    "papers/2605.11011.yaml",
+    "papers/2605.12466.yaml",
+    "papers/2605.12578.yaml",
+    "papers/2605.16048.yaml",
+    "papers/2605.17811.yaml",
+    "papers/2605.18464.yaml",
+    "papers/2605.18797.yaml",
+    "papers/2605.19376.yaml",
+    "papers/2605.19705.yaml",
+    "papers/2605.19943.yaml",
+    "papers/2605.20389.yaml",
+    "papers/2605.20613.yaml",
+    "papers/2605.20670.yaml",
+    "papers/2605.20784.yaml",
+    "papers/2605.21488.yaml",
+    "papers/2605.23872.yaml",
+    "papers/2605.26106.yaml",
+    "papers/2605.26733.yaml",
+    "papers/2605.28919.yaml",
+    "papers/2605.30215.yaml",
+    "papers/2605.30757.yaml",
+    "papers/2605.31215.yaml",
+    "papers/2606.00114.yaml",
+    "papers/2606.00605.yaml",
+    "papers/2606.01495.yaml",
+    "papers/2606.03287.yaml",
+    "papers/2606.03741.yaml",
+    "papers/2606.04438.yaml",
+    "papers/2606.04678.yaml",
+    "papers/2606.06245.yaml",
+    "papers/2606.06574.yaml",
+    "papers/2606.14498.yaml",
+    "papers/2606.18023.yaml",
+    "papers/2606.18206.yaml",
+    "papers/2606.18208.yaml",
+    "papers/2606.18524.yaml",
+    "papers/2606.22462.yaml",
+    "papers/2606.26488.yaml",
+    "papers/2606.29983.yaml",
+    "papers/2606.31779.yaml",
+    "papers/2606.31796.yaml",
+    "papers/2607.00341.yaml",
+    "papers/2607.02491.yaml",
+    "papers/openreview-chaingpt.yaml",
+    "papers/openreview-modr.yaml"
+  ],
+  "tag_inventories": {
+    "mechanism": [
+      {
+        "label": "flat-loop",
+        "count": 97
+      },
+      {
+        "label": "hierarchical-loop",
+        "count": 16
+      },
+      {
+        "label": "implicit-layer",
+        "count": 13
+      },
+      {
+        "label": "parallel-loop",
+        "count": 4
+      }
+    ],
+    "focus": [
+      {
+        "label": "architecture",
+        "count": 101
+      },
+      {
+        "label": "inference-algorithm",
+        "count": 77
+      },
+      {
+        "label": "training-algorithm",
+        "count": 54
+      },
+      {
+        "label": "objective-loss",
+        "count": 16
+      },
+      {
+        "label": "data",
+        "count": 2
+      }
+    ],
+    "domain": [
+      {
+        "label": "language-modeling",
+        "count": 63
+      },
+      {
+        "label": "reasoning",
+        "count": 61
+      },
+      {
+        "label": "efficiency",
+        "count": 52
+      },
+      {
+        "label": "algorithmic-reasoning",
+        "count": 28
+      },
+      {
+        "label": "scaling",
+        "count": 18
+      },
+      {
+        "label": "theory",
+        "count": 14
+      },
+      {
+        "label": "adaptive-compute",
+        "count": 11
+      },
+      {
+        "label": "memory-efficiency",
+        "count": 9
+      },
+      {
+        "label": "vision",
+        "count": 9
+      },
+      {
+        "label": "sequence-modeling",
+        "count": 5
+      },
+      {
+        "label": "graph-data",
+        "count": 3
+      },
+      {
+        "label": "robotics-vla",
+        "count": 2
+      },
+      {
+        "label": "tabular-data",
+        "count": 2
+      },
+      {
+        "label": "wireless-communications",
+        "count": 2
+      },
+      {
+        "label": "alignment",
+        "count": 1
+      },
+      {
+        "label": "compositional-reasoning",
+        "count": 1
+      },
+      {
+        "label": "electronic-structure",
+        "count": 1
+      },
+      {
+        "label": "FLOPs-efficiency",
+        "count": 1
+      },
+      {
+        "label": "hardware-aware",
+        "count": 1
+      },
+      {
+        "label": "hyperspectral-imaging",
+        "count": 1
+      },
+      {
+        "label": "multimodal",
+        "count": 1
+      },
+      {
+        "label": "neuroscience",
+        "count": 1
+      },
+      {
+        "label": "quantum-machine-learning",
+        "count": 1
+      },
+      {
+        "label": "RL",
+        "count": 1
+      },
+      {
+        "label": "rl-control",
+        "count": 1
+      },
+      {
+        "label": "speech-recognition",
+        "count": 1
+      },
+      {
+        "label": "world-modeling",
+        "count": 1
+      }
+    ]
+  }
+}
