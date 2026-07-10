@@ -7,6 +7,7 @@ import io
 import json
 import subprocess
 import unittest
+from unittest import mock
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -357,6 +358,86 @@ class CatalogRiskReportCliTests(unittest.TestCase):
                     self.assertIn("relative path below root", stderr.getvalue())
                     self.assertFalse((root.parent / "outside.json").exists())
                     self.assertFalse((root.parent / "absolute.json").exists())
+
+    def test_cli_rejects_colliding_output_paths_before_writing(self):
+        """One resolved destination cannot serve as both report formats."""
+        for original in (None, "existing report\n"):
+            with self.subTest(original=original):
+                with TemporaryDirectory() as tmpdir:
+                    root = Path(tmpdir)
+                    write_paper(
+                        root,
+                        "2601.00001",
+                        valid_paper("2601.00001"),
+                    )
+                    snapshot_commit = initialize_git_snapshot(root)
+                    target = root / "exports" / "same.report"
+                    if original is not None:
+                        target.parent.mkdir(parents=True)
+                        target.write_text(original, encoding="utf-8")
+                    stderr = io.StringIO()
+
+                    with contextlib.redirect_stderr(stderr):
+                        exit_code = build_catalog_risk_report.main(
+                            [
+                                "--root",
+                                str(root),
+                                "--generated-on",
+                                "2026-07-10",
+                                "--catalog-commit",
+                                snapshot_commit,
+                                "--json-output",
+                                "exports/same.report",
+                                "--markdown-output",
+                                "exports/./same.report",
+                            ]
+                        )
+
+                    self.assertEqual(exit_code, 1)
+                    self.assertIn("distinct paths", stderr.getvalue())
+                    if original is None:
+                        self.assertFalse(target.exists())
+                    else:
+                        self.assertEqual(target.read_text(encoding="utf-8"), original)
+
+    def test_prepare_failure_preserves_both_existing_outputs(self):
+        """Failure before replacement should preserve both targets and clean temps."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            json_path = root / "risk.json"
+            markdown_path = root / "risk.md"
+            json_path.write_text("old json\n", encoding="utf-8")
+            markdown_path.write_text("old markdown\n", encoding="utf-8")
+            original_prepare = build_catalog_risk_report._prepare_report_temp
+            calls = 0
+
+            def fail_second_prepare(path: Path, content: str) -> Path:
+                """Delegate the first preparation and fail the second one."""
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    raise OSError("simulated second temporary write failure")
+                return original_prepare(path, content)
+
+            with mock.patch.object(
+                build_catalog_risk_report,
+                "_prepare_report_temp",
+                side_effect=fail_second_prepare,
+            ):
+                with self.assertRaisesRegex(OSError, "second temporary write"):
+                    build_catalog_risk_report._write_report_outputs(
+                        (
+                            (json_path, "new json\n"),
+                            (markdown_path, "new markdown\n"),
+                        )
+                    )
+
+            self.assertEqual(json_path.read_text(encoding="utf-8"), "old json\n")
+            self.assertEqual(
+                markdown_path.read_text(encoding="utf-8"),
+                "old markdown\n",
+            )
+            self.assertEqual(list(root.glob(".*.tmp")), [])
 
     def test_cli_rejects_invalid_snapshot_arguments(self):
         """Invalid dates and non-40-hex commits should exit through argparse."""

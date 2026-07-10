@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
+import tempfile
 from collections import Counter, defaultdict
 from dataclasses import asdict
 from datetime import date
@@ -428,6 +430,42 @@ def _output_path(root: Path, value: Path) -> Path:
     return path
 
 
+def _prepare_report_temp(path: Path, content: str) -> Path:
+    """Write one complete same-directory temporary report and return its path."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    file_descriptor, temp_name = tempfile.mkstemp(
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        dir=path.parent,
+    )
+    temp_path = Path(temp_name)
+    try:
+        os.fchmod(file_descriptor, 0o644)
+        handle = os.fdopen(file_descriptor, "w", encoding="utf-8", newline="")
+        file_descriptor = -1
+        with handle:
+            handle.write(content)
+    except BaseException:
+        if file_descriptor >= 0:
+            os.close(file_descriptor)
+        temp_path.unlink(missing_ok=True)
+        raise
+    return temp_path
+
+
+def _write_report_outputs(outputs: Sequence[tuple[Path, str]]) -> None:
+    """Prepare every report fully, then replace each destination and clean temps."""
+    prepared: list[tuple[Path, Path]] = []
+    try:
+        for path, content in outputs:
+            prepared.append((path, _prepare_report_temp(path, content)))
+        for path, temp_path in prepared:
+            os.replace(temp_path, path)
+    finally:
+        for _, temp_path in prepared:
+            temp_path.unlink(missing_ok=True)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Audit the snapshot and write both reports, returning nonzero on unsafe input."""
     args = build_parser().parse_args(argv)
@@ -436,6 +474,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         validate_catalog_provenance(root, args.catalog_commit)
         json_output = _output_path(root, args.json_output)
         markdown_output = _output_path(root, args.markdown_output)
+        if json_output == markdown_output:
+            raise CatalogRiskReportError(
+                "JSON and Markdown outputs must resolve to distinct paths"
+            )
         report = build_catalog_risk_report(
             root=root,
             findings=audit_catalog(root),
@@ -446,9 +488,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             (json_output, json.dumps(report, indent=2, ensure_ascii=False) + "\n"),
             (markdown_output, render_catalog_risk_markdown(report)),
         )
-        for path, content in outputs:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding="utf-8")
+        _write_report_outputs(outputs)
     except (CatalogRiskReportError, OSError) as exc:
         print(f"Catalog risk report generation failed: {exc}", file=sys.stderr)
         return 1

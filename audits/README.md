@@ -52,7 +52,9 @@ format or rule changes remain identifiable.
 
 Output overrides passed with `--json-output` and `--markdown-output` must be
 relative paths that resolve below `--root`. Absolute paths, `..` traversal,
-and every destination inside `papers/` are rejected.
+and every destination inside `papers/` are rejected. The two outputs must be
+distinct; each report is fully prepared in its destination directory before
+the generated files replace their targets.
 
 The priority queue is deterministic. P0 contains auditor errors; P1 contains
 non-P0 manual scope-review seeds or papers with multiple mechanism tags; P2
