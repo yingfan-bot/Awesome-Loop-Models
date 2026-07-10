@@ -1388,6 +1388,118 @@ class TagsReferenceRegressionTests(unittest.TestCase):
 
 
 class SourceFileMetadataTests(unittest.TestCase):
+    def test_submission_metadata_has_minimal_deterministic_schema(self):
+        papers = [
+            {
+                "source_path": "papers/b.yaml",
+                "title": "forbidden paper title",
+                "authors": "forbidden paper authors",
+                "desc": "forbidden paper description",
+                "metrics": {"citations": 99},
+                "links": {"arxiv": "https://example.com/forbidden-paper"},
+                "tags": ["forbidden-paper-alias"],
+                "mechanism_tags": ["flat-loop"],
+                "focus_tags": ["architecture"],
+                "domain_tags": ["vision"],
+            },
+            {
+                "source_path": "papers/a.yaml",
+                "mechanism_tags": ["flat-loop", "implicit-layer"],
+                "focus_tags": ["data"],
+                "domain_tags": ["reasoning", "vision"],
+            },
+        ]
+        blogs = [
+            {
+                "source_path": "blogs/c.yaml",
+                "title": "forbidden blog title",
+                "mechanism_tags": [],
+                "focus_tags": [],
+                "domain_tags": [],
+            },
+            {
+                "source_path": "papers/a.yaml",
+                "mechanism_tags": [],
+                "focus_tags": [],
+                "domain_tags": [],
+            },
+        ]
+
+        payload = build.render_submission_metadata(papers, blogs)
+        reversed_payload = build.render_submission_metadata(list(reversed(papers)), list(reversed(blogs)))
+
+        self.assertEqual(payload, reversed_payload)
+        self.assertEqual(set(payload), {"existing_paths", "tag_inventories"})
+        self.assertEqual(
+            payload["existing_paths"],
+            ["blogs/c.yaml", "papers/a.yaml", "papers/b.yaml"],
+        )
+        self.assertEqual(set(payload["tag_inventories"]), {"mechanism", "focus", "domain"})
+        self.assertEqual(
+            payload["tag_inventories"]["mechanism"],
+            [
+                {"label": "flat-loop", "count": 2},
+                {"label": "implicit-layer", "count": 1},
+                {"label": "hierarchical-loop", "count": 0},
+                {"label": "parallel-loop", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            payload["tag_inventories"]["focus"],
+            [
+                {"label": "architecture", "count": 1},
+                {"label": "data", "count": 1},
+                {"label": "inference-algorithm", "count": 0},
+                {"label": "objective-loss", "count": 0},
+                {"label": "training-algorithm", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            payload["tag_inventories"]["domain"],
+            [
+                {"label": "vision", "count": 2},
+                {"label": "reasoning", "count": 1},
+            ],
+        )
+        for inventory in payload["tag_inventories"].values():
+            for row in inventory:
+                self.assertEqual(set(row), {"label", "count"})
+
+        serialized = json.dumps(payload)
+        for forbidden_field in (
+            '"title"',
+            '"authors"',
+            '"desc"',
+            '"metrics"',
+            '"links"',
+            '"briefings"',
+            '"tags"',
+            '"papers"',
+            '"blogs"',
+            '"generated"',
+        ):
+            self.assertNotIn(forbidden_field, serialized)
+        for forbidden_value in (
+            "forbidden paper title",
+            "forbidden paper authors",
+            "forbidden paper description",
+            "forbidden-paper-alias",
+            "forbidden blog title",
+        ):
+            self.assertNotIn(forbidden_value, serialized)
+
+    def test_build_submission_metadata_writes_rendered_payload(self):
+        papers = [{"source_path": "papers/a.yaml", "mechanism_tags": ["flat-loop"]}]
+        blogs = [{"source_path": "blogs/b.yaml", "domain_tags": ["reasoning"]}]
+
+        with TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "submission-meta.json"
+            with patch.object(build, "SUBMISSION_META_OUT", output_path):
+                build.build_submission_metadata(papers, blogs)
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(payload, build.render_submission_metadata(papers, blogs))
+
     def test_loaded_entries_expose_source_paths(self):
         paper = build.load_papers()[0]
         blog = build.load_blogs()[0]
@@ -1582,7 +1694,11 @@ class ContributionWorkflowTests(unittest.TestCase):
     def test_submit_page_contains_searchable_tag_picker_yaml_preview_and_fork_first_github_guidance(self):
         html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
         self.assertIn("Searchable tag picker", html)
-        self.assertIn("fetch('papers.json')", html)
+        self.assertIn("fetch('submission-meta.json')", html)
+        self.assertNotIn("fetch('papers.json')", html)
+        self.assertNotIn("deriveFallbackSourcePath", html)
+        self.assertIn("existing_paths", html)
+        self.assertIn("tag_inventories", html)
         self.assertIn("submission-form", html)
         self.assertIn("resource-kind-toggle", html)
         self.assertIn("resource-title-input", html)
@@ -1613,7 +1729,8 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertIn("slugifyFilenamePart", html)
         self.assertIn("extractArxivId", html)
         self.assertIn("targetFileExists", html)
-        self.assertIn("source_path", html)
+        self.assertNotIn("data.papers", html)
+        self.assertNotIn("data.blogs", html)
         self.assertIn("tag-picker-search", html)
         self.assertIn("Paper Category", html)
         self.assertIn("three flat paper categories", html)

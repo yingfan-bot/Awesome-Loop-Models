@@ -696,7 +696,7 @@
           <p>Copy the generated path and YAML, fork the repository on GitHub, create a branch in your fork, add the file at that path, then open a pull request back to this repo.</p>
         </article>
       </div>
-      <div class="status" id="status-box">Loading existing tags and filenames from papers.json…</div>
+      <div class="status" id="status-box">Loading existing tags and filenames from submission metadata…</div>
     </section>
 
     <section class="grid">
@@ -843,7 +843,7 @@
               <input class="field-input" id="path-status-output" type="text" readonly value="# Waiting for required fields" />
             </label>
           </div>
-          <div class="preview-note">Duplicate detection runs against the current YAML inventory from <code>papers.json</code>.</div>
+          <div class="preview-note">Duplicate detection runs against the current YAML inventory from submission metadata.</div>
         </div>
 
         <div class="preview-box">
@@ -960,18 +960,6 @@
       if (!box) return;
       box.textContent = text;
       box.className = 'status' + (tone ? ' is-' + tone : '');
-    }
-
-    function sortCountedEntries(counterMap) {
-      return Array.from(counterMap.entries())
-        .sort(function(a, b) {
-          const countDiff = b[1] - a[1];
-          if (countDiff !== 0) return countDiff;
-          return a[0].localeCompare(b[0]);
-        })
-        .map(function(entry) {
-          return { label: entry[0], count: entry[1] };
-        });
     }
 
     function getSortedSelected(group) {
@@ -1639,53 +1627,28 @@
       });
     }
 
-    function deriveFallbackSourcePath(entry) {
-      if (entry.source_path) return entry.source_path;
-      if (entry.entry_type === 'blog') return 'blogs/' + entry.id + '.yaml';
-      return 'papers/' + entry.id + '.yaml';
-    }
-
     async function loadTagData() {
       try {
-        const response = await fetch('papers.json');
-        if (!response.ok) throw new Error('Failed to load papers.json');
+        const response = await fetch('submission-meta.json');
+        if (!response.ok) throw new Error('submission-meta.json returned HTTP ' + response.status);
         const data = await response.json();
-        const entries = (data.papers || []).concat(data.blogs || []);
-        const mechanismCounter = new Map();
-        const focusCounter = new Map();
-        const domainCounter = new Map();
+        const inventories = data.tag_inventories || {};
+        if (!Array.isArray(data.existing_paths)
+          || !Array.isArray(inventories.mechanism)
+          || !Array.isArray(inventories.focus)
+          || !Array.isArray(inventories.domain)) {
+          throw new Error('submission-meta.json has an invalid schema');
+        }
 
-        (data.mechanism_tags || FALLBACK_MECHANISM_TAGS).forEach(function(tag) {
-          mechanismCounter.set(tag, 0);
-        });
-        (data.focus_tags || FALLBACK_FOCUS_TAGS).forEach(function(tag) {
-          focusCounter.set(tag, 0);
-        });
-        SUGGESTED_DOMAIN_TAGS.forEach(function(tag) {
-          domainCounter.set(tag, 0);
-        });
-
-        entries.forEach(function(entry) {
-          STATE.existingPaths.add(deriveFallbackSourcePath(entry));
-          (entry.mechanism_tags || []).forEach(function(tag) {
-            mechanismCounter.set(tag, (mechanismCounter.get(tag) || 0) + 1);
-          });
-          (entry.focus_tags || []).forEach(function(tag) {
-            focusCounter.set(tag, (focusCounter.get(tag) || 0) + 1);
-          });
-          (entry.domain_tags || []).forEach(function(tag) {
-            domainCounter.set(tag, (domainCounter.get(tag) || 0) + 1);
-          });
-        });
-
-        STATE.options.mechanism = sortCountedEntries(mechanismCounter);
-        STATE.options.focus = sortCountedEntries(focusCounter);
-        STATE.options.domain = sortCountedEntries(domainCounter);
+        STATE.existingPaths = new Set(data.existing_paths);
+        STATE.options.mechanism = inventories.mechanism;
+        STATE.options.focus = inventories.focus;
+        STATE.options.domain = inventories.domain;
         renderPicker('mechanism');
         renderPicker('focus');
         renderPicker('domain');
         updateTagOutputs();
-        setStatus('Loaded existing tags and filenames from papers.json. Fill the form to generate a YAML draft, then copy the path and YAML into your fork for the PR flow.', 'success');
+        setStatus('Loaded existing tags and filenames from submission metadata. Fill the form to generate a YAML draft, then copy the path and YAML into your fork for the PR flow.', 'success');
       } catch (error) {
         STATE.options.mechanism = FALLBACK_MECHANISM_TAGS.map(function(tag) {
           return { label: tag, count: 0 };
@@ -1700,7 +1663,8 @@
         renderPicker('focus');
         renderPicker('domain');
         updateTagOutputs();
-        setStatus('Could not load papers.json. Mechanism and focus tags still work, domain tags fall back to seeded suggestions, and duplicate filename checks are unavailable in this mode.', 'warning');
+        const reason = error instanceof Error ? error.message : 'unknown error';
+        setStatus('Could not load submission metadata (' + reason + '). Mechanism and focus tags still work, domain tags fall back to seeded suggestions, and duplicate filename checks are unavailable in this mode.', 'warning');
       }
     }
 
