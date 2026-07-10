@@ -266,7 +266,15 @@ class DailyBriefingBuildTests(unittest.TestCase):
                     "status": "watchlist",
                     "summary": "Latest summary.",
                     "highlights": ["Latest highlight."],
-                    "candidates": [{"id": "2604.21999", "verdict": "strong candidate"}],
+                    "candidates": [
+                        {
+                            "id": "2604.21999",
+                            "title": "A paper",
+                            "verdict": "strong candidate",
+                            "url": "https://arxiv.org/abs/2604.21999",
+                            "internal": "sentinel",
+                        }
+                    ],
                     "content": "Latest full Markdown body.",
                     "source_path": "briefings/2026/04/2026-04-28.md",
                 },
@@ -289,12 +297,49 @@ class DailyBriefingBuildTests(unittest.TestCase):
                     "status": "watchlist",
                     "summary": "Latest summary.",
                     "highlights": ["Latest highlight."],
-                    "candidates": [{"id": "2604.21999", "verdict": "strong candidate"}],
+                    "candidates": [
+                        {
+                            "id": "2604.21999",
+                            "title": "A paper",
+                            "verdict": "strong candidate",
+                            "url": "https://arxiv.org/abs/2604.21999",
+                        }
+                    ],
                     "source_path": "briefings/2026/04/2026-04-28.md",
                 }
             ],
         )
         self.assertNotIn("content", payload["briefings"][0])
+        self.assertNotIn("internal", payload["briefings"][0]["candidates"][0])
+
+    def test_serialize_browser_briefings_copies_nested_ui_fields(self):
+        briefings = [
+            {
+                "date": "2026-04-28",
+                "highlights": ["Original highlight."],
+                "candidates": [
+                    {
+                        "id": "2604.21999",
+                        "title": "Original title",
+                        "verdict": "strong candidate",
+                        "url": "https://arxiv.org/abs/2604.21999",
+                        "internal": "sentinel",
+                    }
+                ],
+            }
+        ]
+
+        browser_briefings = build.serialize_browser_briefings(briefings)
+
+        self.assertIsNot(browser_briefings[0]["highlights"], briefings[0]["highlights"])
+        self.assertIsNot(browser_briefings[0]["candidates"], briefings[0]["candidates"])
+        self.assertIsNot(browser_briefings[0]["candidates"][0], briefings[0]["candidates"][0])
+        self.assertNotIn("internal", browser_briefings[0]["candidates"][0])
+
+        browser_briefings[0]["highlights"].append("Browser-only highlight.")
+        browser_briefings[0]["candidates"][0]["title"] = "Browser-only title"
+        self.assertEqual(briefings[0]["highlights"], ["Original highlight."])
+        self.assertEqual(briefings[0]["candidates"][0]["title"], "Original title")
 
     def test_repo_briefings_use_year_month_daily_paths(self):
         paths = sorted(path for path in BRIEFINGS_DIR.glob("*/*/*.md") if not path.name.startswith("_"))
