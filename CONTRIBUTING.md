@@ -276,11 +276,11 @@ The checker reports every measured value alongside its limit and lists all viola
 | `papers.json` raw size | 260,000 bytes |
 | `papers.json` deterministic gzip size (`mtime=0`) | 60,000 bytes |
 | `papers.json.briefings` | At most 1 item |
-| `content` fields in browser briefings | 0 |
+| `content` keys anywhere within browser briefings | 0 |
 | `submission-meta.json` raw size | 20,000 bytes |
 | `assets/favicon.png` raw size | 10,000 bytes |
 
-Missing files, malformed JSON, and invalid generated JSON schemas also fail the check. CI runs the checker immediately after canonical generation, so do not evaluate it against stale generated files.
+Missing files, malformed JSON, and invalid generated JSON schemas also fail the check. On every pull request, CI regenerates the offline artifacts, checks these budgets, and runs the unit tests. Citation metrics fetching and generated-file commits remain disabled for pull requests, so the PR gate performs no metrics network access and does not write back to the branch. Do not evaluate the checker against stale generated files locally.
 
 If a budget must change intentionally, first confirm that payload or image reduction is not practical. Then explain the measured change and rationale in the pull request, and update the checker constant, its contract tests, and this table together. Budget increases require maintainer review; do not raise a limit only to make CI green.
 

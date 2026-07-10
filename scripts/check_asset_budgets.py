@@ -90,20 +90,56 @@ def add_measurement(
         violations.append(f"{name}: measured={measured} {unit}, limit={limit} {unit}{detail}")
 
 
+def count_nested_key(value: object, key: str) -> int:
+    """Count occurrences of ``key`` recursively through JSON objects and arrays."""
+    if isinstance(value, dict):
+        return int(key in value) + sum(count_nested_key(item, key) for item in value.values())
+    if isinstance(value, list):
+        return sum(count_nested_key(item, key) for item in value)
+    return 0
+
+
 def validate_papers_schema(payload: dict, violations: list[str]) -> tuple[int | None, int | None]:
-    """Validate the browser briefing subset and return its two measurements."""
+    """Validate the browser catalog schema and return its briefing measurements."""
+    for field in ("meta", "categories"):
+        if not isinstance(payload.get(field), dict):
+            violations.append(f"papers.json.{field} must be an object")
+
+    for field in ("mechanism_tags", "focus_tags", "papers", "blogs"):
+        if not isinstance(payload.get(field), list):
+            violations.append(f"papers.json.{field} must be an array")
+
     briefings = payload.get("briefings")
     if not isinstance(briefings, list):
         violations.append("papers.json.briefings must be an array")
         return None, None
 
-    content_fields = 0
+    content_fields = sum(count_nested_key(briefing, "content") for briefing in briefings)
+    string_fields = ("date", "title", "status", "summary", "source_path")
     for index, briefing in enumerate(briefings):
+        label = f"papers.json.briefings[{index}]"
         if not isinstance(briefing, dict):
-            violations.append(f"papers.json.briefings[{index}] must be an object")
+            violations.append(f"{label} must be an object")
             continue
-        if "content" in briefing:
-            content_fields += 1
+        for field in string_fields:
+            if not isinstance(briefing.get(field), str):
+                violations.append(f"{label}.{field} must be a string")
+
+        highlights = briefing.get("highlights")
+        if not isinstance(highlights, list):
+            violations.append(f"{label}.highlights must be an array")
+        else:
+            for highlight_index, highlight in enumerate(highlights):
+                if not isinstance(highlight, str):
+                    violations.append(f"{label}.highlights[{highlight_index}] must be a string")
+
+        candidates = briefing.get("candidates")
+        if not isinstance(candidates, list):
+            violations.append(f"{label}.candidates must be an array")
+        else:
+            for candidate_index, candidate in enumerate(candidates):
+                if not isinstance(candidate, dict):
+                    violations.append(f"{label}.candidates[{candidate_index}] must be an object")
     return len(briefings), content_fields
 
 

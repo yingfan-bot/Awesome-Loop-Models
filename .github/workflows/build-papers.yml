@@ -151,16 +151,13 @@ jobs:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
         run: python3 scripts/fetch_metrics.py
 
-      - name: Build papers.json, README.md, and TAGS.md
-        if: ${{ github.event_name != 'pull_request' }}
+      - name: Build papers.json, submission-meta.json, README.md, and TAGS.md
         run: python3 scripts/build.py
 
       - name: Check static asset budgets
-        if: ${{ github.event_name != 'pull_request' }}
         run: python3 scripts/check_asset_budgets.py
 
       - name: Run unit tests
-        if: ${{ github.event_name != 'pull_request' }}
         run: python3 -m unittest discover -s tests -t . -p 'test_*.py'
 
       - name: Commit metrics and generated files (on main only)

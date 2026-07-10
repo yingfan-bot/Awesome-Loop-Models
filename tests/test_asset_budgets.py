@@ -9,7 +9,13 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import yaml
+
 from scripts import check_asset_budgets
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+WORKFLOW_PATH = REPO_ROOT / ".github" / "workflows" / "build-papers.yml"
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -18,16 +24,35 @@ def write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, sort_keys=True), encoding="utf-8")
 
 
+def valid_briefing(date: str = "2026-07-10") -> dict:
+    """Return the minimal complete browser briefing schema."""
+    return {
+        "date": date,
+        "title": "Latest briefing",
+        "status": "published",
+        "summary": "A concise reader-facing summary.",
+        "source_path": f"briefings/{date[:4]}/{date[5:7]}/{date}.md",
+        "highlights": [],
+        "candidates": [],
+    }
+
+
+def valid_papers_payload() -> dict:
+    """Return the minimal complete browser catalog schema."""
+    return {
+        "meta": {},
+        "categories": {},
+        "mechanism_tags": [],
+        "focus_tags": [],
+        "papers": [],
+        "blogs": [],
+        "briefings": [valid_briefing()],
+    }
+
+
 def write_valid_fixture(root: Path) -> None:
     """Create the smallest valid repository fixture for the budget checker."""
-    write_json(
-        root / "papers.json",
-        {
-            "papers": [],
-            "blogs": [],
-            "briefings": [{"date": "2026-07-10", "title": "Latest briefing"}],
-        },
-    )
+    write_json(root / "papers.json", valid_papers_payload())
     write_json(
         root / "submission-meta.json",
         {
@@ -89,7 +114,9 @@ class AssetBudgetContractTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             write_valid_fixture(root)
-            write_json(root / "papers.json", {"briefings": [], "padding": "x" * 260_000})
+            payload = valid_papers_payload()
+            payload["padding"] = "x" * 260_000
+            write_json(root / "papers.json", payload)
 
             report = check_asset_budgets.check_asset_budgets(root)
 
@@ -108,10 +135,9 @@ class AssetBudgetContractTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             write_valid_fixture(root)
-            write_json(
-                root / "papers.json",
-                {"briefings": [], "padding": deterministic_noise(140_000)},
-            )
+            payload = valid_papers_payload()
+            payload["padding"] = deterministic_noise(140_000)
+            write_json(root / "papers.json", payload)
 
             report = check_asset_budgets.check_asset_budgets(root)
 
@@ -168,9 +194,11 @@ class AssetBudgetContractTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             write_valid_fixture(root)
+            payload = valid_papers_payload()
+            payload["briefings"] = [valid_briefing("2026-07-10"), valid_briefing("2026-07-09")]
             write_json(
                 root / "papers.json",
-                {"briefings": [{"date": "2026-07-10"}, {"date": "2026-07-09"}]},
+                payload,
             )
 
             report = check_asset_budgets.check_asset_budgets(root)
@@ -183,15 +211,100 @@ class AssetBudgetContractTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             write_valid_fixture(root)
-            write_json(
-                root / "papers.json",
-                {"briefings": [{"date": "2026-07-10", "content": "Too much text"}]},
-            )
+            payload = valid_papers_payload()
+            payload["briefings"][0]["content"] = "Too much text"
+            write_json(root / "papers.json", payload)
 
             report = check_asset_budgets.check_asset_budgets(root)
 
         self.assertEqual(measurement(report, "papers.json briefing content fields"), 1)
         self.assertIn("must not contain a 'content' field", "\n".join(report.violations))
+
+    def test_rejects_nested_briefing_content_field(self):
+        """No nested candidate or metadata object may restore full briefing content."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_valid_fixture(root)
+            payload = valid_papers_payload()
+            payload["briefings"][0]["candidates"] = [
+                {"title": "Candidate", "details": {"content": "Hidden Markdown"}}
+            ]
+            write_json(root / "papers.json", payload)
+
+            report = check_asset_budgets.check_asset_budgets(root)
+
+        self.assertEqual(measurement(report, "papers.json briefing content fields"), 1)
+        self.assertIn("must not contain a 'content' field", "\n".join(report.violations))
+
+    def test_rejects_missing_required_browser_root_fields(self):
+        """Every browser-consumed top-level catalog field must be present."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_valid_fixture(root)
+            write_json(root / "papers.json", {"briefings": []})
+
+            report = check_asset_budgets.check_asset_budgets(root)
+
+        violations = "\n".join(report.violations)
+        for field in ("meta", "categories", "mechanism_tags", "focus_tags", "papers", "blogs"):
+            with self.subTest(field=field):
+                self.assertIn(f"papers.json.{field}", violations)
+
+    def test_rejects_wrong_browser_root_field_types(self):
+        """Browser-consumed objects and arrays must retain their expected root types."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_valid_fixture(root)
+            payload = valid_papers_payload()
+            payload.update(
+                {
+                    "meta": [],
+                    "categories": [],
+                    "mechanism_tags": {},
+                    "focus_tags": {},
+                    "papers": {},
+                    "blogs": {},
+                    "briefings": {},
+                }
+            )
+            write_json(root / "papers.json", payload)
+
+            report = check_asset_budgets.check_asset_budgets(root)
+
+        violations = "\n".join(report.violations)
+        self.assertIn("papers.json.meta must be an object", violations)
+        self.assertIn("papers.json.categories must be an object", violations)
+        for field in ("mechanism_tags", "focus_tags", "papers", "blogs", "briefings"):
+            with self.subTest(field=field):
+                self.assertIn(f"papers.json.{field} must be an array", violations)
+
+    def test_rejects_invalid_briefing_field_types(self):
+        """Required briefing scalar, highlight, and candidate fields must match the UI schema."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_valid_fixture(root)
+            payload = valid_papers_payload()
+            payload["briefings"] = [
+                {
+                    "date": 20260710,
+                    "title": None,
+                    "status": [],
+                    "summary": {},
+                    "source_path": False,
+                    "highlights": ["valid", 3],
+                    "candidates": [{"title": "valid"}, "invalid"],
+                }
+            ]
+            write_json(root / "papers.json", payload)
+
+            report = check_asset_budgets.check_asset_budgets(root)
+
+        violations = "\n".join(report.violations)
+        for field in ("date", "title", "status", "summary", "source_path"):
+            with self.subTest(field=field):
+                self.assertIn(f"papers.json.briefings[0].{field} must be a string", violations)
+        self.assertIn("papers.json.briefings[0].highlights[1] must be a string", violations)
+        self.assertIn("papers.json.briefings[0].candidates[1] must be an object", violations)
 
     def test_reports_missing_and_malformed_json_clearly(self):
         """Missing and malformed JSON files should be reported in one run."""
@@ -243,14 +356,15 @@ class AssetBudgetContractTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             write_valid_fixture(root)
+            payload = valid_papers_payload()
+            first = valid_briefing()
+            first["content"] = "first"
+            second = valid_briefing("2026-07-09")
+            second["content"] = "second"
+            payload["briefings"] = [first, second]
             write_json(
                 root / "papers.json",
-                {
-                    "briefings": [
-                        {"content": "first"},
-                        {"content": "second"},
-                    ]
-                },
+                payload,
             )
             (root / "assets" / "favicon.png").write_bytes(
                 b"x" * (check_asset_budgets.FAVICON_BYTES_LIMIT + 1)
@@ -266,6 +380,35 @@ class AssetBudgetContractTests(unittest.TestCase):
         self.assertIn("must not contain a 'content' field", rendered)
         self.assertIn("assets/favicon.png raw bytes", rendered)
         self.assertIn("Asset budgets: FAIL", rendered)
+
+    def test_workflow_runs_generation_budgets_and_tests_on_pull_requests(self):
+        """PR CI should run offline generation and gates while keeping network and writes guarded."""
+        workflow = yaml.safe_load(WORKFLOW_PATH.read_text(encoding="utf-8"))
+        steps = workflow["jobs"]["build"]["steps"]
+        steps_by_name = {step["name"]: step for step in steps}
+
+        offline_gate_commands = {
+            "Build papers.json, submission-meta.json, README.md, and TAGS.md": "python3 scripts/build.py",
+            "Check static asset budgets": "python3 scripts/check_asset_budgets.py",
+            "Run unit tests": "python3 -m unittest discover -s tests -t . -p 'test_*.py'",
+        }
+        for name, command in offline_gate_commands.items():
+            with self.subTest(step=name):
+                self.assertEqual(steps_by_name[name]["run"], command)
+                self.assertNotIn("if", steps_by_name[name])
+
+        for name in (
+            "Require Semantic Scholar API key",
+            "Fetch citation counts and GitHub stars",
+        ):
+            with self.subTest(step=name):
+                self.assertEqual(
+                    steps_by_name[name]["if"],
+                    "${{ github.event_name != 'pull_request' }}",
+                )
+        commit_condition = steps_by_name["Commit metrics and generated files (on main only)"]["if"]
+        self.assertIn("github.event_name != 'pull_request'", commit_condition)
+        self.assertIn("github.ref == 'refs/heads/main'", commit_condition)
 
 
 if __name__ == "__main__":
