@@ -20,6 +20,8 @@
 
 A curated list of papers and selected long-form technical blogs on **Loop Models** — architectures where, within a single forward process, a shared learned internal layer, block, module, or operator is reused.
 
+Local preview: run `python3 -m http.server 8123 --bind 127.0.0.1` from the repo root and open `http://127.0.0.1:8123/index.html`; direct `file://` opens cannot load `papers.json`.
+
 ---
 
 ## News

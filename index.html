@@ -3802,7 +3802,12 @@ function renderAllGrids(q) {
     blogsGrid.innerHTML = blogs.map(function(blog) { return renderCard(blog, query); }).join('');
   }
 
-  renderTableView(query, filteredPapers);
+  if (CURRENT_VIEW === 'table') {
+    renderTableView(query, filteredPapers);
+  } else {
+    const tableBody = document.getElementById('papers-table-body');
+    if (tableBody && tableBody.children.length) tableBody.textContent = '';
+  }
   syncDynamicCounts(filteredPapers);
 
   const hasQuery = Boolean(query);
