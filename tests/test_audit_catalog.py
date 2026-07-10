@@ -191,6 +191,96 @@ class CatalogAuditTests(unittest.TestCase):
         self.assertIn(("cross-axis-tag-collision", "domain_tags[1]"), keys)
         self.assertIn(("cross-axis-tag-collision", "tags[0]"), keys)
 
+    def test_required_tag_lists_cannot_be_empty_but_optional_tags_can(self):
+        """Every required tag axis should contain a value while aliases may be empty."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            paper = valid_paper()
+            paper["mechanism_tags"] = []
+            paper["domain_tags"] = []
+            paper["focus_tags"] = []
+            paper["tags"] = []
+            write_paper(root, "2601.00001.yaml", paper)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        empty_fields = {
+            item.field for item in findings if item.code == "empty-field"
+        }
+        self.assertEqual(
+            empty_fields,
+            {"mechanism_tags", "domain_tags", "focus_tags"},
+        )
+
+    def test_valid_optional_metadata_types_have_no_findings(self):
+        """Every allowed optional field should accept its canonical raw type."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            paper = valid_paper()
+            paper.update(
+                {
+                    "added_date": "2026-01-03",
+                    "citation_source_best": "semantic_scholar",
+                    "citation_sources": {"semantic_scholar": 0},
+                    "citations": 0,
+                    "foundation": False,
+                    "github_stars": 3,
+                    "metrics_updated": "2026-01-04",
+                    "must_read": True,
+                    "star_source_best": "github_api",
+                    "star_sources": {"github_api": 3},
+                    "tags": [],
+                }
+            )
+            write_paper(root, "2601.00001.yaml", paper)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        self.assertEqual(findings, [])
+
+    def test_invalid_optional_metadata_types_report_precise_field_paths(self):
+        """Optional scalars, counters, and source mappings should retain raw types."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            paper = valid_paper()
+            paper.update(
+                {
+                    "foundation": "false",
+                    "must_read": 1,
+                    "citations": True,
+                    "github_stars": -1,
+                    "citation_source_best": "",
+                    "star_source_best": 7,
+                    "citation_sources": {
+                        "": 0,
+                        "semantic_scholar": True,
+                        "openalex": -1,
+                    },
+                    "star_sources": [],
+                }
+            )
+            write_paper(root, "2601.00001.yaml", paper)
+
+            findings = audit_catalog.audit_catalog(root)
+
+        keys = {(item.code, item.field) for item in findings}
+        for field in (
+            "foundation",
+            "must_read",
+            "citations",
+            "github_stars",
+            "citation_source_best",
+            "star_source_best",
+            "star_sources",
+        ):
+            with self.subTest(field=field):
+                self.assertIn(("invalid-field-type", field), keys)
+        self.assertIn(("invalid-map-key", "citation_sources['']"), keys)
+        self.assertIn(
+            ("invalid-map-value", "citation_sources.semantic_scholar"), keys
+        )
+        self.assertIn(("invalid-map-value", "citation_sources.openalex"), keys)
+
     def test_description_soft_limits_are_warnings(self):
         """Long or multi-sentence descriptions should warn without becoming errors."""
         with TemporaryDirectory() as tmpdir:

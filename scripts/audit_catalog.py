@@ -53,6 +53,7 @@ ALLOWED_FIELDS = frozenset(
     )
 )
 TAG_FIELDS = ("mechanism_tags", "domain_tags", "focus_tags", "tags")
+REQUIRED_TAG_FIELDS = frozenset(("mechanism_tags", "domain_tags", "focus_tags"))
 PRIMARY_LINK_FIELDS = ("arxiv", "paper", "openreview")
 ARXIV_FILENAME_RE = re.compile(r"^(\d{4}\.\d{4,5})$")
 ARXIV_URL_RE = re.compile(
@@ -182,6 +183,88 @@ def _validate_scalar_fields(data: dict, source: str, findings: list[Finding]) ->
             "category",
             f"Expected one of {expected}; got {category!r}.",
         )
+
+
+def _is_non_negative_int(value: object) -> bool:
+    """Return whether ``value`` is a non-boolean, non-negative integer."""
+    return isinstance(value, int) and not isinstance(value, bool) and value >= 0
+
+
+def _validate_optional_fields(data: dict, source: str, findings: list[Finding]) -> None:
+    """Validate every allowed optional scalar and metric mapping raw type."""
+    for field in ("foundation", "must_read"):
+        if field in data and not isinstance(data[field], bool):
+            _add(
+                findings,
+                "error",
+                "invalid-field-type",
+                source,
+                field,
+                f"Expected a boolean; got {type(data[field]).__name__}.",
+            )
+
+    for field in ("citations", "github_stars"):
+        if field in data and not _is_non_negative_int(data[field]):
+            _add(
+                findings,
+                "error",
+                "invalid-field-type",
+                source,
+                field,
+                "Expected a non-negative integer.",
+            )
+
+    for field in ("citation_source_best", "star_source_best"):
+        if field in data:
+            value = data[field]
+            if not isinstance(value, str) or not value.strip():
+                _add(
+                    findings,
+                    "error",
+                    "invalid-field-type",
+                    source,
+                    field,
+                    "Expected a non-empty string.",
+                )
+
+    for field in ("citation_sources", "star_sources"):
+        if field not in data:
+            continue
+        sources = data[field]
+        if not isinstance(sources, dict):
+            _add(
+                findings,
+                "error",
+                "invalid-field-type",
+                source,
+                field,
+                f"Expected a mapping; got {type(sources).__name__}.",
+            )
+            continue
+        for key in sorted(sources, key=str):
+            item_field = (
+                f"{field}.{key}"
+                if isinstance(key, str) and key
+                else f"{field}[{key!r}]"
+            )
+            if not isinstance(key, str) or not key.strip():
+                _add(
+                    findings,
+                    "error",
+                    "invalid-map-key",
+                    source,
+                    item_field,
+                    "Expected a non-empty string key.",
+                )
+            if not _is_non_negative_int(sources[key]):
+                _add(
+                    findings,
+                    "error",
+                    "invalid-map-value",
+                    source,
+                    item_field,
+                    "Expected a non-negative integer value.",
+                )
 
 
 def _parse_iso_date(
@@ -356,6 +439,15 @@ def _validate_tags(data: dict, source: str, findings: list[Finding]) -> None:
                 f"Expected a list of non-empty strings; got {type(value).__name__}.",
             )
             continue
+        if field in REQUIRED_TAG_FIELDS and not value:
+            _add(
+                findings,
+                "error",
+                "empty-field",
+                source,
+                field,
+                "Expected at least one tag.",
+            )
         seen: set[str] = set()
         normalized_items: list[tuple[int, str]] = []
         for index, item in enumerate(value):
@@ -509,6 +601,7 @@ def audit_catalog(root: Path = REPO_ROOT) -> list[Finding]:
             if field not in ALLOWED_FIELDS:
                 _add(findings, "error", "unknown-field", source, str(field), "Unknown top-level field.")
         _validate_scalar_fields(data, source, findings)
+        _validate_optional_fields(data, source, findings)
         _validate_dates(data, source, findings)
         links = _validate_links(data, source, findings)
         _validate_arxiv_identity(path, links, source, findings)
