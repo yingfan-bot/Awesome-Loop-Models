@@ -3,6 +3,9 @@
 # papers/<paper-id>.yaml. Copy evidence from a primary source; do not infer it.
 
 paper_id: "2601.00001"
+# A remove record may remain as an evidence tombstone after its canonical
+# papers/<paper-id>.yaml file is deleted only when audits/removed-papers.yaml
+# retains the same primary-source identity. Other statuses require that file.
 status: "needs-review" # needs-review | verified | remove
 
 source:

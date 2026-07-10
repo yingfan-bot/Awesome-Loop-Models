@@ -351,7 +351,7 @@ Verify title, author order, dates/venue, description claims, category, foundatio
 
 **Step 4: Apply evidence-backed corrections**
 
-Only change canonical YAML when the ledger explains the evidence. Keep unresolved claims explicitly unresolved.
+Only change canonical YAML when the ledger explains the evidence. Keep unresolved claims explicitly unresolved. When an out-of-scope paper is removed from `papers/`, retain its `status: remove` audit record as an evidence tombstone and register the matching primary-source identity in `audits/removed-papers.yaml`; non-removal audit records still require a canonical paper.
 
 **Step 5: Validate the batch**
 

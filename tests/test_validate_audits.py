@@ -225,6 +225,94 @@ class AuditValidationTests(unittest.TestCase):
         self.assertEqual(invalid_result.coverage.remove, 0)
         self.assertEqual(invalid_result.coverage.complete_decisions, 0)
 
+    def test_removed_paper_tombstone_is_valid_without_canonical_record(self):
+        """A completed removal may retain evidence after canonical deletion."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_yaml(
+                root,
+                "papers/2601.00002.yaml",
+                canonical_paper("2601.00002"),
+            )
+            retained = valid_audit("2601.00002")
+            write_yaml(root, "audits/papers/2601.00002.yaml", retained)
+
+            removed = valid_audit("2601.00001")
+            removed["status"] = "remove"
+            removed["confidence"] = "high"
+            removed["scope"] = {
+                "verdict": "out-of-scope",
+                "evidence": "The method repeats complete model calls externally.",
+                "locator": "Section 3, Algorithm 1",
+            }
+            removed["content_checks"]["description"]["status"] = "issue"
+            removed["unresolved_questions"] = []
+            write_yaml(root, "audits/papers/2601.00001.yaml", removed)
+            write_yaml(
+                root,
+                "audits/removed-papers.yaml",
+                {"2601.00001": "https://arxiv.org/abs/2601.00001"},
+            )
+
+            result = validate_audits.validate_audits(
+                root, require_complete=True
+            )
+
+        self.assertEqual(result.findings, ())
+        self.assertEqual(result.coverage.canonical_papers, 1)
+        self.assertEqual(result.coverage.audit_records, 2)
+        self.assertEqual(result.coverage.covered_papers, 1)
+        self.assertEqual(result.coverage.verified, 1)
+        self.assertEqual(result.coverage.remove, 0)
+
+    def test_orphan_remove_requires_controlled_manifest_entry(self):
+        """A remove status alone must not authorize an unknown paper ID."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_yaml(
+                root,
+                "papers/2601.00002.yaml",
+                canonical_paper("2601.00002"),
+            )
+            removed = valid_audit("2601.00001")
+            removed["status"] = "remove"
+            removed["scope"]["verdict"] = "out-of-scope"
+            write_yaml(root, "audits/papers/2601.00001.yaml", removed)
+
+            result = validate_audits.validate_audits(root)
+
+        self.assertIn(
+            "unknown-paper-id",
+            {finding.code for finding in result.findings},
+        )
+
+    def test_removal_manifest_and_audit_source_identity_must_match(self):
+        """A tombstone source may not point at a different paper identity."""
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            write_yaml(
+                root,
+                "papers/2601.00002.yaml",
+                canonical_paper("2601.00002"),
+            )
+            removed = valid_audit("2601.00001")
+            removed["status"] = "remove"
+            removed["scope"]["verdict"] = "out-of-scope"
+            removed["source"]["url"] = "https://arxiv.org/abs/2601.99999"
+            write_yaml(root, "audits/papers/2601.00001.yaml", removed)
+            write_yaml(
+                root,
+                "audits/removed-papers.yaml",
+                {"2601.00001": "https://arxiv.org/abs/2601.00001"},
+            )
+
+            result = validate_audits.validate_audits(root)
+
+        self.assertIn(
+            "source-id-mismatch",
+            {finding.code for finding in result.findings},
+        )
+
     def test_filename_paper_id_and_canonical_source_must_match(self):
         """Record identity should agree with its path and primary-source identity."""
         with TemporaryDirectory() as tmpdir:

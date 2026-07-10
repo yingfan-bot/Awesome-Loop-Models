@@ -384,6 +384,83 @@ def _url_identity(value: str) -> str | None:
     return urlunsplit((parsed.scheme.lower(), netloc, path, query, ""))
 
 
+def _load_removed_sources(
+    root: Path,
+    canonical_ids: frozenset[str],
+    findings: list[Finding],
+) -> dict[str, str]:
+    """Load controlled removed-paper IDs and their retained source identities."""
+    path = root / "audits" / "removed-papers.yaml"
+    if not path.exists():
+        return {}
+    source = _source_name(path, root)
+    loaded = _load_yaml(path, root, findings)
+    if loaded is YAML_LOAD_FAILED:
+        return {}
+    if not isinstance(loaded, dict):
+        _add(
+            findings,
+            "top-level-type",
+            source,
+            "$",
+            f"Expected a mapping; got {type(loaded).__name__}.",
+        )
+        return {}
+
+    removed_sources: dict[str, str] = {}
+    for raw_paper_id in sorted(loaded, key=str):
+        url = loaded[raw_paper_id]
+        field = str(raw_paper_id)
+        if not isinstance(raw_paper_id, str) or not raw_paper_id.strip():
+            _add(
+                findings,
+                "invalid-removed-paper-id",
+                source,
+                field,
+                "Expected a non-empty string paper ID.",
+            )
+            continue
+        paper_id = raw_paper_id.strip()
+        if paper_id in canonical_ids:
+            _add(
+                findings,
+                "removed-paper-still-canonical",
+                source,
+                paper_id,
+                f"papers/{paper_id}.yaml still exists.",
+            )
+        if not isinstance(url, str) or not _is_absolute_http_url(url):
+            _add(
+                findings,
+                "invalid-url",
+                source,
+                paper_id,
+                "Expected an absolute HTTP(S) primary-source URL.",
+            )
+            continue
+        identity = _url_identity(url)
+        if identity is None:
+            _add(
+                findings,
+                "invalid-source-identity",
+                source,
+                paper_id,
+                "Could not derive a stable primary-source identity.",
+            )
+            continue
+        if ARXIV_ID_RE.fullmatch(paper_id) and identity != f"arxiv:{paper_id}":
+            _add(
+                findings,
+                "manifest-source-id-mismatch",
+                source,
+                paper_id,
+                f"Source identity {identity!r} does not match {paper_id!r}.",
+            )
+            continue
+        removed_sources[paper_id] = identity
+    return removed_sources
+
+
 def _validate_canonical_paper(
     data: dict,
     paper_id: str,
@@ -575,6 +652,7 @@ def _validate_audit_record(
     path: Path,
     root: Path,
     canonical: dict[str, tuple[dict[str, object], frozenset[str]]],
+    removed_sources: dict[str, str],
     findings: list[Finding],
 ) -> tuple[str | None, str | None]:
     """Validate one audit record and return its logical ID and valid status."""
@@ -604,13 +682,20 @@ def _validate_audit_record(
             "paper_id",
             f"Record ID {paper_id!r} does not match filename stem {path.stem!r}.",
         )
-    if paper_id is not None and paper_id not in canonical:
+    if (
+        paper_id is not None
+        and paper_id not in canonical
+        and not (status == "remove" and paper_id in removed_sources)
+    ):
         _add(
             findings,
             "unknown-paper-id",
             source,
             "paper_id",
-            f"No canonical papers/{paper_id}.yaml record exists.",
+            (
+                f"No canonical papers/{paper_id}.yaml record exists. "
+                "Only an evidenced remove record may remain after canonical deletion."
+            ),
         )
 
     source_data = _mapping_field(data, "source", source, "", findings)
@@ -711,6 +796,18 @@ def _validate_audit_record(
                             f"taxonomy.{field}.{value_key}",
                             "Verified taxonomy must exactly match canonical YAML.",
                         )
+    elif (
+        paper_id in removed_sources
+        and source_identity is not None
+        and source_identity != removed_sources[paper_id]
+    ):
+        _add(
+            findings,
+            "source-id-mismatch",
+            source,
+            "source.url",
+            "Removal audit source does not match audits/removed-papers.yaml.",
+        )
 
     if status == "verified":
         if scope_verdict != "in-scope":
@@ -810,6 +907,12 @@ def validate_audits(
             )
         canonical_valid[path.stem] = len(findings) == finding_count
 
+    removed_sources = _load_removed_sources(
+        root,
+        frozenset(canonical),
+        findings,
+    )
+
     audit_records: list[tuple[str, str | None, str | None, bool]] = []
     records_by_id: dict[str, list[str]] = {}
     for path in audit_paths:
@@ -830,7 +933,12 @@ def validate_audits(
             )
         else:
             paper_id, status = _validate_audit_record(
-                loaded, path, root, canonical, findings
+                loaded,
+                path,
+                root,
+                canonical,
+                removed_sources,
+                findings,
             )
         if paper_id is not None:
             prior = records_by_id.setdefault(paper_id, [])
@@ -846,6 +954,29 @@ def validate_audits(
         audit_records.append(
             (source, paper_id, status, len(findings) == finding_count)
         )
+
+    statuses_by_id = {
+        paper_id: status
+        for _, paper_id, status, _ in audit_records
+        if paper_id is not None
+    }
+    for paper_id in sorted(removed_sources):
+        if paper_id not in records_by_id:
+            _add(
+                findings,
+                "missing-removal-audit",
+                "audits/removed-papers.yaml",
+                paper_id,
+                f"No audits/papers/{paper_id}.yaml removal record exists.",
+            )
+        elif statuses_by_id.get(paper_id) != "remove":
+            _add(
+                findings,
+                "invalid-removal-status",
+                records_by_id[paper_id][0],
+                "status",
+                "A removed-paper manifest entry requires status: remove.",
+            )
 
     canonical_ids = set(canonical)
     covered_ids = canonical_ids.intersection(records_by_id)
