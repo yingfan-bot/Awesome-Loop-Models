@@ -16,6 +16,9 @@ mechanism_tags:
 - flat-loop
 domain_tags:
 - robotics-vla
+- efficiency
+- memory-efficiency
+- adaptive-compute
 tags:
 - RD-VLA
 focus_tags:

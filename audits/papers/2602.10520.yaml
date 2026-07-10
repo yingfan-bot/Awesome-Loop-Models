@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.10520"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.10520
+  version: "arXiv v3, 2026-05-28; ICML 2026"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "RLTT trains an underlying LoopLM whose shared weights produce multiple latent loop states in one forward computation."
+  locator: "Introduction; Section 3.1, Equations 1-2; Section 3.2, page 3, Equation 4"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a reinforcement-learning objective for looped language models."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The underlying LoopLM reuses one learned stack over flat recurrent depth."
+  focus_tags:
+    values:
+      - objective-loss
+      - training-algorithm
+    rationale: "RLTT assigns and optimizes rewards over the latent loop-depth distribution."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "The objective improves reasoning in looped language models."
+  tags:
+    values:
+      - RLTT
+      - LoopLM
+    rationale: "These are the proposed training method and target model-family identifiers."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv metadata confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The current arXiv metadata records ICML 2026."
+  description:
+    status: verified
+    evidence: "Sections 3-4 support rewarding the full latent trajectory rather than only the terminal state."
+  links:
+    status: verified
+    evidence: "The arXiv page and jonwill8/RLTT repository identify the work."
+unresolved_questions: []

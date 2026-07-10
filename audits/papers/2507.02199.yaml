@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2507.02199"
+status: verified
+source:
+  url: https://arxiv.org/abs/2507.02199
+  version: "arXiv v2; COLM 2025 reasoning/planning explainability workshop"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "After its prelude, Huginn repeatedly executes the same four recurrent blocks r times before the coda."
+  locator: "Section 2.1, page 2, Equation 1"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper probes whether latent chain-of-thought structure emerges across recurrent depth."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The shared recurrent block group is repeated over one depth axis."
+  focus_tags:
+    values:
+      - inference-algorithm
+    rationale: "The analysis concerns hidden-state behavior across inference recurrences."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "The work probes a recurrent language model for latent reasoning structure."
+  tags:
+    values:
+      - depth-recurrent
+      - latent-cot
+      - Huginn
+    rationale: "These identify the recurrent-depth setting, probe target, and audited model."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The OpenReview record confirms the COLM 2025 workshop presentation."
+  description:
+    status: verified
+    evidence: "Section 3.3 and the conclusion cautiously report limited latent-CoT evidence and recurrence-depth-dependent interpretability."
+  links:
+    status: verified
+    evidence: "The arXiv, OpenReview, and wenquanlu/huginn-latent-cot links identify the same work."
+unresolved_questions: []

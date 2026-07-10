@@ -1,0 +1,49 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.05999"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.05999
+  version: "arXiv v4, 2026-07-02; ICML 2026 Spotlight"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The same learned iterative reasoning unit is recursively applied N times inside a policy forward pass."
+  locator: "Section 5, page 4, Figure 1 and Equations 2-4"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The core contribution is a theoretical and empirical analysis of computation in reinforcement learning."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One IRU block is reused over a single internal computation axis."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The controlled variable-compute policy architecture is the relevant loop-model artifact."
+  domain_tags:
+    values:
+      - rl-control
+      - theory
+    rationale: "Theorems and 31 control tasks characterize iterative computation in online/offline RL."
+  tags:
+    values:
+      - compute-bounded-policy
+      - IRU
+    rationale: "These identify the policy formulation and iterative reasoning unit."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "arXiv v4, OpenReview, and the official project confirm the corrected title and four-author order."
+  publication:
+    status: verified
+    evidence: "The official OpenReview record confirms ICML 2026 Spotlight."
+  description:
+    status: verified
+    evidence: "Theorems 4.1-4.2 and the 31-task experiments support the compute-bounded policy, iterative gains, and longer-horizon result."
+  links:
+    status: verified
+    evidence: "The arXiv, ICML OpenReview, and author project page identify the same paper."
+unresolved_questions: []

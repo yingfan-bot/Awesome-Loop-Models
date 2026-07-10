@@ -1,0 +1,55 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2511.08577"
+status: verified
+source:
+  url: https://arxiv.org/abs/2511.08577
+  version: "arXiv v3, 2026-06-14; ICML 2026"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Think-at-Hard executes recurrent depth sequentially while reusing learned latent refiners inside one forward process."
+  locator: "Section 5.1, page 4, Figure 2 and Equation 6"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces selective latent iterations and their training procedure."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "Depth iterations are sequential; full-sequence attention parallelism is not a parallel loop form."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The work contributes refiners/decider architecture, two-stage training, and selective inference depth."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - adaptive-compute
+    rationale: "The method adaptively spends latent language-model compute on hard tokens."
+  tags:
+    values:
+      - Think-at-Hard
+      - TaH
+      - LoRA
+      - adaptive-latent-iteration
+    rationale: "These identify the method, abbreviation, adaptation mechanism, and selective recurrence."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the title and six-author order."
+  publication:
+    status: verified
+    evidence: "The official OpenReview record confirms ICML 2026; 2025-11-11 remains the arXiv v1 date."
+  description:
+    status: verified
+    evidence: "Sections 5.1-5.3 support the decider, LoRA refiners, duo-causal attention, and two-stage training."
+  links:
+    status: verified
+    evidence: "The arXiv, ICML OpenReview, and thu-nics/TaH identities match."
+unresolved_questions: []

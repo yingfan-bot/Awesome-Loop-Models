@@ -14,17 +14,20 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
+- algorithmic-reasoning
+- theory
 tags:
 - latent-thoughts
 - looped-transformer
 focus_tags:
+- objective-loss
 - training-algorithm
-- inference-algorithm
 desc: Studies looped transformers as reasoning models, showing effective-depth scaling,
   latent-thought simulation of chain-of-thought, and a looping-based regularizer that
   improves the reasoning-versus-memorization trade-off.
 links:
   arxiv: https://arxiv.org/abs/2502.17416
+  openreview: https://openreview.net/forum?id=din0lGfZFd
   comment:
   - label: Reza Bayat reading list (#7)
     url: https://x.com/reza_byt/status/2045168844658950392?s=20

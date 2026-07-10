@@ -6,7 +6,7 @@ authors:
 year: 2026
 published_date: '2026-02-11'
 added_date: '2026-04-20'
-venue: arXiv
+venue: ICML
 category: designs
 mechanism_tags:
 - flat-loop
@@ -24,6 +24,7 @@ desc: Introduces RLTT, a reinforcement-learning objective that assigns reward ac
   final latent state.
 links:
   arxiv: https://arxiv.org/abs/2602.10520
+  github: https://github.com/jonwill8/RLTT
 citations: 3
 citation_sources:
   semantic_scholar: 3

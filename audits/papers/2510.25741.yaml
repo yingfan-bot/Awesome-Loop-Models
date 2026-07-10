@@ -1,0 +1,54 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2510.25741"
+status: verified
+source:
+  url: https://arxiv.org/abs/2510.25741
+  version: "arXiv v5, 2026-07-01"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Ouro repeats the same K-layer learned stack R times, with gating over the recurrent depth."
+  locator: "Section 3.1, Figure 3 and Equation 1; Section 3.2, Equation 3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces pretrained Looped Language Models and loop-depth scaling."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One learned stack is reused over a single recurrent-depth axis."
+  focus_tags:
+    values:
+      - objective-loss
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The work covers the LoopLM design, entropy objective, large-scale pretraining, and adaptive-depth execution."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - adaptive-compute
+    rationale: "Ouro is a language/reasoning model whose recurrent depth provides efficient adaptive computation."
+  tags:
+    values:
+      - Ouro
+      - LoopLM
+    rationale: "Ouro and LoopLM are official model/family identifiers."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and thirty-three-author order."
+  publication:
+    status: verified
+    evidence: "The source history records v1 on 2025-10-29 and current v5 on 2026-07-01."
+  description:
+    status: verified
+    evidence: "Section 3 and Tables 7-8 support the model sizes, 7.7T-token training, qualified 4B/8B comparisons, and loop depth as a scaling axis."
+  links:
+    status: verified
+    evidence: "The arXiv, Ouro project, and ByteDance Hugging Face page identify the work; the comment is separately labeled."
+unresolved_questions: []

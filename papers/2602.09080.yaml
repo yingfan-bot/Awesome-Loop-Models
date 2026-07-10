@@ -15,15 +15,18 @@ added_date: '2026-04-20'
 venue: arXiv
 category: designs
 mechanism_tags:
-- hierarchical-loop
+- flat-loop
 domain_tags:
 - vision
 - efficiency
+- multimodal
+- adaptive-compute
 tags:
 - RecursiveVLM
-- multimodal
 focus_tags:
 - architecture
+- objective-loss
+- training-algorithm
 - inference-algorithm
 desc: Introduces RecursiveVLM, a recursive multimodal transformer with a recursive
   connector and monotonic recursion loss that enables on-demand extra refinement under
