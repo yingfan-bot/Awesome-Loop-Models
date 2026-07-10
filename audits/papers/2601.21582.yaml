@@ -1,0 +1,57 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2601.21582"
+status: verified
+source:
+  url: https://arxiv.org/abs/2601.21582
+  version: "arXiv v1, 2026-01-29"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    Dreamer repeatedly applies the same attention-mixture layer across recurrent
+    depth within one forward pass; the parallel attention branches occur inside
+    each step and do not make the depth loop parallel.
+  locator: "Sections 3.1 and 3.6, Figures 1-2, Equations 5-6; Section 3.7, Equations 7-8"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The primary contribution is a depth-recurrent attention-mixture architecture."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The learned layer is reused sequentially across depth without parallel loop execution."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The paper proposes a fixed-depth recurrent architecture rather than a separate inference algorithm."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - MoE
+    rationale: "The framework combines language/reasoning evaluation with sparse experts and matched-resource analysis."
+  tags:
+    values:
+      - Dreamer
+    rationale: "Dreamer is the official model name used in the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history confirms submission on 2026-01-29 and no formal venue claim."
+  description:
+    status: verified
+    evidence: >-
+      Section 3 defines the sequence, depth, and sparse-expert attention mixture;
+      Table 2 reports higher accuracy and data efficiency under tight resource matching.
+  links:
+    status: verified
+    evidence: >-
+      The canonical arXiv link identifies the paper; the separately labeled X URL
+      is a reading note and does not claim official paper ownership.
+unresolved_questions: []

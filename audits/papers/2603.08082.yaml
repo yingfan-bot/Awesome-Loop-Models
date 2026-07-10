@@ -1,0 +1,61 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2603.08082"
+status: verified
+source:
+  url: https://arxiv.org/abs/2603.08082
+  version: "arXiv v1, 2026-03-09; ICLR 2026 Workshop RSI Spotlight"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    The controlled model family repeatedly applies the same decoder block within
+    one autoregressive forward call; its Autoregressive TRM nests inner latent
+    refinements inside solution updates and resets streams between calls.
+  locator: "Figure 1; Section 3.2; Table 1"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The main artifact is a compute-matched decomposition and negative empirical analysis."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+      - flat-loop
+    rationale: "The study covers both nested Autoregressive TRM refinement and flat recurrent baselines."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: >-
+      It isolates architectural compute placement and within-forward recurrent
+      execution choices under a fixed objective and training protocol; analyzing
+      learning dynamics does not constitute a new training algorithm.
+  domain_tags:
+    values:
+      - algorithmic-reasoning
+      - language-modeling
+    rationale: "The experiments use causal language modeling on character-level algorithmic tasks."
+  tags:
+    values:
+      - TRM
+    rationale: "TRM is the recursive model family analyzed by the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and three-author order."
+  publication:
+    status: verified
+    evidence: >-
+      The arXiv history records v1 on 2026-03-09, and its journal-reference
+      field lists ICLR 2026 Workshop RSI Spotlight.
+  description:
+    status: verified
+    evidence: >-
+      Section 1 Findings and Figures 3-6 support the matched-budget comparison,
+      the advantage of untied depth/flat two-stream recurrence, and the lack of
+      consistent benefit from the full Autoregressive TRM.
+  links:
+    status: verified
+    evidence: "The arXiv page and pauliusrauba/autoregressive-TRM repository identify the work."
+unresolved_questions: []

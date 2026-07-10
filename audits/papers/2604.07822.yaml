@@ -1,0 +1,52 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.07822"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.07822
+  version: "arXiv v1, 2026-04-09"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The same GPT-2-style learned layer stack f_theta is explicitly iterated R times in one forward process."
+  locator: "Figure 1, pages 1-2; Section 4, pages 4-5"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper studies generalization and overthinking behavior in recurrent-depth Transformers."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: >-
+      The model explicitly unrolls one shared stack; 'implicit reasoning' means
+      reasoning without emitted chain-of-thought, not an implicit equilibrium layer.
+  focus_tags:
+    values:
+      - inference-algorithm
+    rationale: "The analysis centers on scaling recurrence at inference and its overthinking limit."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "The experiments study implicit multi-hop reasoning in a language-model architecture."
+  tags:
+    values:
+      - implicit-reasoning
+    rationale: "Implicit reasoning is the paper's stated problem setting."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and four-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-04-09 and under-review status."
+  description:
+    status: verified
+    evidence: >-
+      Sections 5-6 and Figures 3-4 and 8 support systematic generalization,
+      depth extrapolation, inference-time recurrence scaling, and overthinking.
+  links:
+    status: verified
+    evidence: "The arXiv page and OSU-NLP-Group/Loop-Think-Generalize repository match the work."
+unresolved_questions: []

@@ -1,0 +1,59 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2605.20613"
+status: verified
+source:
+  url: https://arxiv.org/abs/2605.20613
+  version: "arXiv v1, 2026-05-20"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    HRM-Text reuses the same learned low- and high-level modules over a
+    two-timescale schedule, with three low updates inside each of two high cycles.
+  locator: "Section 2 and Figure 2; Table 1, H2L3 configuration"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the HRM-Text pretraining architecture and recipe."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+      - flat-loop
+    rationale: "Low updates are nested under high cycles, and each learned module is reused across its updates."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - objective-loss
+      - data
+    rationale: "The contributions include architecture, warmup credit assignment, PrefixLM/task-completion objectives, and data-efficient pretraining."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+    rationale: "The 1B model is pretrained for language/reasoning tasks with 40B unique tokens and efficiency as a core claim."
+  tags:
+    values:
+      - HRM
+      - HRM-Text
+      - PrefixLM
+    rationale: "HRM-Text is the official model, HRM its family, and PrefixLM the masking scheme explicitly used and ablated."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and nine-author order."
+  publication:
+    status: verified
+    evidence: "The canonical identity is arXiv 2605.20613, first submitted on 2026-05-20."
+  description:
+    status: verified
+    evidence: >-
+      The abstract and Section 2 support the dual-timescale model, MagicNorm,
+      warmup credit assignment, PrefixLM, task completion, and 40B-token training claim.
+  links:
+    status: verified
+    evidence: "The arXiv page and Sapient project, repository, and model card all identify HRM-Text."
+unresolved_questions: []

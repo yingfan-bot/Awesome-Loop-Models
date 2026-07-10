@@ -8,7 +8,6 @@ venue: arXiv
 category: analysis
 mechanism_tags:
 - flat-loop
-- implicit-layer
 domain_tags:
 - reasoning
 - theory
@@ -22,6 +21,7 @@ desc: Analyzes stability and generalization in looped transformers through a fix
   and trainable loop dynamics.
 links:
   arxiv: https://arxiv.org/abs/2604.15259
+  github: https://github.com/ashlab11/generalization
 citations: 5
 citation_sources:
   semantic_scholar: 5

@@ -17,10 +17,8 @@ domain_tags:
 tags:
 - HRM
 - TRM
-- mechanistic-analysis
 focus_tags:
 - architecture
-- inference-algorithm
 desc: Proposes interaction locality as a mechanistic measurement framework for HRM
   and TRM, showing how repeated recursive updates accumulate local writes into broader
   solution structure on grid reasoning benchmarks.

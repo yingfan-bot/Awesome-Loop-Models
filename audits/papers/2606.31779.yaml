@@ -1,0 +1,52 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.31779"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.31779
+  version: "arXiv v1, 2026-06-30"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "LOTUS explicitly reuses one base language model and prefix KV state over R sequential recurrent-depth iterations."
+  locator: "Section 3.2, Equation 2"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the LOTUS looped padded Transformer and its training objective."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "Loop iterations are sequential; parallel latent positions inside each iteration are not parallel loop execution."
+  focus_tags:
+    values:
+      - architecture
+      - objective-loss
+      - training-algorithm
+    rationale: "The contribution combines the padded recurrent architecture with step-aligned and answer losses used for training."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - scaling
+    rationale: "The study compares latent and explicit reasoning, thought latency, and a 3B-scale model."
+  tags:
+    values:
+      - LOTUS
+    rationale: "LOTUS is the proposed model's official identifier."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and three-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-06-30 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Sections 3.2-3.3 and Section 4.2 Tables 1-2 support parallel latent blocks, 3B explicit-CoT matching, and lower thought latency."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

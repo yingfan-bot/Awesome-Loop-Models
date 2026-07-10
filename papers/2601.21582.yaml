@@ -11,19 +11,19 @@ published_date: '2026-01-29'
 venue: arXiv
 category: designs
 mechanism_tags:
-- parallel-loop
 - flat-loop
 domain_tags:
 - language-modeling
 - reasoning
 - efficiency
+- MoE
 tags:
-- attention-mixture
+- Dreamer
 focus_tags:
 - architecture
-- inference-algorithm
-desc: Introduces a modular framework combining sequence attention and depth attention
-  for recurrent-depth models, improving FLOP-, parameter-, and memory-efficiency simultaneously.
+desc: Introduces Dreamer, a depth-recurrent attention-mixture framework combining
+  sequence, depth, and sparse expert attention, and reports higher reasoning accuracy
+  and data efficiency than tightly FLOP-, parameter-, and memory-matched baselines.
 links:
   arxiv: https://arxiv.org/abs/2601.21582
   comment:

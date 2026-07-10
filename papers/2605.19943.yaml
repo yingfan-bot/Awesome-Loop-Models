@@ -10,9 +10,7 @@ venue: arXiv
 category: designs
 foundation: false
 mechanism_tags:
-- hierarchical-loop
 - flat-loop
-- parallel-loop
 domain_tags:
 - reasoning
 - algorithmic-reasoning
@@ -20,7 +18,6 @@ domain_tags:
 tags:
 - TRM
 - PTRM
-- stochastic-rollouts
 focus_tags:
 - inference-algorithm
 desc: Introduces PTRM, an inference-time scaling framework for Tiny Recursive Models

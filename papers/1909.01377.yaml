@@ -10,16 +10,21 @@ category: designs
 foundation: true
 mechanism_tags:
 - implicit-layer
+domain_tags:
+- sequence-modeling
+- language-modeling
+- memory-efficiency
 tags:
 - DEQ
 focus_tags:
 - architecture
 - training-algorithm
 - inference-algorithm
-desc: Proposes to directly solve for the fixed point of an infinite-depth network,
-  enabling implicit-depth models that are memory-efficient and theoretically equivalent
-  to infinitely deep recurrent networks.
+desc: Proposes DEQ, which directly solves for the fixed point of an infinite-depth
+  weight-tied network and uses implicit differentiation to train with constant activation
+  memory.
 links:
+  arxiv: https://arxiv.org/abs/1909.01377
   paper: https://proceedings.neurips.cc/paper/2019/hash/01386bd6d8e091c2ab4c7c7de644d37b-Abstract.html
   github: https://github.com/locuslab/deq
 citations: 922

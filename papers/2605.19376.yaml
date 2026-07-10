@@ -13,15 +13,13 @@ venue: arXiv
 category: designs
 foundation: false
 mechanism_tags:
+- hierarchical-loop
 - flat-loop
-- parallel-loop
 domain_tags:
 - reasoning
 - algorithmic-reasoning
 tags:
 - GRAM
-- recursive-reasoning
-- latent-trajectories
 focus_tags:
 - architecture
 - objective-loss

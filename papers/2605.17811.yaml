@@ -26,6 +26,7 @@ desc: Analyzes Asymmetric Input Recurrence, a two-state shared-weight recurrent 
   asymmetry induce distinct proposal-vs-uncertainty roles on Sudoku-Extreme and Maze.
 links:
   arxiv: https://arxiv.org/abs/2605.17811
+  github: https://github.com/juchengshen/air
 citations: 0
 citation_sources:
   semantic_scholar: 0

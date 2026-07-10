@@ -1,0 +1,54 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2510.04871"
+status: verified
+source:
+  url: https://arxiv.org/abs/2510.04871
+  version: "arXiv v1, 2025-10-06"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    TRM repeatedly applies the same learned two-layer network to refine its
+    latent state and then reuses that network across answer-improvement steps.
+  locator: "Figure 3; Algorithm 3; Sections 4 and 4.3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The main contribution is the Tiny Recursive Model architecture and training recipe."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One network is reused repeatedly; the paper explicitly removes HRM's two-module hierarchy."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+      - training-algorithm
+    rationale: "TRM changes the recurrent architecture, recursive execution, and deep-supervision training."
+  domain_tags:
+    values:
+      - reasoning
+      - algorithmic-reasoning
+    rationale: "The reported tasks are ARC-AGI, Sudoku, and maze-style algorithmic reasoning."
+  tags:
+    values:
+      - TRM
+    rationale: "TRM is the proposed model's official abbreviation."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and sole author."
+  publication:
+    status: verified
+    evidence: "The arXiv history confirms submission on 2025-10-06 and no formal venue claim."
+  description:
+    status: verified
+    evidence: >-
+      Figure 3 and Algorithm 3 support single-network refinement; the paper
+      reports 44.6% ARC-AGI-1, 7.8% ARC-AGI-2, and a 7M-parameter model.
+  links:
+    status: verified
+    evidence: "The arXiv page and SamsungSAILMontreal/TinyRecursiveModels repository match the work."
+unresolved_questions: []
