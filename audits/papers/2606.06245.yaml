@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.06245"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.06245
+  version: "arXiv v1, 2026-06-04"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Each MPCoT latent hypothesis path is refined for K steps by the same weight-tied refiner before the paths are reward-aggregated for action prediction."
+  locator: "Section 3.3, Equations 4-5; Sections 3.4 and 3.6"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The parallel recurrent reasoning mechanism is applied to vision-language-action policy learning."
+  mechanism_tags:
+    values: [parallel-loop]
+    rationale: "Multiple latent paths recur independently through a shared refiner before aggregation."
+  focus_tags:
+    values: [architecture, objective-loss, inference-algorithm]
+    rationale: "The work contributes parallel latent paths, reward-guided supervision, and test-time path/refinement scaling."
+  domain_tags:
+    values: [robotics-vla, reasoning]
+    rationale: "The target is latent reasoning for embodied vision-language-action control."
+  tags:
+    values: [MPCoT]
+    rationale: "MPCoT is the paper's method abbreviation."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-04; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 3.3-3.6 support multi-path initialization, K weight-tied refinement steps, reward guidance, and aggregation before decoding."
+  links:
+    status: verified
+    evidence: "The paper identifies the EDGSCOUT/MPCoT code repository."
+unresolved_questions: []

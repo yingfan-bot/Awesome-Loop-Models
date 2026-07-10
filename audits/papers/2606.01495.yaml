@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.01495"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.01495
+  version: "arXiv v2, 2026-06-03"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "CART applies the same learned CoreBlock R times in a single forward pass, anchoring each recurrence to precomputed context tensors."
+  locator: "Section 3.2, architecture definition"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper proposes and evaluates a recurrent language-model architecture."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "A single CoreBlock is reused over one recurrence axis."
+  focus_tags:
+    values: [architecture]
+    rationale: "The contribution is the context-anchored recurrent topology rather than a distinct training objective."
+  domain_tags:
+    values: [language-modeling]
+    rationale: "CART is trained and evaluated as an autoregressive language model."
+  tags:
+    values: [looped-transformer, shared-weight-recurrence, hyper-connections, CART]
+    rationale: "The aliases capture the model name, shared recurrent core, and hyper-connection design."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v2 title page confirms the title and sole author Chad A. Capps."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-05-31 and v2 on 2026-06-03; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 3.2, 7.4, and 8 support the shared context-anchored CoreBlock and the reported negative parameter-parity result."
+  links:
+    status: verified
+    evidence: "The paper and project materials identify the ccapps42/CART repository."
+unresolved_questions: []

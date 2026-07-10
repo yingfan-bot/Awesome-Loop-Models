@@ -13,14 +13,15 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - efficiency
-- scaling
-- MoE
 focus_tags:
 - architecture
+- objective-loss
 - training-algorithm
 tags:
 - depth-recurrent
 - shared-weight-recurrence
+- CHERRY
+- MoEE
 desc: Compresses a 48-layer language Transformer to 6 layers and restores depth through
   learned recurrent unrolling, then combines compressed recurrent models as efficient
   experts.

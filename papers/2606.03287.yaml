@@ -14,9 +14,9 @@ mechanism_tags:
 - flat-loop
 domain_tags:
 - vision
-- efficiency
 tags:
 - recursive-transformer
+- BA-T
 focus_tags:
 - architecture
 - inference-algorithm
@@ -26,6 +26,7 @@ desc: Implements bundle-adjustment-style 3D reconstruction updates as a repeatab
 links:
   arxiv: https://arxiv.org/abs/2606.03287
   alphaxiv: https://www.alphaxiv.org/abs/2606.03287
+  github: https://github.com/zhangganlin/BA-T
 citations: 0
 citation_sources:
   semantic_scholar: 0

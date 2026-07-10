@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2607.00341"
+status: verified
+source:
+  url: https://arxiv.org/abs/2607.00341
+  version: "arXiv v1, 2026-07-01"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "DiscoLoop applies one shared Transformer backbone four times in a forward pass while carrying discrete embeddings and continuous hidden states between loop steps."
+  locator: "Abstract; method section; Appendix B"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a dual-channel recurrent architecture for multi-hop reasoning."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "The same backbone is reused sequentially across four loop steps."
+  focus_tags:
+    values: [architecture]
+    rationale: "The principal novelty is jointly recurrent discrete and continuous state channels."
+  domain_tags:
+    values: [language-modeling, reasoning]
+    rationale: "The architecture is evaluated as a language model on multi-hop reasoning."
+  tags:
+    values: [looped-transformer, looped-llm, DiscoLoop]
+    rationale: "The aliases identify the recurrent language-model family and the proposed method."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and eight-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-07-01; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "The method and Appendix B support four shared-backbone applications and recurrence over both discrete embeddings and continuous hidden states."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

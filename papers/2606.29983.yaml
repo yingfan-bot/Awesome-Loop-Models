@@ -9,7 +9,7 @@ year: 2026
 published_date: '2026-06-29'
 added_date: '2026-06-29'
 venue: arXiv
-category: analysis
+category: designs
 foundation: false
 mechanism_tags:
 - flat-loop
@@ -23,6 +23,7 @@ focus_tags:
 tags:
 - looped-transformer
 - depth-scaling
+- halting
 desc: Studies looped Transformers that repeatedly apply a shared Transformer block,
   showing that stochastic training-time loop counts and learned stochastic stopping
   can reduce out-of-distribution variance across inference loop counts on algorithmic

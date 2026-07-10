@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.31796"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.31796
+  version: "arXiv v1, 2026-06-30"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Each CHERRY expert restores depth by repeatedly applying its compressed learned middle core within one language-model forward pass."
+  locator: "Section 3.3.2; Table 5; Appendix C.2"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper proposes compressed recurrent language-model experts and combines them."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "A compressed shared core is recurrently unrolled along one depth axis."
+  focus_tags:
+    values: [architecture, objective-loss, training-algorithm]
+    rationale: "The contribution combines the recurrent expert design with selective-supervision objectives and staged compression/recovery training."
+  domain_tags:
+    values: [language-modeling, efficiency]
+    rationale: "The model targets language modeling with compression and parameter-efficient expert reuse."
+  tags:
+    values: [depth-recurrent, shared-weight-recurrence, CHERRY, MoEE]
+    rationale: "CHERRY and MoEE are the paper's method names; the remaining aliases describe recurrent shared-depth execution."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-30; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Section 3.3.2, Table 5, and Appendix C.2 support compressing 48 layers to 6, recurrently restoring depth, and combining the resulting models as experts."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

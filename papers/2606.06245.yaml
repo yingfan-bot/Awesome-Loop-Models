@@ -13,15 +13,18 @@ mechanism_tags:
 domain_tags:
 - robotics-vla
 - reasoning
+tags:
+- MPCoT
 focus_tags:
 - architecture
-- training-algorithm
+- objective-loss
 - inference-algorithm
 desc: Introduces a VLA latent-reasoning policy that initializes multiple latent hypotheses,
   refines them for K weight-tied steps, and aggregates them before action decoding.
 links:
   arxiv: https://arxiv.org/abs/2606.06245
   alphaxiv: https://www.alphaxiv.org/abs/2606.06245
+  github: https://github.com/EDGSCOUT/MPCoT
 citations: 0
 citation_sources:
   semantic_scholar: 0

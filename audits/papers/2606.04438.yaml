@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.04438"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.04438
+  version: "arXiv v1, 2026-06-03"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "LoopMoE repeatedly executes a weight-shared Transformer-MoE loop body between nonrecurrent input and output layers during one language-model forward pass."
+  locator: "Section 3.2, looped sandwich architecture; Section 3.3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The main contribution is a looped sparse-expert language-model architecture."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "The shared loop body is applied sequentially along a single recurrence axis."
+  focus_tags:
+    values: [architecture]
+    rationale: "Sparse routing, iteration conditioning, and capacity balancing are components of the proposed architecture."
+  domain_tags:
+    values: [language-modeling]
+    rationale: "The model is designed and evaluated for language modeling."
+  tags:
+    values: [looped-transformer, looped-llm, MoE, LoopMoE]
+    rationale: "The aliases identify the looping family, sparse-expert design, and method name."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and six-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-03; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 3.2-3.3 support weight-shared recurrence, sparse routing, iteration-conditioned modulation, and capacity balancing."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

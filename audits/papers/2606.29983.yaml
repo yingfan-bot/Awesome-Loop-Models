@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.29983"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.29983
+  version: "arXiv v1, 2026-06-29"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The model repeatedly applies one shared Transformer block, while stochastic loop-count training and a learned stopping policy control how many applications occur."
+  locator: "Section 3.2; Section 4.3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper proposes stochastic-depth training and a learned stopping mechanism for looped Transformers."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "A single weight-shared block is repeated along one depth axis."
+  focus_tags:
+    values: [training-algorithm, inference-algorithm]
+    rationale: "The contributions are stochastic training depths and a learned inference-time stopping policy."
+  domain_tags:
+    values: [algorithmic-reasoning, scaling, adaptive-compute]
+    rationale: "The experiments study algorithmic sequence tasks, recurrent-depth extrapolation, and input-dependent stopping."
+  tags:
+    values: [looped-transformer, depth-scaling, halting]
+    rationale: "The aliases describe the architecture, evaluated depth extrapolation, and stopping mechanism."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-29; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 3.2 and 4.3 support stochastic training loop counts, learned stopping, and reduced out-of-distribution variance across inference depths."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []
