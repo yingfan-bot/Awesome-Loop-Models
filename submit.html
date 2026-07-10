@@ -962,6 +962,44 @@
       box.className = 'status' + (tone ? ' is-' + tone : '');
     }
 
+    /** Return whether every inventory row is a safe plain {label, count} object. */
+    function isValidCountedInventory(inventory) {
+      return Array.isArray(inventory) && inventory.every(function(row) {
+        return Boolean(row)
+          && typeof row === 'object'
+          && !Array.isArray(row)
+          && Object.getPrototypeOf(row) === Object.prototype
+          && typeof row.label === 'string'
+          && Boolean(row.label.trim())
+          && Number.isFinite(row.count)
+          && Number.isInteger(row.count)
+          && row.count >= 0;
+      });
+    }
+
+    /** Merge frontend-only suggestions into observed rows, preserving counts and stable display order. */
+    function mergeSuggestedCountedInventory(observedInventory, suggestedLabels) {
+      const rowsByLabel = new Map();
+      observedInventory.forEach(function(row) {
+        const key = row.label.toLowerCase();
+        if (!rowsByLabel.has(key)) {
+          rowsByLabel.set(key, { label: row.label, count: row.count });
+        }
+      });
+      suggestedLabels.forEach(function(label) {
+        const normalizedLabel = String(label || '').trim();
+        if (!normalizedLabel) return;
+        const key = normalizedLabel.toLowerCase();
+        if (!rowsByLabel.has(key)) {
+          rowsByLabel.set(key, { label: normalizedLabel, count: 0 });
+        }
+      });
+      return Array.from(rowsByLabel.values()).sort(function(a, b) {
+        const countDiff = b.count - a.count;
+        return countDiff !== 0 ? countDiff : a.label.localeCompare(b.label);
+      });
+    }
+
     function getSortedSelected(group) {
       return Array.from(STATE.selected[group]).sort(function(a, b) {
         return a.localeCompare(b);
@@ -1634,16 +1672,16 @@
         const data = await response.json();
         const inventories = data.tag_inventories || {};
         if (!Array.isArray(data.existing_paths)
-          || !Array.isArray(inventories.mechanism)
-          || !Array.isArray(inventories.focus)
-          || !Array.isArray(inventories.domain)) {
+          || !isValidCountedInventory(inventories.mechanism)
+          || !isValidCountedInventory(inventories.focus)
+          || !isValidCountedInventory(inventories.domain)) {
           throw new Error('submission-meta.json has an invalid schema');
         }
 
         STATE.existingPaths = new Set(data.existing_paths);
         STATE.options.mechanism = inventories.mechanism;
         STATE.options.focus = inventories.focus;
-        STATE.options.domain = inventories.domain;
+        STATE.options.domain = mergeSuggestedCountedInventory(inventories.domain, SUGGESTED_DOMAIN_TAGS);
         renderPicker('mechanism');
         renderPicker('focus');
         renderPicker('domain');

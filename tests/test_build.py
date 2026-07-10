@@ -1643,6 +1643,21 @@ class ContributionWorkflowTests(unittest.TestCase):
     def load_issue_config() -> dict:
         return yaml.safe_load(ISSUE_TEMPLATE_CONFIG_PATH.read_text(encoding="utf-8"))
 
+    @staticmethod
+    def run_submission_inventory_helpers(expression: str):
+        """Evaluate the submission inventory pure helpers from submit.html in Node."""
+        html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
+        helper_start = html.index("function isValidCountedInventory(inventory) {")
+        helper_end = html.index("function getSortedSelected(group) {", helper_start)
+        helpers = html[helper_start:helper_end]
+        script = f"""
+{helpers}
+const result = {expression};
+process.stdout.write(JSON.stringify(result));
+"""
+        output = subprocess.check_output(["node", "-e", script], text=True)
+        return json.loads(output)
+
     def test_old_submission_issue_templates_are_removed(self):
         self.assertFalse((REPO_ROOT / ".github" / "ISSUE_TEMPLATE" / "add_paper.yml").exists())
         self.assertFalse((REPO_ROOT / ".github" / "ISSUE_TEMPLATE" / "add_blog.yml").exists())
@@ -1699,6 +1714,13 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertNotIn("deriveFallbackSourcePath", html)
         self.assertIn("existing_paths", html)
         self.assertIn("tag_inventories", html)
+        self.assertIn("isValidCountedInventory(inventories.mechanism)", html)
+        self.assertIn("isValidCountedInventory(inventories.focus)", html)
+        self.assertIn("isValidCountedInventory(inventories.domain)", html)
+        self.assertIn(
+            "STATE.options.domain = mergeSuggestedCountedInventory(inventories.domain, SUGGESTED_DOMAIN_TAGS);",
+            html,
+        )
         self.assertIn("submission-form", html)
         self.assertIn("resource-kind-toggle", html)
         self.assertIn("resource-title-input", html)
@@ -1770,6 +1792,60 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertNotIn("Taxonomy category required", html)
         self.assertNotIn("Automatic YAML generation is disabled for new paper category proposals", html)
         self.assertIn("efficient-loop", html)
+
+    def test_submit_inventory_helpers_merge_observed_and_suggested_domain_tags(self):
+        result = self.run_submission_inventory_helpers("""({
+  missingSuggestion: mergeSuggestedCountedInventory(
+    [{label: 'vision', count: 4}, {label: 'reasoning', count: 2}],
+    ['efficient-loop', 'reasoning']
+  ),
+  observedSuggestion: mergeSuggestedCountedInventory(
+    [{label: 'vision', count: 2}, {label: 'efficient-loop', count: 2}],
+    ['efficient-loop']
+  )
+})""")
+
+        self.assertEqual(
+            result["missingSuggestion"],
+            [
+                {"label": "vision", "count": 4},
+                {"label": "reasoning", "count": 2},
+                {"label": "efficient-loop", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            result["observedSuggestion"],
+            [
+                {"label": "efficient-loop", "count": 2},
+                {"label": "vision", "count": 2},
+            ],
+        )
+        self.assertEqual(
+            sum(row["label"] == "efficient-loop" for row in result["observedSuggestion"]),
+            1,
+        )
+
+    def test_submit_inventory_helper_rejects_malformed_rows(self):
+        result = self.run_submission_inventory_helpers("""({
+  valid: isValidCountedInventory([{label: 'flat-loop', count: 0}]),
+  malformed: [
+    isValidCountedInventory([null]),
+    isValidCountedInventory([[]]),
+    isValidCountedInventory([{label: '', count: 0}]),
+    isValidCountedInventory([{label: '   ', count: 0}]),
+    isValidCountedInventory([{label: 3, count: 0}]),
+    isValidCountedInventory([{label: 'flat-loop', count: -1}]),
+    isValidCountedInventory([{label: 'flat-loop', count: 1.5}]),
+    isValidCountedInventory([{label: 'flat-loop', count: Infinity}]),
+    isValidCountedInventory([{label: 'flat-loop', count: NaN}]),
+    isValidCountedInventory([
+      Object.assign(Object.create(null), {label: 'flat-loop', count: 1})
+    ])
+  ]
+})""")
+
+        self.assertTrue(result["valid"])
+        self.assertEqual(result["malformed"], [False] * 10)
 
     def test_submit_page_marks_required_fields_and_gives_tag_actions_more_spacing(self):
         html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
