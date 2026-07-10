@@ -23,7 +23,7 @@ The four measured files total 656,107 uncompressed bytes. This total is a filesy
 
 ## Verified post-change source deltas
 
-These measurements compare the current committed source at `a4fd92184cc7a01c38aac5d6b80448d3102e56f3`
+These measurements compare the committed source at `b64c890f3acf007597c671f75ce386656931f734`
 with the fixed baseline commit. They intentionally exclude generated-artifact and browser-runtime
 claims until the canonical build and browser checks run under CI/Slurm.
 
@@ -38,11 +38,27 @@ The source diff also proves three render/network-path changes without relying on
 
 - `index.html` no longer loads Google Fonts, removing the stylesheet request plus its font-host connections.
 - Category and blog section construction no longer fills card grids before the initial `renderAllGrids()` pass, eliminating the known duplicate initial card-markup build.
-- `submit.html` now loads the dedicated `submission-meta.json` payload instead of the full browsing catalog; its final transfer-size reduction remains pending regeneration.
+- `submit.html` now loads the dedicated `submission-meta.json` payload instead of the full browsing catalog.
 
-`papers.json`, `submission-meta.json`, `README.md`, and `TAGS.md` are intentionally not reported as
-post-change artifacts yet. Their authoritative after-values require `python3 scripts/build.py`, and
-the final runtime/transfer comparison requires the external verification gate below.
+## External CI after-values
+
+GitHub Actions run `29093679344` rebuilt the generated artifacts from commit
+`b64c890f3acf007597c671f75ce386656931f734` and passed the asset-budget and full unit-test gates.
+
+| Artifact or request path | Baseline | CI after-value | Delta |
+|---|---:|---:|---:|
+| `papers.json` raw | 370,796 bytes | 206,451 bytes | -164,345 bytes (-44.32%) |
+| `papers.json` deterministic gzip | 74,208 bytes | 34,483 bytes | -39,725 bytes (-53.53%) |
+| Submission bootstrap payload | 370,796-byte `papers.json` | 6,387-byte `submission-meta.json` | -364,409 bytes (-98.28%) |
+| Favicon | 89,103 bytes | 3,938 bytes | -85,165 bytes (-95.58%) |
+
+The baseline four-file filesystem sum was 656,107 bytes. Counting the new dedicated submission
+payload, the corresponding five generated/source artifacts total 412,922 bytes, a reduction of
+243,185 bytes (-37.06%). This is an artifact-size comparison, not a browser timing benchmark.
+
+The same run generated 109 papers, 7 blogs, and 32 source briefings while emitting only one
+browser briefing with no `content` fields. All six asset budgets passed, and the full suite reported
+`Ran 204 tests in 1.852s` followed by `OK`.
 
 ## Briefing payload
 

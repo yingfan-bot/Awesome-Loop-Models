@@ -16,6 +16,7 @@ from scripts import check_asset_budgets
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = REPO_ROOT / ".github" / "workflows" / "build-papers.yml"
+UPDATE_METRICS_WORKFLOW_PATH = REPO_ROOT / ".github" / "workflows" / "update-metrics.yml"
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -409,6 +410,21 @@ class AssetBudgetContractTests(unittest.TestCase):
         commit_condition = steps_by_name["Commit metrics and generated files (on main only)"]["if"]
         self.assertIn("github.event_name != 'pull_request'", commit_condition)
         self.assertIn("github.ref == 'refs/heads/main'", commit_condition)
+        self.assertIn(
+            "git add -f papers.json submission-meta.json README.md TAGS.md",
+            steps_by_name["Commit metrics and generated files (on main only)"]["run"],
+        )
+
+    def test_metric_workflow_commits_submission_metadata(self):
+        """Scheduled rebuilds should publish every generated browser dependency."""
+        workflow = yaml.safe_load(UPDATE_METRICS_WORKFLOW_PATH.read_text(encoding="utf-8"))
+        steps = workflow["jobs"]["update-metrics"]["steps"]
+        commit_step = next(step for step in steps if step["name"] == "Commit updated metrics")
+
+        self.assertIn(
+            "git add -f papers.json submission-meta.json README.md TAGS.md",
+            commit_step["run"],
+        )
 
 
 if __name__ == "__main__":
