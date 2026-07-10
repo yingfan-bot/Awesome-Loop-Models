@@ -1,0 +1,48 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.17224"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.17224
+  version: "arXiv v1, 2026-04-19; LIT Workshop at ICLR OpenReview"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "LASER operates on activations produced while the TRM backbone reuses learned modules across nested recursive unrolling in one forward process."
+  locator: "Section 1, first two paragraphs; Section 3.3, Algorithm 1"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a low-rank activation-compression method for training recursive models."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+    rationale: "The target TRM backbone uses nested recursive computation."
+  focus_tags:
+    values:
+      - training-algorithm
+    rationale: "LASER compresses stored training activations and reconstructs them for the backward pass."
+  domain_tags:
+    values:
+      - efficiency
+    rationale: "The primary objective is reducing recursive-training activation memory."
+  tags:
+    values:
+      - TRM
+      - activation-compression
+    rationale: "These identify the audited backbone and the proposed efficiency technique."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the stored title and three-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-19, and OpenReview confirms the LIT Workshop at ICLR venue."
+  description:
+    status: verified
+    evidence: "The Introduction, Algorithm 1, and Table 1 support TRM activation analysis, dynamic low-rank storage, about 60% activation-memory reduction, and no statistically significant accuracy loss."
+  links:
+    status: verified
+    evidence: "The arXiv and OpenReview ApxoeCZByZ identities match the paper."
+unresolved_questions: []

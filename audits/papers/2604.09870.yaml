@@ -1,0 +1,49 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.09870"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.09870
+  version: "arXiv v1, 2026-04-10"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The analysis probes hidden states from successive applications of Ouro's shared recurrent-depth module within one forward computation."
+  locator: "Section 1, first paragraph; Section 2.1, first paragraph"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper analyzes relational preference information encoded in a frozen looped model."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The audited Ouro backbone reuses one module over a single recurrent-depth axis."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The work probes how preference structure is represented across internal states of an existing architecture."
+  domain_tags:
+    values:
+      - language-modeling
+      - alignment
+    rationale: "The frozen language model is probed on HH-RLHF preference pairs."
+  tags:
+    values:
+      - Ouro
+      - preference-probing
+    rationale: "These identify the analyzed backbone and the paper's diagnostic task."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the stored title and sole author."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-10; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Abstract; Sections 3.4, 4.1, and 4.2 support frozen Ouro states, HH-RLHF evaluators, pairwise-state decodability, and the limited internal-consistency interpretation."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

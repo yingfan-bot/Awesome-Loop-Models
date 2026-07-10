@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.11698"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.11698
+  version: "arXiv v1, 2026-02-12"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "SpiralFormer reuses the same learned f_loop under a multi-resolution recursive schedule within one forward process."
+  locator: "Section 2, Equations 1-3, Figure 1, and Algorithm 1"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the SpiralFormer architecture and its multi-resolution recursion schedule."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+    rationale: "The shared loop function is executed through a multi-resolution recursive hierarchy."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The contribution covers the shared-layer design and its resolution-dependent execution schedule."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+    rationale: "The work targets language-model reasoning and studies more efficient recurrent computation."
+  tags:
+    values:
+      - SpiralFormer
+      - multi-resolution-recursion
+    rationale: "These are the official model name and the paper's named recursion mechanism."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the stored title and eleven-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-02-12; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Section 2, Figure 1, and Algorithm 1 support shared layers, multi-resolution recursion, and the hierarchical-dependency efficiency framing."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

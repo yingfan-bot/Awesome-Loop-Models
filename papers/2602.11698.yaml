@@ -22,6 +22,7 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
+- efficiency
 tags:
 - SpiralFormer
 - multi-resolution-recursion

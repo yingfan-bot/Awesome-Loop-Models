@@ -6,7 +6,7 @@ authors:
 - Daniel Y. Fu
 year: 2026
 published_date: '2026-04-14'
-venue: arXiv
+venue: LIT Workshop @ ICLR
 must_read: true
 category: designs
 mechanism_tags:
@@ -18,13 +18,15 @@ tags:
 - Parcae
 - isoFLOPs
 focus_tags:
-- objective-loss
 - architecture
+- training-algorithm
+- inference-algorithm
 desc: Introduces Parcae, a stable looped language model that constrains injection
   spectral norms to prevent instability and studies isoFLOPs-style training- and test-time
   scaling laws for quality gains under fixed-parameter budgets.
 links:
   arxiv: https://arxiv.org/abs/2604.12946
+  openreview: https://openreview.net/forum?id=ri0LAMdhd9
   comment:
   - label: Benhao's reading note
     url: https://x.com/huskydogewoof/status/2044609402553115070?s=20

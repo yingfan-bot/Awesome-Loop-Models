@@ -18,6 +18,7 @@ tags:
 - silent-thinking
 focus_tags:
 - architecture
+- objective-loss
 - inference-algorithm
 desc: Introduces a depth-recurrent Transformer for compositional generalization, with
   silent thinking, LayerScale, and identity-biased recurrence enabling stable deep

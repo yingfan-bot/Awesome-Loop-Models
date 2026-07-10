@@ -1,0 +1,49 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.11279"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.11279
+  version: "arXiv v1, 2026-04-13"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "DEQ-Unmix repeatedly applies the same learned update f_Theta and solves its equilibrium, with implicit differentiation through that fixed point."
+  locator: "Section 2.2, Equation 5; Section 2.3, Equation 6"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The paper applies deep-equilibrium modeling to hyperspectral unmixing."
+  mechanism_tags:
+    values:
+      - implicit-layer
+    rationale: "The forward model solves the fixed point of a learned shared update."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+    rationale: "The work contributes the equilibrium unmixing architecture and implicit-gradient training method."
+  domain_tags:
+    values:
+      - hyperspectral-imaging
+    rationale: "The evaluated task is hyperspectral image unmixing."
+  tags:
+    values:
+      - DEQ
+      - DEQ-Unmix
+    rationale: "These identify the deep-equilibrium family and the paper's named model."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the stored title and four-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-13; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 2.2-2.3 support the learned convolutional update, fixed-point solve, and implicit constant-memory differentiation."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

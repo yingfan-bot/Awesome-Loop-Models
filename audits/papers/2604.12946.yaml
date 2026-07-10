@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.12946"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.12946
+  version: "arXiv v1, 2026-04-14; LIT Workshop at ICLR OpenReview"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Parcae repeatedly applies one learned recurrent core between prelude and coda modules, with stable injection parameterization for variable recurrent depth."
+  locator: "Section 4.1, Equation 3; Section 4.2; Sections 5.2-5.3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces Parcae and studies its training- and test-time scaling laws."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One shared recurrent core is repeated over a single depth axis."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The work covers stable recurrent parameterization, training-scale studies, and variable-depth test-time execution."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "Parcae is trained as a language model and evaluated for reasoning with recurrent test-time compute."
+  tags:
+    values:
+      - Parcae
+      - isoFLOPs
+    rationale: "These identify the model and its named compute-controlled scaling analysis."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the stored title and four-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-14, and OpenReview confirms the LIT Workshop at ICLR venue."
+  description:
+    status: verified
+    evidence: "Sections 4.1-4.2 and 5.2-5.3 support constrained injection spectral norms and isoFLOPs-style training- and test-time scaling under fixed-parameter budgets."
+  links:
+    status: verified
+    evidence: "The arXiv and OpenReview ri0LAMdhd9 identities match; the comment remains separately labeled as a reading note."
+unresolved_questions: []

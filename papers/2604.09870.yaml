@@ -14,11 +14,11 @@ tags:
 - Ouro
 - preference-probing
 focus_tags:
-- training-algorithm
 - architecture
-desc: Probes looped transformer hidden states during iterative refinement, showing
-  that human-preference information is encoded primarily in relational differences
-  between loop states rather than independent per-state scores.
+desc: Probes frozen Ouro loop states with lightweight evaluators on HH-RLHF, finding
+  that preference labels are primarily decodable from pairwise state differences;
+  the authors frame this as an internal-consistency probe of Ouro's learned value
+  organization rather than direct prediction of noisy human annotations.
 links:
   arxiv: https://arxiv.org/abs/2604.09870
 citations: 1

@@ -9,7 +9,7 @@ authors:
 year: 2026
 published_date: '2026-04-10'
 added_date: '2026-05-03'
-venue: arXiv
+venue: EDGE
 category: designs
 mechanism_tags:
 - flat-loop
@@ -32,6 +32,7 @@ desc: 'Introduces Elastic Looped Transformers for image and video generation, us
   '
 links:
   arxiv: https://arxiv.org/abs/2604.09168
+  openreview: https://openreview.net/forum?id=7DB1Xc8e7o
   comment:
   - label: Tweet by Grigory Sapunov
     url: https://x.com/che_shr_cat/status/2050923533199376595?s=20
