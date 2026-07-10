@@ -12,6 +12,8 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
+- efficiency
+- adaptive-compute
 tags:
 - CoLa
 focus_tags:

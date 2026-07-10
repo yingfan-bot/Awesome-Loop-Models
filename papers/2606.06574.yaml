@@ -6,7 +6,7 @@ authors:
 year: 2026
 published_date: '2026-06-04'
 added_date: '2026-06-11'
-venue: arXiv
+venue: ICML
 category: designs
 foundation: false
 mechanism_tags:
@@ -14,10 +14,9 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
-- efficiency
-- scaling
 tags:
 - looped-transformer
+- PoLar
 focus_tags:
 - architecture
 - inference-algorithm
@@ -27,6 +26,7 @@ desc: Learns input-specific programs over pretrained LLM layers, allowing layers
 links:
   arxiv: https://arxiv.org/abs/2606.06574
   alphaxiv: https://www.alphaxiv.org/abs/2606.06574
+  github: https://github.com/tianyi-lab/PoLar
 citations: 1
 citation_sources:
   semantic_scholar: 1

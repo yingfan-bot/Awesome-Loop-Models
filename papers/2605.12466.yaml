@@ -28,6 +28,8 @@ desc: Introduces Attractor Models, where a backbone proposes output embeddings a
   convergence-depth inference.
 links:
   arxiv: https://arxiv.org/abs/2605.12466
+  project: https://attractor-models.github.io/
+  github: https://github.com/jacobfa/Attractor
 citations: 3
 citation_sources:
   semantic_scholar: 3

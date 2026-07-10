@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.18206"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.18206
+  version: "arXiv v1, 2026-06-16"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "FPRM repeatedly applies one shared Looped Transformer block and uses a damped fixed-point optimizer until a residual threshold is met."
+  locator: "Section 3.2, Equations 2-3 and Theorems 1-2; Section 3.3, Algorithm 1; Section 3.5, Algorithm 2"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a fixed-point reasoning architecture and adaptive halting method."
+  mechanism_tags:
+    values:
+      - flat-loop
+      - implicit-layer
+    rationale: "A shared block is repeated and a residual-based damped optimizer explicitly solves toward its fixed point."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The contribution covers the looped architecture and convergence-based adaptive inference."
+  domain_tags:
+    values:
+      - reasoning
+      - algorithmic-reasoning
+      - adaptive-compute
+    rationale: "The method adapts iterations to Sudoku, maze, state-tracking, and ARC-AGI difficulty."
+  tags:
+    values: []
+    rationale: "The canonical record does not require an additional alias beyond its title."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and eight-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-06-16 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "The abstract, Section 3.5, and Tables 1 and 4-6 support the repeated block, fixed-point halting, adaptive compute, and benchmark list."
+  links:
+    status: verified
+    evidence: "The arXiv comments directly link the nilskiKonjIzDunava/fprm implementation."
+unresolved_questions: []

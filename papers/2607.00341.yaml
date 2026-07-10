@@ -20,13 +20,12 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
-- efficiency
 focus_tags:
 - architecture
-- training-algorithm
 tags:
 - looped-transformer
 - looped-llm
+- DiscoLoop
 desc: Introduces DiscoLoop, a looping architecture for multi-hop reasoning that carries
   both discrete embedding and continuous hidden-state channels across recurrent loop
   steps, improving generalization and training efficiency over looped-transformer

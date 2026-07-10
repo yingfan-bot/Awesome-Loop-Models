@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.18524"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.18524
+  version: "arXiv v1, 2026-06-16"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The analyzed model applies the same residual Transformer block N times in a forward pass, so its depth is recurrent weight sharing rather than a stack of independent blocks."
+  locator: "Model formulation; Section 8.1-8.2"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper analyzes stability and hyperparameter transfer under recurrent-depth scaling."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "A shared residual block is repeated sequentially N times."
+  focus_tags:
+    values: [architecture, training-algorithm]
+    rationale: "The contribution connects recurrent architecture to residual scaling needed for stable training."
+  domain_tags:
+    values: [language-modeling, theory, scaling]
+    rationale: "The theoretical and empirical analysis concerns language models as recurrent depth grows."
+  tags:
+    values: [looped-transformer, depth-scaling]
+    rationale: "These aliases describe the studied architecture and central scaling variable."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and six-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-16; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 8.1-8.2 support stronger 1/N residual scaling for correlated shared-block updates and transfer across recurrent depths."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

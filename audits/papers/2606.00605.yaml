@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.00605"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.00605
+  version: "arXiv v1, 2026-05-30"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The construction recurrently applies the same learned linear Transformer layer within one forward computation, with each application implementing another power-method iteration."
+  locator: "Abstract; Section 3.2; Theorem 4.1"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The central result proves what algorithm a trained looped Transformer implements."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "One weight-shared Transformer layer is reused sequentially."
+  focus_tags:
+    values: [architecture, training-algorithm]
+    rationale: "The paper specifies the recurrent architecture and proves the behavior learned by gradient-based training."
+  domain_tags:
+    values: [theory, algorithmic-reasoning]
+    rationale: "The main contribution is a theorem about learning an iterative numerical algorithm."
+  tags:
+    values: [looped-transformer, shared-weight-recurrence]
+    rationale: "Both aliases directly describe the studied architecture."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the stored title and three-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-05-30; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Section 3.2 and Theorem 4.1 support the learned power-method interpretation and the role of layer normalization."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

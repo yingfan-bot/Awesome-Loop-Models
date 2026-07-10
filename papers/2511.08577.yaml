@@ -6,10 +6,10 @@ authors:
 - Guohao Dai
 - Huazhong Yang
 - Yu Wang
-year: 2025
+year: 2026
 published_date: '2025-11-11'
 added_date: '2026-04-24'
-venue: arXiv
+venue: ICML
 category: designs
 mechanism_tags:
 - flat-loop
@@ -17,6 +17,7 @@ domain_tags:
 - language-modeling
 - reasoning
 - efficiency
+- adaptive-compute
 tags:
 - Think-at-Hard
 - TaH
@@ -24,12 +25,14 @@ tags:
 - adaptive-latent-iteration
 focus_tags:
 - architecture
+- training-algorithm
 - inference-algorithm
 desc: Introduces Think-at-Hard, a dynamic latent-thinking method that uses a learned
   decider to apply extra recurrent latent iterations only to hard tokens, with LoRA
   refiners and duo-causal attention across iteration depth.
 links:
   arxiv: https://arxiv.org/abs/2511.08577
+  openreview: https://openreview.net/forum?id=eQaJSRZiGn
   github: https://github.com/thu-nics/TaH
 citations: 14
 citation_sources:

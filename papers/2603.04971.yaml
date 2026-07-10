@@ -20,9 +20,9 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - efficiency
-- MoE
 tags:
 - MOUE
+- MoE
 focus_tags:
 - objective-loss
 - architecture

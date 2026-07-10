@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2605.20784"
+status: verified
+source:
+  url: https://arxiv.org/abs/2605.20784
+  version: "arXiv v1, 2026-05-20"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The paper directly analyzes HRM's reused high/low schedule and TRM's repeated shared module over recursive cycles."
+  locator: "Section 2, Equation 1; Section 3; Figures 1-5 and Table 2"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The main artifact is a mechanistic measurement framework for existing recursive models."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+      - flat-loop
+    rationale: "The analyzed HRM and TRM models cover hierarchical and flat shared-module recurrence."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The framework measures information flow and specialization in recurrent architectures, not a new inference algorithm."
+  domain_tags:
+    values:
+      - reasoning
+      - algorithmic-reasoning
+    rationale: "The primary evaluations use maze, Sudoku, and ARC-AGI grid reasoning."
+  tags:
+    values:
+      - HRM
+      - TRM
+    rationale: "HRM and TRM are the two principal model families analyzed."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-05-20 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Sections 4.1-4.2, Figures 2-5, and Table 2 support local writes accumulating into broader recursive solution structure."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the paper; its code-availability section supplies the associated snapshot."
+unresolved_questions: []

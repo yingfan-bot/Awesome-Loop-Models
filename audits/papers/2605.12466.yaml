@@ -1,0 +1,54 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2605.12466"
+status: verified
+source:
+  url: https://arxiv.org/abs/2605.12466
+  version: "arXiv v1, 2026-05-12"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "An attractor module repeatedly applies the same learned operator through an Anderson solver until a fixed point is reached."
+  locator: "Figure 1, page 1; Sections 3.1-3.2, pages 4-5"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the Attractor Model architecture and its implicit training method."
+  mechanism_tags:
+    values:
+      - flat-loop
+      - implicit-layer
+    rationale: "The learned attractor operator is repeatedly evaluated and solved to a fixed point."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The work covers architecture, implicit differentiation, and convergence-adaptive forward solution."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - scaling
+      - efficiency
+    rationale: "The experiments span language pretraining, small-model reasoning, scale comparisons, and compute/memory tradeoffs."
+  tags:
+    values:
+      - looped-transformer
+      - looped-llm
+    rationale: "These aliases place Attractor Models in the looped Transformer and language-model families."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-05-12 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Sections 3.1-3.2 and Tables 1, 2, and 8 support fixed-point solution, implicit gradients, language/reasoning gains, and adaptive depth."
+  links:
+    status: verified
+    evidence: "The arXiv page, attractor-models project, and jacobfa/Attractor repository identify the work."
+unresolved_questions: []

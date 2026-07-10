@@ -8,21 +8,22 @@ authors:
 year: 2026
 published_date: '2026-02-09'
 venue: arXiv
-category: designs
+category: analysis
 mechanism_tags:
 - flat-loop
 domain_tags:
 - language-modeling
 - algorithmic-reasoning
 - efficiency
+- adaptive-compute
 tags:
 - ANIRA
 focus_tags:
 - architecture
 - inference-algorithm
-desc: Proposes ANIRA, a recurrent Transformer framework for per-token variable-depth
-  computation, and shows adaptive compute can align with token complexity while failing
-  to extrapolate to longer algorithmic inputs.
+desc: Uses ANIRA as a controlled recurrent-Transformer framework to study per-token
+  variable-depth computation, showing that adaptive compute can align with token
+  complexity while failing to extrapolate to longer algorithmic inputs.
 links:
   arxiv: https://arxiv.org/abs/2602.08864
   comment:

@@ -1,0 +1,55 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.18023"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.18023
+  version: "arXiv v1, 2026-06-16"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    LoopCoder-v2 reuses a shared block over recurrent depth, while its cross-loop
+    pipeline concurrently executes displaced token/loop stages and shares first-loop KV state.
+  locator: "Section 2.2, Equations 1-2, Table 1 and Figure 1"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The named LoopCoder-v2/PLT design studies efficient loop-count and execution choices."
+  mechanism_tags:
+    values:
+      - flat-loop
+      - parallel-loop
+    rationale: "A shared block is repeated in flat depth and cross-loop stages are genuinely pipelined in one forward execution."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The contribution combines a looped model family with cross-loop execution and KV-sharing choices."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - memory-efficiency
+    rationale: "The coder/reasoning study evaluates accuracy, latency, loop count, and shared-KV memory behavior."
+  tags:
+    values:
+      - LoopCoder-v2
+      - PLT
+    rationale: "These are the official model and Parallel Loop Transformer identifiers."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and nineteen-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-06-16 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Section 2.2, Table 2, and Figures 2-7 support productive two-loop refinement and later-loop positional mismatch regression."
+  links:
+    status: verified
+    evidence: "The arXiv page and author-published LoopCoder-V2 Hugging Face model identify the work."
+unresolved_questions: []

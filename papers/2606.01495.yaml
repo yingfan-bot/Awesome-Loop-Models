@@ -12,21 +12,20 @@ mechanism_tags:
 - flat-loop
 domain_tags:
 - language-modeling
-- efficiency
-- scaling
 tags:
 - looped-transformer
 - shared-weight-recurrence
 - hyper-connections
+- CART
 focus_tags:
 - architecture
-- training-algorithm
 desc: Introduces a compact language model that reuses a single shared transformer
   core across depth while anchoring recurrence to precomputed key-value tensors and
   reports a mostly negative parameter-parity result against dense baselines.
 links:
   arxiv: https://arxiv.org/abs/2606.01495
   alphaxiv: https://www.alphaxiv.org/abs/2606.01495
+  github: https://github.com/ccapps42/CART
 citations: 1
 metrics_updated: '2026-06-29'
 citation_sources:

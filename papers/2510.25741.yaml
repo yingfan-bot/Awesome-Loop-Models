@@ -43,17 +43,20 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - reasoning
+- efficiency
+- adaptive-compute
 tags:
 - Ouro
+- LoopLM
 focus_tags:
 - objective-loss
 - architecture
-- data
 - training-algorithm
 - inference-algorithm
-desc: Introduces Ouro, a family of pre-trained Looped Language Models (1.4B and 2.6B)
-  that match the performance of 12B standard LLMs. Establishes loop depth as a third
-  scaling axis beyond model size and data.
+desc: Introduces Ouro, 1.4B and 2.6B pretrained LoopLMs trained on 7.7T tokens; the
+  1.4B model is comparable to 4B models on most benchmarks, while the 2.6B model
+  outperforms models up to 8B on reasoning-intensive tasks, positioning loop depth
+  as a third scaling axis.
 links:
   arxiv: https://arxiv.org/abs/2510.25741
   project: https://ouro-llm.github.io/

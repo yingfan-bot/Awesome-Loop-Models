@@ -1,0 +1,53 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.09080"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.09080
+  version: "arXiv v1, 2026-02-09"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "RecursiveVLM reuses one set of Transformer-decoder parameters over a single recurrent axis within the multimodal forward pass."
+  locator: "Section 3.2, Figure 3 and Equation 3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces RecursiveVLM, its connector, and recursion objective."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "There is no nested, multilevel, or coarse-to-fine recurrent loop."
+  focus_tags:
+    values:
+      - architecture
+      - objective-loss
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The contribution spans the architecture, monotonic recursion loss, its training, and budget-controlled inference."
+  domain_tags:
+    values:
+      - vision
+      - efficiency
+      - multimodal
+      - adaptive-compute
+    rationale: "The model targets efficient multimodal vision-language computation with on-demand refinement under varying budgets."
+  tags:
+    values:
+      - RecursiveVLM
+    rationale: "RecursiveVLM is the model identifier; multimodal is a domain, not an alias."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and eight-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-02-09 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Sections 3.2-3.4 support shared decoder recursion, the recursive connector, monotonic loss, and on-demand refinement."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

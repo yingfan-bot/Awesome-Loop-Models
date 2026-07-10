@@ -7,21 +7,22 @@ added_date: '2026-04-20'
 venue: arXiv
 category: designs
 mechanism_tags:
-- hierarchical-loop
 - flat-loop
 domain_tags:
 - reasoning
+- algorithmic-reasoning
 tags:
 - TRM
 focus_tags:
 - architecture
 - inference-algorithm
 - training-algorithm
-desc: Proposes Tiny Recursive Model (TRM), a single tiny network that recursively
-  refines latent state and answer over multiple improvement steps, outperforming HRM
-  and many larger models on ARC-AGI-style reasoning tasks.
+desc: Proposes Tiny Recursive Model (TRM), which reuses one two-layer network to update
+  a latent state repeatedly and then refine its answer across improvement steps; reports
+  44.6% on ARC-AGI-1 and 7.8% on ARC-AGI-2 with a 7M-parameter model.
 links:
   arxiv: https://arxiv.org/abs/2510.04871
+  github: https://github.com/SamsungSAILMontreal/TinyRecursiveModels
 citations: 4
 citation_sources:
   openalex: 4

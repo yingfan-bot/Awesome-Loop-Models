@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.06574"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.06574
+  version: "arXiv v1, 2026-06-04"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "PoLar executes an input-specific program over pretrained Transformer layer segments, including programs that revisit the same segment within one inference pass."
+  locator: "Method section, program-of-layers execution; MCTS-generated supervision"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper proposes learned input-specific execution programs over existing LLM layers."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "Selected layer segments can be revisited sequentially along one execution path."
+  focus_tags:
+    values: [architecture, inference-algorithm]
+    rationale: "The contribution changes model execution topology and selects skip/repeat programs at inference time."
+  domain_tags:
+    values: [language-modeling, reasoning]
+    rationale: "PoLar controls pretrained language models on reasoning tasks."
+  tags:
+    values: [looped-transformer, PoLar]
+    rationale: "The aliases identify the recurrent Transformer behavior and proposed method."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and three-author order."
+  publication:
+    status: verified
+    evidence: "The paper identifies ICML as its venue, and arXiv v1 was posted 2026-06-04."
+  description:
+    status: verified
+    evidence: "The method and MCTS-supervision sections support learned programs that skip or repeat pretrained layers."
+  links:
+    status: verified
+    evidence: "The paper identifies the tianyi-lab/PoLar project repository."
+unresolved_questions: []

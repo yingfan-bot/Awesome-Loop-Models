@@ -1,0 +1,46 @@
+# Primary-source evidence tombstone for a paper removed from the loop-model catalog.
+paper_id: "2602.05970"
+status: remove
+source:
+  url: https://arxiv.org/abs/2602.05970
+  version: "arXiv v2, 2026-05-31; ICML 2026"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: out-of-scope
+  evidence: "The toy student is a sequence of independently parameterized MLP_l modules, and the analyzed language models likewise use ordinary untied layers; the paper does not reuse the same learned module within a forward pass."
+  locator: "Section 2; Section 3, Equations 5-6; Figure 3"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "Before removal, the entry described an analysis of depth scaling in residual and language models."
+  mechanism_tags:
+    values: []
+    rationale: "No loop mechanism applies because each depth position has distinct learned parameters."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The paper analyzes similarity and scaling across ordinary layered architectures."
+  domain_tags:
+    values:
+      - language-modeling
+      - theory
+    rationale: "The source develops a theoretical account and tests it on language models, although that subject is outside this recurrence catalog."
+  tags:
+    values: []
+    rationale: "The source provides no loop-model alias because its studied layers are not tied recurrently."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v2 title page confirms the stored title and four-author order."
+  publication:
+    status: verified
+    evidence: "The source history records first submission on 2026-02-05, inspected v2 on 2026-05-31, and ICML 2026 publication."
+  description:
+    status: verified
+    evidence: "Sections 2-3 and Figure 3 support inverse-depth loss scaling from similar layers and ensemble averaging; those factual claims do not establish tied-weight recurrence."
+  links:
+    status: verified
+    evidence: "The retained tombstone identity matches arXiv paper 2602.05970; the removed community comment was not used as evidence."
+unresolved_questions: []

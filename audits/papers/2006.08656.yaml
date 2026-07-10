@@ -1,0 +1,56 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2006.08656"
+status: verified
+source:
+  url: https://arxiv.org/abs/2006.08656
+  version: "arXiv v2, 2020-11-24; NeurIPS 2020 proceedings"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    MDEQ repeatedly applies the same learned multiscale transformation and
+    solves the joint equilibrium of its feature streams within one forward pass.
+  locator: "Section 3.1, page 3, Equations 1-2; Section 3.2 and Figure 1, page 4"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The main contribution is a multiscale deep-equilibrium architecture."
+  mechanism_tags:
+    values:
+      - implicit-layer
+    rationale: >-
+      The model solves a joint fixed point; the resolution streams operate
+      simultaneously rather than as a nested recurrent hierarchy.
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The paper's primary artifact is the multiscale equilibrium model design."
+  domain_tags:
+    values:
+      - vision
+      - memory-efficiency
+    rationale: >-
+      The experiments cover ImageNet and Cityscapes, and Section 4.4 reports
+      constant-depth activation memory and substantial GPU-memory savings.
+  tags:
+    values:
+      - MDEQ
+    rationale: "MDEQ is the model abbreviation used by the paper and official repository."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page and NeurIPS proceedings confirm the title and author order."
+  publication:
+    status: verified
+    evidence: "arXiv v1 was submitted 2020-06-15 and the paper appeared at NeurIPS 2020."
+  description:
+    status: verified
+    evidence: >-
+      Sections 3-4 and Tables 2-3 support synchronized multiresolution
+      equilibria, competitive large-scale vision results, and constant-depth memory.
+  links:
+    status: verified
+    evidence: "The arXiv page, official NeurIPS record, and locuslab/mdeq repository match the paper."
+unresolved_questions: []

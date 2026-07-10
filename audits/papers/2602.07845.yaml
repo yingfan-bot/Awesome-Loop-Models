@@ -1,0 +1,52 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.07845"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.07845
+  version: "arXiv v1, 2026-02-08"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "RD-VLA repeatedly applies a weight-tied learned core to update an internal scratchpad and uses a learned stopping rule."
+  locator: "Section III-B.1, pages 4-5, Figure 2 and Equations 3-4; Section III-C, Equation 7"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The main contribution applies recurrent-depth computation to vision-language-action robotics."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The title's 'implicit' means latent/non-verbal computation, not a fixed-point implicit layer."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The work covers the recurrent head, its training, and adaptive stopping."
+  domain_tags:
+    values:
+      - robotics-vla
+      - efficiency
+      - memory-efficiency
+      - adaptive-compute
+    rationale: "The robotics architecture targets latent adaptive compute with constant-memory execution."
+  tags:
+    values:
+      - RD-VLA
+    rationale: "RD-VLA is the official model abbreviation."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and seven-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-02-08 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Sections III-B/C support the weight-tied action head, adaptive stopping, test-time scaling, and constant-memory claim."
+  links:
+    status: verified
+    evidence: "The arXiv, rd-vla project, and rd-vla/rd-vla repository identify the work."
+unresolved_questions: []

@@ -1,0 +1,61 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2405.16039"
+status: verified
+source:
+  url: https://arxiv.org/abs/2405.16039
+  version: "arXiv v2, 2024-10-13; NeurIPS 2024 proceedings"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    MoEUT forms a learned group of fine-grained MoE layers and recurrently
+    reuses that same group for multiple depth steps in one model forward pass.
+  locator: "Section 2.3 and Figure 1, pages 3-4"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a mixture-of-experts Universal Transformer design."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: >-
+      One shared layer group is repeated in a flat ABAB pattern; the method
+      does not define nested or coarse-to-fine recurrent loops.
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+    rationale: >-
+      The paper changes the shared-depth architecture and introduces routing,
+      entropy regularization, and normalization choices used for training.
+  domain_tags:
+    values:
+      - language-modeling
+      - efficiency
+    rationale: >-
+      The primary experiments are language-modeling and code tasks, with
+      parameter, MAC, and memory comparisons for the MoE recurrent design.
+  tags:
+    values:
+      - MoEUT
+      - UT
+      - MoE
+    rationale: "MoEUT is the proposed model, UT is its Universal Transformer family, and MoE identifies the sparse-expert architecture."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page and NeurIPS proceedings confirm the title and five authors."
+  publication:
+    status: verified
+    evidence: "arXiv v1 was submitted 2024-05-25 and the official venue is NeurIPS 2024."
+  description:
+    status: verified
+    evidence: >-
+      Section 2.3 and the experiment tables support shared MoE layer groups,
+      marginal perplexity gains, fewer training MACs, and comparable dense-model memory.
+  links:
+    status: verified
+    evidence: "The arXiv page, NeurIPS record, and robertcsordas/moeut repository match the paper."
+unresolved_questions: []

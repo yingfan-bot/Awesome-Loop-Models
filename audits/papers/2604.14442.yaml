@@ -1,0 +1,56 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.14442"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.14442
+  version: "arXiv v1, 2026-04-15"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    HRM-LM reuses shared Fast and Slow functions over a two-timescale schedule,
+    while the Universal Transformer comparison repeatedly applies one shared block.
+  locator: "Section 3.1, page 4; Section 5.8, page 11"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The contribution is an empirical comparison of hierarchical, flat, and untied iteration."
+  mechanism_tags:
+    values:
+      - flat-loop
+      - hierarchical-loop
+    rationale: "The paper directly compares flat shared-weight iteration with a two-speed nested recurrence."
+  focus_tags:
+    values:
+      - architecture
+    rationale: "The comparison varies recurrent architectural structure under parameter matching."
+  domain_tags:
+    values:
+      - language-modeling
+    rationale: >-
+      The evidence is an OpenWebText language-modeling study; the paper explicitly
+      leaves cross-scale generalization unresolved, so no scaling tag is used.
+  tags:
+    values:
+      - shared-weight-recurrence
+      - hierarchical-recurrence
+      - universal-transformer
+    rationale: "These aliases name the recurrent structures explicitly compared in the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and sole author."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-04-15 and no formal venue claim."
+  description:
+    status: verified
+    evidence: >-
+      Section 5.8 and Section 6.1 support the 3.4-nat advantage over the
+      parameter-matched flat Universal Transformer and the caveats for untied comparisons.
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

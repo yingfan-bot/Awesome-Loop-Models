@@ -23,9 +23,11 @@ domain_tags:
 focus_tags:
 - architecture
 - training-algorithm
-desc: A framework for retrofitting pretrained feedforward language models with depth
-  recurrence, improving training efficiency for depth-recurrent models and enabling
-  greater FLOP efficiency than comparable feedforward models.
+tags:
+- depth-recurrent
+desc: Retrofits pretrained feedforward language models with depth recurrence, preserving
+  performance with less total training compute and achieving better mathematics performance
+  than continued post-training of the feedforward model at a matched compute budget.
 links:
   arxiv: https://arxiv.org/abs/2511.07384
   github: https://github.com/mcleish7/retrofitting-recurrence

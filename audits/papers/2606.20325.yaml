@@ -1,0 +1,48 @@
+# Primary-source removal record retained after canonical catalog deletion.
+paper_id: "2606.20325"
+status: remove
+source:
+  url: https://arxiv.org/abs/2606.20325
+  version: "arXiv v1, 2026-06-18"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-c"
+confidence: high
+scope:
+  verdict: out-of-scope
+  evidence: >-
+    The construction is an ordinary ReLU RNN evolving over sequence time; it
+    does not add recurrent-depth or within-forward latent-depth reuse beyond
+    standard temporal recurrence, which the catalog explicitly excludes.
+  locator: "Section 2, Definition 2.1, Equations 3-4; Definition 2.2, Equation 5; Section 3, Theorem 3.1, Equation 8"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper is approximation theory, but catalog taxonomy is inapplicable after the scope failure."
+  mechanism_tags:
+    values: []
+    rationale: "Standard sequence-time recurrence is not a qualifying loop mechanism in this repository."
+  focus_tags:
+    values:
+      - inference-algorithm
+    rationale: "Runtime controls approximation accuracy, but this does not satisfy the catalog boundary."
+  domain_tags:
+    values:
+      - theory
+    rationale: "The contribution is a continuous-function approximation theorem."
+  tags:
+    values: []
+    rationale: "No catalog alias is retained for the removed paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and three-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-06-18 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "The abstract, Equation 5, and Theorem 3.1 support fixed weights, fixed hidden dimension, and runtime-controlled approximation accuracy."
+  links:
+    status: verified
+    evidence: "The canonical arXiv identity matches the removed paper."
+unresolved_questions: []

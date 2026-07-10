@@ -9,7 +9,7 @@ published_date: '2026-01-26'
 venue: ICLR
 category: "designs"
 mechanism_tags:
-- flat-loop
+- hierarchical-loop
 domain_tags:
 - language-modeling
 - reasoning

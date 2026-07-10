@@ -20,8 +20,9 @@ focus_tags:
 - architecture
 - inference-algorithm
 desc: Studies weight-tied dynamics for set-valued solution maps, proving that regular
-  equilibrium dynamics can represent multiple branches while repeated shared-operator
-  iterations discover multiple valid equilibria on Ising and Allen-Cahn tasks.
+  equilibrium dynamics can represent multiple branches; experiments discover multiple
+  low-energy Ising equilibria, while Allen-Cahn requires explicit diversity promotion
+  and exhibits an accuracy-diversity tradeoff.
 links:
   arxiv: https://arxiv.org/abs/2605.07277
 citations: 0

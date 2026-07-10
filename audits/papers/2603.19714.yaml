@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2603.19714"
+status: verified
+source:
+  url: https://arxiv.org/abs/2603.19714
+  version: "arXiv v1, 2026-03-20"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-f"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "LoopRPT trains over latent iteration states produced by repeatedly applying Ouro's shared recurrent-depth module within one forward computation."
+  locator: "Sections 3.1-3.4, Equations 5-13 and Algorithm 1; Section 6.3"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a reinforcement pre-training method for looped language models."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "Ouro reuses one recurrent module over a single latent-iteration axis."
+  focus_tags:
+    values:
+      - objective-loss
+      - training-algorithm
+    rationale: "The central contribution is an iteration-level reinforcement objective and training algorithm."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - RL
+    rationale: "The method applies reinforcement pre-training to recurrent language-model reasoning."
+  tags:
+    values:
+      - LoopRPT
+      - Ouro
+    rationale: "LoopRPT is the proposed method and Ouro is the evaluated looped model family."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the stored title and nine-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-03-20; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 3.1-3.4 and 6.3 support iteration-level learning signals, the accuracy-compute framing, and stronger early forced-depth reasoning on Ouro."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

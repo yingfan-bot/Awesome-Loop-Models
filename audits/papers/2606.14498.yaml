@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.14498"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.14498
+  version: "arXiv v1, 2026-06-12"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "HamEvo repeatedly applies one learned Hamiltonian-update operator until its state reaches a fixed point within a prediction."
+  locator: "Section 2.1, Equation 1; Section 4.1, Equations 4-5"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The implicit recurrent operator is applied to Kohn-Sham Hamiltonian prediction."
+  mechanism_tags:
+    values: [implicit-layer]
+    rationale: "Prediction is defined as the equilibrium of a shared learned update operator."
+  focus_tags:
+    values: [architecture, objective-loss, training-algorithm, inference-algorithm]
+    rationale: "The work specifies the fixed-point operator, its learning objective and training, and equilibrium inference."
+  domain_tags:
+    values: [electronic-structure]
+    rationale: "The application is transferable electronic-structure Hamiltonian prediction."
+  tags:
+    values: [HamEvo]
+    rationale: "HamEvo is the proposed operator name; DEQ appears as a baseline rather than the paper's method name."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-12; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Section 2.1 and Equations 4-5 support learning a self-consistent update and returning its converged Hamiltonian fixed point."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and AlphaXiv mirrors the same identifier."
+unresolved_questions: []

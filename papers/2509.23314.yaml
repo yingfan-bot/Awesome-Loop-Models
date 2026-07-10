@@ -11,9 +11,9 @@ mechanism_tags:
 - flat-loop
 domain_tags:
 - language-modeling
-- reasoning
 tags:
-- ACT
+- depth-recurrent
+- test-time-compute
 focus_tags:
 - inference-algorithm
 desc: Analyzes recurrent-depth transformers through a two-scale latent-dynamics lens,

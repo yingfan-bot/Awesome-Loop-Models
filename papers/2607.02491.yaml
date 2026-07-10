@@ -19,7 +19,9 @@ domain_tags:
 - algorithmic-reasoning
 focus_tags:
 - inference-algorithm
-- architecture
+tags:
+- G-RRM
+- SE-RRM
 desc: Integrates symbol-equivariant Recurrent Reasoning Models with symbolic solvers,
   showing that neural solution proposals can cut Sudoku and SAT-style search when
   the downstream solver can overwrite imperfect recurrent-model hints.

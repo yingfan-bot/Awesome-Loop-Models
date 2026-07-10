@@ -4,7 +4,7 @@ authors:
 year: 2026
 published_date: '2026-06-02'
 added_date: '2026-06-11'
-venue: arXiv
+venue: CompLearn Workshop @ ICML
 category: designs
 foundation: false
 mechanism_tags:
@@ -16,7 +16,7 @@ tags:
 - HRM
 focus_tags:
 - architecture
-- training-algorithm
+- objective-loss
 desc: Extends hierarchical latent reasoning with a slow manager module whose directional
   subgoal persists across several low-level hidden-state update steps, making subgoal
   duration a central design knob.

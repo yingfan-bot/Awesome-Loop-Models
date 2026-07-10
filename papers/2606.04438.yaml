@@ -17,15 +17,13 @@ mechanism_tags:
 - flat-loop
 domain_tags:
 - language-modeling
-- efficiency
-- scaling
 tags:
 - looped-transformer
 - looped-llm
 - MoE
+- LoopMoE
 focus_tags:
 - architecture
-- training-algorithm
 desc: Introduces LoopMoE, a looped mixture-of-experts language model that combines
   sparse routing with iterative weight-shared computation through iteration-conditioned
   modulation and capacity balancing.

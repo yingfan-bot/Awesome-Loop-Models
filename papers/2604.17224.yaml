@@ -6,7 +6,7 @@ authors:
 year: 2026
 published_date: '2026-04-19'
 added_date: '2026-04-21'
-venue: arXiv
+venue: LIT Workshop @ ICLR
 category: designs
 mechanism_tags:
 - hierarchical-loop
@@ -16,13 +16,14 @@ tags:
 - TRM
 - activation-compression
 focus_tags:
-- architecture
-- inference-algorithm
-desc: Analyzes Tiny Recursive Model activation geometry during recursive unrolling
-  and introduces LASER, a dynamic low-rank activation compression method that cuts
-  recursive activation memory by ~60% without statistically significant accuracy loss.
+- training-algorithm
+desc: Analyzes TRM activation geometry during recursive unrolling and introduces
+  LASER, a dynamic low-rank compression method for stored training activations that
+  reduces activation memory by about 60% without statistically significant accuracy
+  loss.
 links:
   arxiv: https://arxiv.org/abs/2604.17224
+  openreview: https://openreview.net/forum?id=ApxoeCZByZ
 citations: 0
 citation_sources:
   semantic_scholar: 0

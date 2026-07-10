@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2507.07996"
+status: verified
+source:
+  url: https://arxiv.org/abs/2507.07996
+  version: "arXiv v1, 2025-07-10"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Each searched CoLa candidate forward can reuse the same pretrained layer one or more times along its selected layer path."
+  locator: "Section 3, page 3; Algorithm 1"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces Chain-of-Layers test-time depth adaptation."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "Candidate paths can repeat a learned layer within one forward computation."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The method searches skip/repeat layer paths at inference."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+      - adaptive-compute
+    rationale: "CoLa adapts language-model depth per sample for reasoning and efficiency."
+  tags:
+    values:
+      - CoLa
+    rationale: "CoLa is the official method abbreviation."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and three-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2025-07-10 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Section 3 and Algorithm 1 support MCTS selection of skipped/repeated layers for shorter, more accurate paths."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the paper; the comment is separately labeled."
+unresolved_questions: []

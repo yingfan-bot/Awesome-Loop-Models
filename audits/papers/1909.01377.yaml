@@ -1,0 +1,59 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "1909.01377"
+status: verified
+source:
+  url: https://arxiv.org/abs/1909.01377
+  version: "arXiv v2, 2019-10-28; NeurIPS 2019 proceedings"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: >-
+    The same learned transformation f_theta is reused at every modeled depth,
+    and the forward computation directly solves for its equilibrium state.
+  locator: "Section 3, page 3, Equations 3-4; Section 3.1.1, page 4, Equations 5-6"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the deep-equilibrium architecture and its training method."
+  mechanism_tags:
+    values:
+      - implicit-layer
+    rationale: "The forward pass solves the fixed-point equation rather than explicitly unrolling depth."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: >-
+      The contribution covers the equilibrium architecture, implicit-gradient
+      training, and a root solver used in the forward pass.
+  domain_tags:
+    values:
+      - sequence-modeling
+      - language-modeling
+      - memory-efficiency
+    rationale: >-
+      Section 5 evaluates sequence and language tasks, while the implicit
+      differentiation method uses constant activation memory in effective depth.
+  tags:
+    values:
+      - DEQ
+    rationale: "DEQ is the model-family name used by the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page and NeurIPS proceedings confirm the title and author order."
+  publication:
+    status: verified
+    evidence: "arXiv v1 was submitted 2019-09-03 and the paper appeared at NeurIPS 2019."
+  description:
+    status: verified
+    evidence: >-
+      Section 3 and Section 3.2 support fixed-point solution of an infinite-depth
+      weight-tied network and constant-memory implicit differentiation.
+  links:
+    status: verified
+    evidence: "The arXiv, NeurIPS proceedings, and locuslab/deq repository all identify this paper."
+unresolved_questions: []

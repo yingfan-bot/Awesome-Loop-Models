@@ -1,0 +1,52 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2502.17416"
+status: verified
+source:
+  url: https://arxiv.org/abs/2502.17416
+  version: "arXiv v1; ICLR 2025 Poster"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The same learned backbone f is applied L times over latent depth within one forward computation."
+  locator: "Section 2, page 3; Figure 1, page 2; Section 5.1, Definition 5.2"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper studies the theoretical reasoning power and regularization of looped Transformers."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One shared backbone is repeated over a single latent-depth axis."
+  focus_tags:
+    values:
+      - objective-loss
+      - training-algorithm
+    rationale: "The paper introduces and analyzes a looping regularizer rather than a new inference procedure."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - algorithmic-reasoning
+      - theory
+    rationale: "The theory and experiments concern latent language-model reasoning and algorithmic tasks."
+  tags:
+    values:
+      - latent-thoughts
+      - looped-transformer
+    rationale: "These aliases identify the latent-computation setting and analyzed model family."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The official OpenReview record confirms ICLR 2025 Poster."
+  description:
+    status: verified
+    evidence: "The effective-depth results, CoT simulation, and Equations 3-4 support the scaling, latent-thought, and regularizer claims."
+  links:
+    status: verified
+    evidence: "The arXiv and ICLR OpenReview identities match; the comment is separately labeled as a reading list."
+unresolved_questions: []

@@ -14,18 +14,20 @@ domain_tags:
 - language-modeling
 - reasoning
 - efficiency
+- adaptive-compute
 tags:
 - LoopFormer
-- ACT
 focus_tags:
 - architecture
 - training-algorithm
 - inference-algorithm
-desc: Introduces LoopFormer, trained on variable-length trajectories to enable budget-conditioned
-  reasoning. Uses shortcut-consistency regularization to ensure stable internal trajectories
-  across different loop depths.
+desc: Introduces LoopFormer, trained on variable-length trajectories with shortcut-consistency
+  regularization to enable budget-conditioned reasoning and stable internal trajectories
+  across loop depths.
 links:
   arxiv: https://arxiv.org/abs/2602.11451
+  openreview: https://openreview.net/forum?id=RzYXb5YWBs
+  project: https://loopformer.github.io/
   github: https://github.com/armenjeddi/loopformer
 citations: 23
 citation_sources:

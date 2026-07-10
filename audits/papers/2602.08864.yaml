@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2602.08864"
+status: verified
+source:
+  url: https://arxiv.org/abs/2602.08864
+  version: "arXiv v1, 2026-02-09"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-e"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "ANIRA repeatedly applies one shared recurrent Transformer core while varying per-token computation depth."
+  locator: "Section 3.1, pages 2-3, Figure 1 and Equation 2; Section 3.2, Equations 3-7"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The authors position ANIRA as a controlled framework for measuring dynamic compute allocation."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One shared core is repeated over a flat recurrent-depth axis."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The controlled architecture exposes and measures per-token variable-depth inference."
+  domain_tags:
+    values:
+      - language-modeling
+      - algorithmic-reasoning
+      - efficiency
+      - adaptive-compute
+    rationale: "The study analyzes adaptive compute on language and algorithmic inputs."
+  tags:
+    values:
+      - ANIRA
+    rationale: "ANIRA is the paper's experimental framework name."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and five-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-02-09 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "Section 3 and experiments support compute-complexity alignment and failure to extrapolate to longer algorithmic inputs."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the paper; the comment is separately labeled as a reading note."
+unresolved_questions: []

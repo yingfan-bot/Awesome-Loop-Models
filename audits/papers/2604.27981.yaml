@@ -1,0 +1,48 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.27981"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.27981
+  version: "arXiv v1, 2026-04-30"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The same learned residual mixer stack F_theta is composed N times inside one forecasting forward pass."
+  locator: "Section 5.1, Equation 1 and Algorithm 1, pages 6-8; Section 5.2, Equations 7-8, page 8"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The main artifact is a loop-model application to multivariate time-series forecasting."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One shared residual mixer stack is repeatedly applied in a flat refinement loop."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The all-MLP architecture includes shared-parameter forward-time iterative refinement."
+  domain_tags:
+    values:
+      - sequence-modeling
+      - efficiency
+    rationale: "The task is multivariate sequence forecasting and the design targets lower-cost modeling."
+  tags:
+    values: []
+    rationale: "The canonical record does not need a separate short alias."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and four-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms arXiv v1 on 2026-04-30 and no formal venue claim."
+  description:
+    status: verified
+    evidence: "The abstract, Algorithm 1, and Equations 1 and 7-8 support the all-MLP shared refinement description."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

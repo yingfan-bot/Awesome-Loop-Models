@@ -8,7 +8,7 @@ authors:
 year: 2025
 published_date: '2025-07-02'
 added_date: '2026-04-21'
-venue: arXiv
+venue: COLM 2025 Workshop
 category: analysis
 mechanism_tags:
 - flat-loop
@@ -18,6 +18,7 @@ domain_tags:
 tags:
 - depth-recurrent
 - latent-cot
+- Huginn
 focus_tags:
 - inference-algorithm
 desc: Probes a depth-recurrent Transformer to test whether latent chain-of-thought
@@ -25,6 +26,8 @@ desc: Probes a depth-recurrent Transformer to test whether latent chain-of-thoug
   interpretability effects.
 links:
   arxiv: https://arxiv.org/abs/2507.02199
+  openreview: https://openreview.net/forum?id=roIQdXMuEj
+  github: https://github.com/wenquanlu/huginn-latent-cot
 citations: 11
 metrics_updated: '2026-06-29'
 citation_sources:

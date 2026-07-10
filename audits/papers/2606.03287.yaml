@@ -1,0 +1,43 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.03287"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.03287
+  version: "arXiv v1, 2026-06-02"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-j"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "BA-T repeatedly applies the same lightweight Transformer update layer to refine pose and structure tokens within a reconstruction run."
+  locator: "Abstract; method section, iterative BA-T update"
+taxonomy:
+  category:
+    value: applications
+    rationale: "The recurrent architecture is applied to two-view bundle adjustment."
+  mechanism_tags:
+    values: [flat-loop]
+    rationale: "One learned update layer is reused across refinement iterations."
+  focus_tags:
+    values: [architecture, inference-algorithm]
+    rationale: "The work contributes an iterative token architecture and bundle-adjustment-style inference procedure."
+  domain_tags:
+    values: [vision]
+    rationale: "The task is camera-pose and 3D reconstruction from two images."
+  tags:
+    values: [recursive-transformer, BA-T]
+    rationale: "These identify the recurrent family and the proposed model."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the title and four-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-02; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "The method section supports repeatable implicit-token Transformer updates that progressively improve pose and reconstruction estimates."
+  links:
+    status: verified
+    evidence: "The primary source identifies the zhangganlin/BA-T project repository."
+unresolved_questions: []

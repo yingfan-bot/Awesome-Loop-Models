@@ -1,0 +1,60 @@
+# Primary-source removal record retained after canonical catalog deletion.
+paper_id: "2510.03206"
+status: remove
+source:
+  url: https://arxiv.org/abs/2510.03206
+  version: "arXiv v2, 2026-05-12; ICML 2026 OpenReview version"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-a"
+confidence: high
+scope:
+  verdict: out-of-scope
+  evidence: >-
+    CCDD invokes a complete time-conditioned denoiser at each reverse-diffusion
+    timestep. Its denoiser is a conventional DiT-family stack, not a learned
+    internal block reused over recurrent depth within one forward process.
+  locator: >-
+    Section 2; Section 4.1, Equation 15; Appendix C.2, Algorithm 2, lines 2-10;
+    Appendix C.1, Figure 5
+taxonomy:
+  category:
+    value: designs
+    rationale: >-
+      The paper is a diffusion-model design, but the catalog category becomes
+      inapplicable because it fails the repository's inclusion rule.
+  mechanism_tags:
+    values: []
+    rationale: >-
+      Repeated full-denoiser diffusion steps are not a qualifying flat,
+      hierarchical, parallel, or implicit internal loop.
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "These describe the diffusion paper itself but do not make it a loop-model paper."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "The paper targets diffusion language modeling and latent reasoning."
+  tags:
+    values:
+      - CCDD
+    rationale: "CCDD is the method abbreviation and is retained only for removal provenance."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv and OpenReview records confirm the title and ten-author order."
+  publication:
+    status: issue
+    evidence: "The deleted entry listed arXiv, while OpenReview records the official ICML 2026 version."
+  description:
+    status: issue
+    evidence: >-
+      The diffusion claims are supported, but the wording could imply a
+      qualifying loop even though the repeated operation is a full denoiser call.
+  links:
+    status: verified
+    evidence: "The arXiv, ICML OpenReview, and zhouc20/CCDD repository identify the same work."
+unresolved_questions: []

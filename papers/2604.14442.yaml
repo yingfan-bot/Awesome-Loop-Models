@@ -11,16 +11,16 @@ mechanism_tags:
 - hierarchical-loop
 domain_tags:
 - language-modeling
-- scaling
 tags:
 - shared-weight-recurrence
 - hierarchical-recurrence
 - universal-transformer
 focus_tags:
 - architecture
-desc: Empirically compares hierarchical shared-weight recurrence against flat shared-weight
-  iteration and independent-layer stacking, revealing a persistent representational
-  gap for the recurrent hierarchy.
+desc: Empirically compares two-speed hierarchical shared-weight recurrence with flat
+  shared-weight iteration and independent-layer Transformers, finding a robust 3.4-nat
+  validation-CE advantage over a parameter-matched Universal Transformer while reporting
+  caveats for the independent-layer comparisons.
 links:
   arxiv: https://arxiv.org/abs/2604.14442
 citations: 3

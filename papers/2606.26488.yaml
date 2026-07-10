@@ -12,18 +12,24 @@ venue: arXiv
 category: analysis
 foundation: false
 mechanism_tags:
-- flat-loop
+- hierarchical-loop
 domain_tags:
 - reasoning
+- algorithmic-reasoning
 - efficiency
+- memory-efficiency
 - hardware-aware
+tags:
+- TRM
+- HRM
+- activation-compression
 focus_tags:
 - inference-algorithm
 - architecture
-desc: Analyzes compression of recursive reasoning models that repeatedly update latent
-  state, showing how quantization and pruning can preserve local predictions while
-  destroying global reasoning trajectories and how calibrated INT4 recovers them for
-  edge deployment.
+desc: Analyzes compression of TRM/HRM recursive reasoners, finding that naïve INT4,
+  pruning, distillation, and linear attention can preserve cell accuracy while collapsing
+  puzzle-exact accuracy; calibrated per-channel INT4 largely recovers Sudoku performance,
+  and carry-trajectory fidelity diagnoses the damage.
 links:
   arxiv: https://arxiv.org/abs/2606.26488
   alphaxiv: https://www.alphaxiv.org/abs/2606.26488

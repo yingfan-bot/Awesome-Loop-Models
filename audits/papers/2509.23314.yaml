@@ -1,0 +1,48 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2509.23314"
+status: verified
+source:
+  url: https://arxiv.org/abs/2509.23314
+  version: "arXiv v2, 2025-11-13; first submitted 2025-09-27"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The analyzed recurrent-depth Transformer repeatedly applies the same learned block to its latent state within a forward pass."
+  locator: "Section 2, recurrent-depth formulation; Section 3"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The contribution is a latent-dynamics analysis and early-exit criterion for recurrent-depth Transformers."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One learned block is reused sequentially along the recurrent-depth axis."
+  focus_tags:
+    values:
+      - inference-algorithm
+    rationale: "The paper derives an early-exit rule to improve the latency-quality trade-off at inference."
+  domain_tags:
+    values:
+      - language-modeling
+    rationale: "The analyzed recurrent-depth models and evaluations are language models; the source does not establish a dedicated reasoning domain claim."
+  tags:
+    values:
+      - depth-recurrent
+      - test-time-compute
+    rationale: "These aliases identify the studied architecture and its variable-depth inference setting; ACT is not the paper's named method."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v2 title page confirms the stored title and three-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2025-09-27 and inspected v2 on 2025-11-13; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Sections 2-4, especially Equations 5-6 and Figure 4, support two-scale latent dynamics, shrinking increasingly orthogonal updates, and the second-order early-exit criterion."
+  links:
+    status: verified
+    evidence: "The canonical arXiv URL identifies the audited paper."
+unresolved_questions: []

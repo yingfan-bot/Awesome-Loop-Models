@@ -1,0 +1,54 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2605.07277"
+status: verified
+source:
+  url: https://arxiv.org/abs/2605.07277
+  version: "arXiv v1, 2026-05-08"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-b"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "One weight-tied learned update g_theta is repeatedly applied so different initializations can reach different stable equilibria."
+  locator: "Section 1, Equation 1, pages 1-2; Theorem 2.2, page 4"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper primarily develops theory for set-valued equilibrium solution maps."
+  mechanism_tags:
+    values:
+      - flat-loop
+      - implicit-layer
+    rationale: "A weight-tied update is iterated toward an attractor landscape of equilibrium solutions."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The work defines the weight-tied dynamics and how multiple equilibria are discovered from initializations."
+  domain_tags:
+    values:
+      - theory
+      - algorithmic-reasoning
+    rationale: "The paper proves representation results and studies combinatorial Ising and Allen-Cahn solution tasks."
+  tags:
+    values:
+      - weight-tying
+      - convergence
+    rationale: "These aliases describe the shared dynamics and their equilibrium behavior."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the title and two-author order."
+  publication:
+    status: verified
+    evidence: "The source history confirms first submission on 2026-05-08 and no formal venue claim."
+  description:
+    status: verified
+    evidence: >-
+      Theorem 2.2 supports multiple solution branches; Section 3 supports multiple
+      Ising equilibria; Section 4 and Appendix F.1 document Allen-Cahn diversity
+      promotion and its accuracy-diversity tradeoff.
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper."
+unresolved_questions: []

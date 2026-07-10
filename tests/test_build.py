@@ -33,6 +33,27 @@ FAVICON_PATH = REPO_ROOT / "assets" / "favicon.png"
 
 
 class BuildTaxonomyTests(unittest.TestCase):
+    def test_colm_workshop_uses_colm_venue_class(self):
+        """A COLM workshop must not fall back to the arXiv badge class."""
+        self.assertEqual(
+            build.normalize_venue_class("COLM 2025 Workshop", "paper"),
+            "venue-colm",
+        )
+
+    def test_unknown_paper_venue_uses_other_class(self):
+        """An unknown non-arXiv venue should render with the neutral badge."""
+        self.assertEqual(
+            build.normalize_venue_class("Example Workshop", "paper"),
+            "venue-other",
+        )
+
+    def test_arxiv_venue_keeps_arxiv_class(self):
+        """The canonical arXiv venue should keep its dedicated badge class."""
+        self.assertEqual(
+            build.normalize_venue_class("arXiv", "paper"),
+            "venue-arxiv",
+        )
+
     def test_foundation_category_is_rejected_as_legacy_shelf(self):
         paper = {"category": "foundation"}
         with self.assertRaisesRegex(ValueError, "invalid category"):
@@ -215,21 +236,131 @@ class DailyBriefingBuildTests(unittest.TestCase):
         self.assertEqual(briefing["candidates"][0]["id"], "2604.21999")
         self.assertNotIn("run_id", briefing)
 
-    def test_build_json_includes_briefings_and_latest_date(self):
+    def test_load_briefings_keeps_every_briefing_content_for_internal_consumers(self):
+        with TemporaryDirectory() as tmpdir:
+            briefings_dir = Path(tmpdir) / "briefings"
+            for briefing_date, body in (
+                ("2026-04-28", "Latest reader notes."),
+                ("2026-04-27", "Earlier reader notes."),
+            ):
+                briefing_path = (
+                    briefings_dir
+                    / briefing_date[:4]
+                    / briefing_date[5:7]
+                    / f"{briefing_date}.md"
+                )
+                briefing_path.parent.mkdir(parents=True, exist_ok=True)
+                briefing_path.write_text(
+                    "---\n"
+                    f"date: {briefing_date}\n"
+                    f"title: Briefing {briefing_date}\n"
+                    "---\n\n"
+                    f"{body}\n",
+                    encoding="utf-8",
+                )
+
+            with patch.object(build, "BRIEFINGS_DIR", briefings_dir):
+                briefings = build.load_briefings()
+
+        self.assertEqual([briefing["date"] for briefing in briefings], ["2026-04-28", "2026-04-27"])
+        self.assertEqual([briefing["content"] for briefing in briefings], ["Latest reader notes.", "Earlier reader notes."])
+
+    def test_build_json_trims_briefings_for_browser_without_changing_catalog_entries(self):
         with TemporaryDirectory() as tmpdir:
             json_out = Path(tmpdir) / "papers.json"
+            papers = [{"id": "2604.21999", "title": "A paper"}]
+            blogs = [{"id": "blog-1", "title": "A blog"}]
             briefings = [
-                {"date": "2026-04-28", "title": "Today", "source_path": "briefings/2026/04/2026-04-28.md"},
-                {"date": "2026-04-27", "title": "Yesterday", "source_path": "briefings/2026/04/2026-04-27.md"},
+                {
+                    "date": "2026-04-27",
+                    "title": "Yesterday",
+                    "status": "ok",
+                    "summary": "Earlier summary.",
+                    "highlights": ["Earlier highlight."],
+                    "candidates": [],
+                    "content": "Earlier full Markdown body.",
+                    "source_path": "briefings/2026/04/2026-04-27.md",
+                },
+                {
+                    "date": "2026-04-28",
+                    "title": "Today",
+                    "status": "watchlist",
+                    "summary": "Latest summary.",
+                    "highlights": ["Latest highlight."],
+                    "candidates": [
+                        {
+                            "id": "2604.21999",
+                            "title": "A paper",
+                            "verdict": "strong candidate",
+                            "url": "https://arxiv.org/abs/2604.21999",
+                            "internal": "sentinel",
+                        }
+                    ],
+                    "content": "Latest full Markdown body.",
+                    "source_path": "briefings/2026/04/2026-04-28.md",
+                },
             ]
             with patch.object(build, "JSON_OUT", json_out):
-                build.build_json([], [], briefings)
+                build.build_json(papers, blogs, briefings)
             payload = json.loads(json_out.read_text(encoding="utf-8"))
 
+        self.assertEqual(payload["papers"], papers)
+        self.assertEqual(payload["blogs"], blogs)
         self.assertEqual(payload["meta"]["briefing_total"], 2)
         self.assertEqual(payload["meta"]["latest_briefing_date"], "2026-04-28")
         self.assertEqual(payload["meta"]["briefing_section_title"], "Daily Briefing")
-        self.assertEqual(payload["briefings"][0]["date"], "2026-04-28")
+        self.assertEqual(
+            payload["briefings"],
+            [
+                {
+                    "date": "2026-04-28",
+                    "title": "Today",
+                    "status": "watchlist",
+                    "summary": "Latest summary.",
+                    "highlights": ["Latest highlight."],
+                    "candidates": [
+                        {
+                            "id": "2604.21999",
+                            "title": "A paper",
+                            "verdict": "strong candidate",
+                            "url": "https://arxiv.org/abs/2604.21999",
+                        }
+                    ],
+                    "source_path": "briefings/2026/04/2026-04-28.md",
+                }
+            ],
+        )
+        self.assertNotIn("content", payload["briefings"][0])
+        self.assertNotIn("internal", payload["briefings"][0]["candidates"][0])
+
+    def test_serialize_browser_briefings_copies_nested_ui_fields(self):
+        briefings = [
+            {
+                "date": "2026-04-28",
+                "highlights": ["Original highlight."],
+                "candidates": [
+                    {
+                        "id": "2604.21999",
+                        "title": "Original title",
+                        "verdict": "strong candidate",
+                        "url": "https://arxiv.org/abs/2604.21999",
+                        "internal": "sentinel",
+                    }
+                ],
+            }
+        ]
+
+        browser_briefings = build.serialize_browser_briefings(briefings)
+
+        self.assertIsNot(browser_briefings[0]["highlights"], briefings[0]["highlights"])
+        self.assertIsNot(browser_briefings[0]["candidates"], briefings[0]["candidates"])
+        self.assertIsNot(browser_briefings[0]["candidates"][0], briefings[0]["candidates"][0])
+        self.assertNotIn("internal", browser_briefings[0]["candidates"][0])
+
+        browser_briefings[0]["highlights"].append("Browser-only highlight.")
+        browser_briefings[0]["candidates"][0]["title"] = "Browser-only title"
+        self.assertEqual(briefings[0]["highlights"], ["Original highlight."])
+        self.assertEqual(briefings[0]["candidates"][0]["title"], "Original title")
 
     def test_repo_briefings_use_year_month_daily_paths(self):
         paths = sorted(path for path in BRIEFINGS_DIR.glob("*/*/*.md") if not path.name.startswith("_"))
@@ -365,6 +496,51 @@ class TagFilterUiTests(unittest.TestCase):
         self.assertIn("BLOG_SECTION_META", html)
         self.assertIn("section-blogs", html)
         self.assertIn("blogs-grid", html)
+
+    def test_catalog_section_builders_create_empty_grid_shells(self):
+        """Keep section construction free of eager catalog card rendering."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        category_start = html.index("function createCategorySection(node, pathParts, depth) {")
+        category_end = html.index("function createBlogSection()", category_start)
+        category_builder = html[category_start:category_end]
+        blog_start = category_end
+        blog_end = html.index("function renderTreeInto(container)", blog_start)
+        blog_builder = html[blog_start:blog_end]
+        renderer_start = html.index("function renderAllGrids(q) {")
+        renderer_end = html.index("function updateDailyBriefingNotice()", renderer_start)
+        renderer = html[renderer_start:renderer_end]
+
+        self.assertIn('grid.dataset.nodeKey = getNodeKey(pathParts);', category_builder)
+        self.assertIn('grid.id = "grid-" + pathParts.join("__");', category_builder)
+        self.assertIn("grid.id = 'blogs-grid';", blog_builder)
+        for builder in (category_builder, blog_builder):
+            self.assertNotIn("grid.innerHTML", builder)
+            self.assertNotIn("renderCard(", builder)
+
+        self.assertIn(
+            "grid.innerHTML = papers.map(function(paper) { return renderCard(paper, query); }).join('');",
+            renderer,
+        )
+        self.assertIn(
+            "blogsGrid.innerHTML = blogs.map(function(blog) { return renderCard(blog, query); }).join('');",
+            renderer,
+        )
+        self.assertEqual(html.count("grid.innerHTML ="), 1)
+        self.assertEqual(html.count("blogsGrid.innerHTML ="), 1)
+
+    def test_table_rows_are_rendered_only_for_table_view_and_cleared_in_category_view(self):
+        """Preserve lazy table rendering when view modes change."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        renderer_start = html.index("function renderAllGrids(q) {")
+        renderer_end = html.index("function updateDailyBriefingNotice()", renderer_start)
+        renderer = html[renderer_start:renderer_end]
+
+        self.assertIn(
+            "if (CURRENT_VIEW === 'table') {\n    renderTableView(query, filteredPapers);\n  } else {",
+            renderer,
+        )
+        self.assertIn("if (tableBody && tableBody.children.length) tableBody.textContent = '';", renderer)
+        self.assertEqual(renderer.count("renderTableView(query, filteredPapers);"), 1)
 
     def test_daily_briefing_notice_exists_in_frontend(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
@@ -1278,6 +1454,118 @@ class TagsReferenceRegressionTests(unittest.TestCase):
 
 
 class SourceFileMetadataTests(unittest.TestCase):
+    def test_submission_metadata_has_minimal_deterministic_schema(self):
+        papers = [
+            {
+                "source_path": "papers/b.yaml",
+                "title": "forbidden paper title",
+                "authors": "forbidden paper authors",
+                "desc": "forbidden paper description",
+                "metrics": {"citations": 99},
+                "links": {"arxiv": "https://example.com/forbidden-paper"},
+                "tags": ["forbidden-paper-alias"],
+                "mechanism_tags": ["flat-loop"],
+                "focus_tags": ["architecture"],
+                "domain_tags": ["vision"],
+            },
+            {
+                "source_path": "papers/a.yaml",
+                "mechanism_tags": ["flat-loop", "implicit-layer"],
+                "focus_tags": ["data"],
+                "domain_tags": ["reasoning", "vision"],
+            },
+        ]
+        blogs = [
+            {
+                "source_path": "blogs/c.yaml",
+                "title": "forbidden blog title",
+                "mechanism_tags": [],
+                "focus_tags": [],
+                "domain_tags": [],
+            },
+            {
+                "source_path": "papers/a.yaml",
+                "mechanism_tags": [],
+                "focus_tags": [],
+                "domain_tags": [],
+            },
+        ]
+
+        payload = build.render_submission_metadata(papers, blogs)
+        reversed_payload = build.render_submission_metadata(list(reversed(papers)), list(reversed(blogs)))
+
+        self.assertEqual(payload, reversed_payload)
+        self.assertEqual(set(payload), {"existing_paths", "tag_inventories"})
+        self.assertEqual(
+            payload["existing_paths"],
+            ["blogs/c.yaml", "papers/a.yaml", "papers/b.yaml"],
+        )
+        self.assertEqual(set(payload["tag_inventories"]), {"mechanism", "focus", "domain"})
+        self.assertEqual(
+            payload["tag_inventories"]["mechanism"],
+            [
+                {"label": "flat-loop", "count": 2},
+                {"label": "implicit-layer", "count": 1},
+                {"label": "hierarchical-loop", "count": 0},
+                {"label": "parallel-loop", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            payload["tag_inventories"]["focus"],
+            [
+                {"label": "architecture", "count": 1},
+                {"label": "data", "count": 1},
+                {"label": "inference-algorithm", "count": 0},
+                {"label": "objective-loss", "count": 0},
+                {"label": "training-algorithm", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            payload["tag_inventories"]["domain"],
+            [
+                {"label": "vision", "count": 2},
+                {"label": "reasoning", "count": 1},
+            ],
+        )
+        for inventory in payload["tag_inventories"].values():
+            for row in inventory:
+                self.assertEqual(set(row), {"label", "count"})
+
+        serialized = json.dumps(payload)
+        for forbidden_field in (
+            '"title"',
+            '"authors"',
+            '"desc"',
+            '"metrics"',
+            '"links"',
+            '"briefings"',
+            '"tags"',
+            '"papers"',
+            '"blogs"',
+            '"generated"',
+        ):
+            self.assertNotIn(forbidden_field, serialized)
+        for forbidden_value in (
+            "forbidden paper title",
+            "forbidden paper authors",
+            "forbidden paper description",
+            "forbidden-paper-alias",
+            "forbidden blog title",
+        ):
+            self.assertNotIn(forbidden_value, serialized)
+
+    def test_build_submission_metadata_writes_rendered_payload(self):
+        papers = [{"source_path": "papers/a.yaml", "mechanism_tags": ["flat-loop"]}]
+        blogs = [{"source_path": "blogs/b.yaml", "domain_tags": ["reasoning"]}]
+
+        with TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "submission-meta.json"
+            with patch.object(build, "SUBMISSION_META_OUT", output_path):
+                build.build_submission_metadata(papers, blogs)
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(payload, build.render_submission_metadata(papers, blogs))
+
     def test_loaded_entries_expose_source_paths(self):
         paper = build.load_papers()[0]
         blog = build.load_blogs()[0]
@@ -1421,6 +1709,21 @@ class ContributionWorkflowTests(unittest.TestCase):
     def load_issue_config() -> dict:
         return yaml.safe_load(ISSUE_TEMPLATE_CONFIG_PATH.read_text(encoding="utf-8"))
 
+    @staticmethod
+    def run_submission_inventory_helpers(expression: str):
+        """Evaluate the submission inventory pure helpers from submit.html in Node."""
+        html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
+        helper_start = html.index("function isValidCountedInventory(inventory) {")
+        helper_end = html.index("function getSortedSelected(group) {", helper_start)
+        helpers = html[helper_start:helper_end]
+        script = f"""
+{helpers}
+const result = {expression};
+process.stdout.write(JSON.stringify(result));
+"""
+        output = subprocess.check_output(["node", "-e", script], text=True)
+        return json.loads(output)
+
     def test_old_submission_issue_templates_are_removed(self):
         self.assertFalse((REPO_ROOT / ".github" / "ISSUE_TEMPLATE" / "add_paper.yml").exists())
         self.assertFalse((REPO_ROOT / ".github" / "ISSUE_TEMPLATE" / "add_blog.yml").exists())
@@ -1472,7 +1775,18 @@ class ContributionWorkflowTests(unittest.TestCase):
     def test_submit_page_contains_searchable_tag_picker_yaml_preview_and_fork_first_github_guidance(self):
         html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
         self.assertIn("Searchable tag picker", html)
-        self.assertIn("fetch('papers.json')", html)
+        self.assertIn("fetch('submission-meta.json')", html)
+        self.assertNotIn("fetch('papers.json')", html)
+        self.assertNotIn("deriveFallbackSourcePath", html)
+        self.assertIn("existing_paths", html)
+        self.assertIn("tag_inventories", html)
+        self.assertIn("isValidCountedInventory(inventories.mechanism)", html)
+        self.assertIn("isValidCountedInventory(inventories.focus)", html)
+        self.assertIn("isValidCountedInventory(inventories.domain)", html)
+        self.assertIn(
+            "STATE.options.domain = mergeSuggestedCountedInventory(inventories.domain, SUGGESTED_DOMAIN_TAGS);",
+            html,
+        )
         self.assertIn("submission-form", html)
         self.assertIn("resource-kind-toggle", html)
         self.assertIn("resource-title-input", html)
@@ -1503,7 +1817,8 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertIn("slugifyFilenamePart", html)
         self.assertIn("extractArxivId", html)
         self.assertIn("targetFileExists", html)
-        self.assertIn("source_path", html)
+        self.assertNotIn("data.papers", html)
+        self.assertNotIn("data.blogs", html)
         self.assertIn("tag-picker-search", html)
         self.assertIn("Paper Category", html)
         self.assertIn("three flat paper categories", html)
@@ -1543,6 +1858,60 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertNotIn("Taxonomy category required", html)
         self.assertNotIn("Automatic YAML generation is disabled for new paper category proposals", html)
         self.assertIn("efficient-loop", html)
+
+    def test_submit_inventory_helpers_merge_observed_and_suggested_domain_tags(self):
+        result = self.run_submission_inventory_helpers("""({
+  missingSuggestion: mergeSuggestedCountedInventory(
+    [{label: 'vision', count: 4}, {label: 'reasoning', count: 2}],
+    ['efficient-loop', 'reasoning']
+  ),
+  observedSuggestion: mergeSuggestedCountedInventory(
+    [{label: 'vision', count: 2}, {label: 'efficient-loop', count: 2}],
+    ['efficient-loop']
+  )
+})""")
+
+        self.assertEqual(
+            result["missingSuggestion"],
+            [
+                {"label": "vision", "count": 4},
+                {"label": "reasoning", "count": 2},
+                {"label": "efficient-loop", "count": 0},
+            ],
+        )
+        self.assertEqual(
+            result["observedSuggestion"],
+            [
+                {"label": "efficient-loop", "count": 2},
+                {"label": "vision", "count": 2},
+            ],
+        )
+        self.assertEqual(
+            sum(row["label"] == "efficient-loop" for row in result["observedSuggestion"]),
+            1,
+        )
+
+    def test_submit_inventory_helper_rejects_malformed_rows(self):
+        result = self.run_submission_inventory_helpers("""({
+  valid: isValidCountedInventory([{label: 'flat-loop', count: 0}]),
+  malformed: [
+    isValidCountedInventory([null]),
+    isValidCountedInventory([[]]),
+    isValidCountedInventory([{label: '', count: 0}]),
+    isValidCountedInventory([{label: '   ', count: 0}]),
+    isValidCountedInventory([{label: 3, count: 0}]),
+    isValidCountedInventory([{label: 'flat-loop', count: -1}]),
+    isValidCountedInventory([{label: 'flat-loop', count: 1.5}]),
+    isValidCountedInventory([{label: 'flat-loop', count: Infinity}]),
+    isValidCountedInventory([{label: 'flat-loop', count: NaN}]),
+    isValidCountedInventory([
+      Object.assign(Object.create(null), {label: 'flat-loop', count: 1})
+    ])
+  ]
+})""")
+
+        self.assertTrue(result["valid"])
+        self.assertEqual(result["malformed"], [False] * 10)
 
     def test_submit_page_marks_required_fields_and_gives_tag_actions_more_spacing(self):
         html = SUBMIT_PAGE_PATH.read_text(encoding="utf-8")
@@ -1648,6 +2017,22 @@ class ContributionWorkflowTests(unittest.TestCase):
         self.assertNotIn("const DEFAULT_REPO_NAME = 'Awesome-Loop-Models';", html)
         self.assertNotIn("function inferRepoNameFromLocation()", html)
         self.assertNotIn("https://github.com/huskydoge/Awesome-Loop-Models\">View on GitHub", html)
+
+    def test_site_avoids_remote_google_fonts(self):
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        self.assertNotIn("fonts.googleapis.com", html)
+        self.assertNotIn("fonts.gstatic.com", html)
+
+    def test_site_uses_a_small_favicon(self):
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        self.assertIn('<link rel="icon" type="image/png" href="assets/favicon.png" />', html)
+
+        favicon = FAVICON_PATH.read_bytes()
+        self.assertTrue(favicon.startswith(b"\x89PNG\r\n\x1a\n"))
+        self.assertEqual(favicon[12:16], b"IHDR")
+        self.assertEqual(int.from_bytes(favicon[16:20], "big"), 64)
+        self.assertEqual(int.from_bytes(favicon[20:24], "big"), 64)
+        self.assertLess(len(favicon), 20_000)
 
     def test_repo_docs_describe_submission_guide_and_pr_submission(self):
         contributing = CONTRIBUTING_PATH.read_text(encoding="utf-8")

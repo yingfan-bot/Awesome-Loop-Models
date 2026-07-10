@@ -4,8 +4,9 @@ build.py — Single-source build script for Awesome Loop Models.
 
 Reads all papers/*.yaml and blogs/*.yaml files and generates:
   1. papers.json   — consumed by index.html
-  2. README.md     — the GitHub repository README
-  3. TAGS.md       — contributor-facing tag reference
+  2. submission-meta.json — minimal tag/path inventory consumed by submit.html
+  3. README.md     — the GitHub repository README
+  4. TAGS.md       — contributor-facing tag reference
 
 The paper/blog YAML files are the source of truth.
 """
@@ -27,6 +28,7 @@ PAPERS_DIR = REPO_ROOT / "papers"
 BLOGS_DIR = REPO_ROOT / "blogs"
 BRIEFINGS_DIR = REPO_ROOT / "briefings"
 JSON_OUT = REPO_ROOT / "papers.json"
+SUBMISSION_META_OUT = REPO_ROOT / "submission-meta.json"
 README_OUT = REPO_ROOT / "README.md"
 TAGS_OUT = REPO_ROOT / "TAGS.md"
 HEADER_FILE = Path(__file__).parent / "README_HEADER.md"
@@ -147,6 +149,7 @@ VENUE_CLASSES = {
     "ICML": "venue-icml",
     "ACL": "venue-acl",
     "CoLM": "venue-colm",
+    "COLM 2025 Workshop": "venue-colm",
     "LoG": "venue-log",
     "arXiv": "venue-arxiv",
 }
@@ -494,7 +497,7 @@ def validate_blog_links(links: dict, source: str) -> None:
 def normalize_venue_class(venue: str, entry_type: str) -> str:
     if entry_type == "blog":
         return BLOG_VENUE_CLASS
-    return VENUE_CLASSES.get(venue, "venue-arxiv")
+    return VENUE_CLASSES.get(venue, "venue-other")
 
 
 def normalize_focus_tags(raw_focus_tags: object, source: str) -> list[str]:
@@ -779,6 +782,40 @@ def load_briefings() -> list[dict]:
     return sorted(briefings, key=lambda item: item["date"], reverse=True)
 
 
+def serialize_browser_briefing_candidate(candidate: dict) -> dict:
+    """Return a new candidate mapping containing only fields rendered by index.html."""
+    browser_fields = ("id", "title", "verdict", "url")
+    return {field: candidate[field] for field in browser_fields if field in candidate}
+
+
+def serialize_browser_briefings(briefings: list[dict]) -> list[dict]:
+    """Return an isolated latest briefing containing only fields rendered by index.html."""
+    if not briefings:
+        return []
+
+    latest = max(briefings, key=lambda item: item.get("date", ""))
+    scalar_fields = (
+        "date",
+        "title",
+        "status",
+        "summary",
+        "source_path",
+    )
+    browser_briefing = {
+        field: latest[field]
+        for field in scalar_fields
+        if field in latest
+    }
+    if "highlights" in latest:
+        browser_briefing["highlights"] = list(latest["highlights"])
+    if "candidates" in latest:
+        browser_briefing["candidates"] = [
+            serialize_browser_briefing_candidate(candidate)
+            for candidate in latest["candidates"]
+        ]
+    return [browser_briefing]
+
+
 def build_json(papers: list[dict], blogs: list[dict], briefings: list[dict] | None = None) -> None:
     briefings = sorted(briefings or [], key=lambda item: item.get("date", ""), reverse=True)
     payload = {
@@ -802,10 +839,51 @@ def build_json(papers: list[dict], blogs: list[dict], briefings: list[dict] | No
         "focus_tags": list(VALID_FOCUS_TAGS),
         "papers": papers,
         "blogs": blogs,
-        "briefings": briefings,
+        "briefings": serialize_browser_briefings(briefings),
     }
     JSON_OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"✓ papers.json  — {len(papers)} papers, {len(blogs)} blogs, {len(briefings)} briefings")
+
+
+def render_submission_metadata(papers: list[dict], blogs: list[dict]) -> dict:
+    """Return the deterministic minimal path and tag inventory used by submit.html."""
+    entries = [*papers, *blogs]
+    existing_paths = sorted({str(entry["source_path"]) for entry in entries})
+
+    def counted_inventory(counter: Counter[str], labels: tuple[str, ...] | None = None) -> list[dict]:
+        """Return counted tag rows sorted by descending count and deterministic label order."""
+        inventory_labels = labels if labels is not None else tuple(counter)
+        return [
+            {"label": label, "count": counter[label]}
+            for label in sorted(
+                inventory_labels,
+                key=lambda label: (-counter[label], label.lower(), label),
+            )
+        ]
+
+    mechanism_counts: Counter[str] = Counter()
+    focus_counts: Counter[str] = Counter()
+    domain_counts: Counter[str] = Counter()
+    for entry in entries:
+        mechanism_counts.update(entry.get("mechanism_tags", []))
+        focus_counts.update(entry.get("focus_tags", []))
+        domain_counts.update(entry.get("domain_tags", []))
+
+    return {
+        "existing_paths": existing_paths,
+        "tag_inventories": {
+            "mechanism": counted_inventory(mechanism_counts, VALID_MECHANISM_TAGS),
+            "focus": counted_inventory(focus_counts, VALID_FOCUS_TAGS),
+            "domain": counted_inventory(domain_counts),
+        },
+    }
+
+
+def build_submission_metadata(papers: list[dict], blogs: list[dict]) -> None:
+    """Write submission-meta.json for the lightweight submission-page bootstrap."""
+    payload = render_submission_metadata(papers, blogs)
+    SUBMISSION_META_OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"✓ submission-meta.json — {len(payload['existing_paths'])} existing source paths")
 
 
 def render_tags_reference_text(papers: list[dict], blogs: list[dict]) -> str:
@@ -1154,6 +1232,7 @@ def build() -> None:
     blogs = load_blogs()
     briefings = load_briefings()
     build_json(papers, blogs, briefings)
+    build_submission_metadata(papers, blogs)
     build_readme(papers, blogs, repo_meta)
     build_tags_reference(papers, blogs)
     build_repo_meta_js(repo_meta)

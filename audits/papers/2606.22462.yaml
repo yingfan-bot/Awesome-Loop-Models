@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.22462"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.22462
+  version: "arXiv v1, 2026-06-21; ICML 2026"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "AdaR repeatedly applies the same learned recurrent message-passing layer, conditioned on the step, within one graph-model forward computation."
+  locator: "Figure 2; Section 3.2, Equation 2; Section 3.3, Equation 4"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces an adaptive recurrent graph architecture."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "A single message-passing update is reused sequentially without a nested recurrence."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+      - training-algorithm
+    rationale: "AdaR changes the recurrent architecture and learns a policy that controls computation during training and test-time inference."
+  domain_tags:
+    values:
+      - graph-data
+      - efficiency
+    rationale: "The evaluated tasks use graph data and the method allocates test-time computation adaptively."
+  tags:
+    values:
+      - AdaR
+    rationale: "AdaR is the method name used by the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv title page confirms the stored title and four-author order."
+  publication:
+    status: verified
+    evidence: "The source history records arXiv v1 on 2026-06-21 and identifies the paper as ICML 2026."
+  description:
+    status: verified
+    evidence: "Figure 2 and Sections 3.2-3.3, Equations 2 and 4, support repeated step-conditioned message passing and adaptive test-time computation without parameter changes."
+  links:
+    status: verified
+    evidence: "The arXiv and AlphaXiv links resolve to the same paper identity."
+unresolved_questions: []

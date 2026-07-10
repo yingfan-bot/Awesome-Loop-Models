@@ -1,0 +1,105 @@
+# Site Performance Baseline
+
+## Measurement point
+
+- Baseline first measured at: 2026-07-10 11:11:08 KST (+0900)
+- Fixed-SHA measurements reproduced at: 2026-07-10 11:16:36 KST (+0900)
+- Branch: `codex/site-performance-paper-audit`
+- Baseline commit: `382914b56a104d82b103dad11cc6ff171b7c728e`
+- Canonical paper YAML files (`papers/*.yaml`): 112
+
+These values describe the checked-out files at the commit above, before the payload and initial-render changes in the site-performance implementation plan. The branch already includes commit `95501d9` (`perf: avoid hidden table rendering`).
+
+## Artifact sizes
+
+| Artifact | Uncompressed bytes | Gzip bytes | Additional detail |
+|---|---:|---:|---|
+| `index.html` | 134,931 | — | Inline CSS and JavaScript included |
+| `submit.html` | 61,277 | — | Fetches the full catalog payload at this baseline |
+| `papers.json` | 370,796 | 74,208 | `git show <baseline>:papers.json \| gzip -n -c` |
+| `assets/favicon.png` | 89,103 | — | 512 × 512 pixels |
+
+The four measured files total 656,107 uncompressed bytes. This total is a filesystem-size sum, not a network-transfer estimate.
+
+## Verified post-change source deltas
+
+These measurements compare the committed source at `b64c890f3acf007597c671f75ce386656931f734`
+with the fixed baseline commit. They intentionally exclude generated-artifact and browser-runtime
+claims until the canonical build and browser checks run under CI/Slurm.
+
+| Artifact or path | Baseline | Current source | Delta |
+|---|---:|---:|---:|
+| `index.html` | 134,931 bytes | 134,445 bytes | -486 bytes (-0.36%) |
+| `submit.html` | 61,277 bytes | 61,701 bytes | +424 bytes (+0.69%) |
+| `assets/favicon.png` | 89,103 bytes, 512 × 512 | 3,938 bytes, 64 × 64 | -85,165 bytes (-95.58%) |
+| Canonical `papers/*.yaml` | 112 | 109 | -3 out-of-scope records |
+
+The source diff also proves three render/network-path changes without relying on generated data:
+
+- `index.html` no longer loads Google Fonts, removing the stylesheet request plus its font-host connections.
+- Category and blog section construction no longer fills card grids before the initial `renderAllGrids()` pass, eliminating the known duplicate initial card-markup build.
+- `submit.html` now loads the dedicated `submission-meta.json` payload instead of the full browsing catalog.
+
+## External CI after-values
+
+GitHub Actions run `29093679344` rebuilt the generated artifacts from commit
+`b64c890f3acf007597c671f75ce386656931f734` and passed the asset-budget and full unit-test gates.
+
+| Artifact or request path | Baseline | CI after-value | Delta |
+|---|---:|---:|---:|
+| `papers.json` raw | 370,796 bytes | 206,451 bytes | -164,345 bytes (-44.32%) |
+| `papers.json` deterministic gzip | 74,208 bytes | 34,483 bytes | -39,725 bytes (-53.53%) |
+| Submission bootstrap payload | 370,796-byte `papers.json` | 6,387-byte `submission-meta.json` | -364,409 bytes (-98.28%) |
+| Favicon | 89,103 bytes | 3,938 bytes | -85,165 bytes (-95.58%) |
+
+The baseline four-file filesystem sum was 656,107 bytes. Counting the new dedicated submission
+payload, the corresponding five generated/source artifacts total 412,922 bytes, a reduction of
+243,185 bytes (-37.06%). This is an artifact-size comparison, not a browser timing benchmark.
+
+The same run generated 109 papers, 7 blogs, and 32 source briefings while emitting only one
+browser briefing with no `content` fields. All six asset budgets passed, and the full suite reported
+`Ran 204 tests in 1.852s` followed by `OK`.
+
+## Briefing payload
+
+- Briefing records in `papers.json`: 32
+- Sum of `briefings[].content` JSON string lengths: 99,648 characters
+- Concatenated `briefings[].content` UTF-8 size: 99,742 bytes
+
+The character figure is the sum of jq string `length` values. The byte figure writes the same strings contiguously with `jq -j` and counts their UTF-8 bytes. Neither number includes JSON quotes, separators, field names, or escaping overhead. At this baseline, all historical briefing bodies are present in the browser payload even though the catalog only surfaces the latest briefing summary.
+
+## Known render path
+
+- During category-section construction, `createCategorySection()` immediately generates each paper grid with `renderCard()`. `createBlogSection()` does the same for blog cards.
+- After section construction and initialization, the initial `doSearch()` call enters `renderAllGrids()` and generates the same grid cards again. The default first load therefore builds category/blog card markup once while constructing sections and once more during the initial search/render pass.
+- The branch already uses lazy table rendering: `CURRENT_VIEW` starts as `category`, `renderAllGrids()` calls `renderTableView()` only when the active view is `table`, and it clears an existing table body while category view is active. The table body is therefore not populated on the default first load.
+
+## Measurement commands
+
+```sh
+BASELINE=382914b56a104d82b103dad11cc6ff171b7c728e
+
+git ls-tree --name-only "${BASELINE}:papers" \
+  | awk '/\.yaml$/ { count++ } END { print count+0 }'
+
+git cat-file -s "${BASELINE}:index.html"
+git cat-file -s "${BASELINE}:submit.html"
+git cat-file -s "${BASELINE}:papers.json"
+git cat-file -s "${BASELINE}:assets/favicon.png"
+
+git show "${BASELINE}:papers.json" | gzip -n -c | wc -c
+git show "${BASELINE}:papers.json" | jq '.briefings | length'
+git show "${BASELINE}:papers.json" \
+  | jq '[.briefings[].content | length] | add'
+git show "${BASELINE}:papers.json" \
+  | jq -j '.briefings[].content' | wc -c
+
+git show "${BASELINE}:assets/favicon.png" | file -
+
+git show "${BASELINE}:index.html" \
+  | rg -n "CURRENT_VIEW = 'category'|function renderAllGrids|function createCategorySection|function createBlogSection|grid.innerHTML|doSearch\(document|getElementById\('papers-table-body'\)|renderTableView"
+
+git diff --check
+```
+
+Every content and size measurement above reads an object from the fixed baseline commit rather than the current worktree. `gzip -n` suppresses filename and timestamp metadata, making the compressed byte count reproducible for that blob. The favicon dimensions are read directly from the fixed-SHA blob through `file -`, so no temporary file is required. All commands completed successfully, and `git diff --check` reported no whitespace errors.

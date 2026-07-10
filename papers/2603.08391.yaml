@@ -9,7 +9,7 @@ authors:
 year: 2026
 published_date: '2026-03-09'
 added_date: '2026-04-20'
-venue: arXiv
+venue: LIT Workshop @ ICLR
 category: designs
 mechanism_tags:
 - flat-loop
@@ -22,11 +22,13 @@ tags:
 - ACT
 focus_tags:
 - architecture
+- inference-algorithm
 desc: Introduces transformers with adaptive per-layer looping and gated memory banks,
   showing that combining learned halting with extra storage improves reasoning under
   matched parameter and FLOP budgets.
 links:
   arxiv: https://arxiv.org/abs/2603.08391
+  openreview: https://openreview.net/forum?id=F87X9c107e
 citations: 5
 citation_sources:
   semantic_scholar: 5
