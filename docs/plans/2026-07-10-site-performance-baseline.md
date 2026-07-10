@@ -21,6 +21,29 @@ These values describe the checked-out files at the commit above, before the payl
 
 The four measured files total 656,107 uncompressed bytes. This total is a filesystem-size sum, not a network-transfer estimate.
 
+## Verified post-change source deltas
+
+These measurements compare the current committed source at `a4fd92184cc7a01c38aac5d6b80448d3102e56f3`
+with the fixed baseline commit. They intentionally exclude generated-artifact and browser-runtime
+claims until the canonical build and browser checks run under CI/Slurm.
+
+| Artifact or path | Baseline | Current source | Delta |
+|---|---:|---:|---:|
+| `index.html` | 134,931 bytes | 134,445 bytes | -486 bytes (-0.36%) |
+| `submit.html` | 61,277 bytes | 61,701 bytes | +424 bytes (+0.69%) |
+| `assets/favicon.png` | 89,103 bytes, 512 × 512 | 3,938 bytes, 64 × 64 | -85,165 bytes (-95.58%) |
+| Canonical `papers/*.yaml` | 112 | 109 | -3 out-of-scope records |
+
+The source diff also proves three render/network-path changes without relying on generated data:
+
+- `index.html` no longer loads Google Fonts, removing the stylesheet request plus its font-host connections.
+- Category and blog section construction no longer fills card grids before the initial `renderAllGrids()` pass, eliminating the known duplicate initial card-markup build.
+- `submit.html` now loads the dedicated `submission-meta.json` payload instead of the full browsing catalog; its final transfer-size reduction remains pending regeneration.
+
+`papers.json`, `submission-meta.json`, `README.md`, and `TAGS.md` are intentionally not reported as
+post-change artifacts yet. Their authoritative after-values require `python3 scripts/build.py`, and
+the final runtime/transfer comparison requires the external verification gate below.
+
 ## Briefing payload
 
 - Briefing records in `papers.json`: 32
