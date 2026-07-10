@@ -16,9 +16,9 @@ domain_tags:
 - language-modeling
 - reasoning
 - efficiency
-- MoE
 tags:
 - Dreamer
+- MoE
 focus_tags:
 - architecture
 desc: Introduces Dreamer, a depth-recurrent attention-mixture framework combining

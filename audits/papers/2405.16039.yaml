@@ -34,7 +34,6 @@ taxonomy:
     values:
       - language-modeling
       - efficiency
-      - MoE
     rationale: >-
       The primary experiments are language-modeling and code tasks, with
       parameter, MAC, and memory comparisons for the MoE recurrent design.
@@ -42,7 +41,8 @@ taxonomy:
     values:
       - MoEUT
       - UT
-    rationale: "MoEUT is the proposed model and UT is its stated Universal Transformer family."
+      - MoE
+    rationale: "MoEUT is the proposed model, UT is its Universal Transformer family, and MoE identifies the sparse-expert architecture."
 content_checks:
   title_authors:
     status: verified

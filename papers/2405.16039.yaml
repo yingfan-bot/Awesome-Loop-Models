@@ -15,10 +15,10 @@ mechanism_tags:
 domain_tags:
 - language-modeling
 - efficiency
-- MoE
 tags:
 - MoEUT
 - UT
+- MoE
 focus_tags:
 - architecture
 - training-algorithm

@@ -31,12 +31,12 @@ taxonomy:
       - language-modeling
       - reasoning
       - efficiency
-      - MoE
     rationale: "The framework combines language/reasoning evaluation with sparse experts and matched-resource analysis."
   tags:
     values:
       - Dreamer
-    rationale: "Dreamer is the official model name used in the paper."
+      - MoE
+    rationale: "Dreamer is the official model name, and MoE identifies its sparse-expert architecture."
 content_checks:
   title_authors:
     status: verified
