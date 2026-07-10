@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2606.18208"
+status: verified
+source:
+  url: https://arxiv.org/abs/2606.18208
+  version: "arXiv v1, 2026-06-16"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "LoopWM reuses one learned dynamics Transformer block for multiple latent-state refinement steps within each prediction forward process."
+  locator: "Section 3.1; Section 3.2, Equation 5; Section 3.4, Equation 12"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces LoopWM as a recurrent world-model architecture rather than only analyzing an existing model."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The same dynamics block is iterated along a single latent-refinement axis."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The work defines a parameter-shared architecture and adaptively varies its computation at prediction time."
+  domain_tags:
+    values:
+      - world-modeling
+      - efficiency
+      - scaling
+    rationale: "The experiments study world modeling, parameter efficiency, and scaling latent depth through repeated computation."
+  tags:
+    values:
+      - LoopWM
+    rationale: "LoopWM is the model name used by the paper."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the stored title and 31-author order, including the displayed spelling Z.L. Victor Wei."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-06-16; no formal venue is claimed in the canonical entry."
+  description:
+    status: verified
+    evidence: "The abstract and Sections 3.1-3.4, including Equations 5 and 12, support shared recurrent dynamics, adaptive latent depth, and the reported parameter-efficiency comparison."
+  links:
+    status: verified
+    evidence: "The canonical arXiv link identifies the audited paper; AlphaXiv resolves the same arXiv ID."
+unresolved_questions: []

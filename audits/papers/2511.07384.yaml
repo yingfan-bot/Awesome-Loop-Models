@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2511.07384"
+status: verified
+source:
+  url: https://arxiv.org/abs/2511.07384
+  version: "arXiv v1, 2025-11-10"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The retrofit extracts a learned core from a pretrained feedforward language model and repeatedly reuses that core across recurrent depth in one forward computation."
+  locator: "Figure 1; Introduction; Method section, recurrent-core construction"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper proposes a method for converting pretrained feedforward language models into depth-recurrent models."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The extracted recurrent core is repeated along a single depth axis."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+    rationale: "The contribution changes model depth sharing and supplies a training procedure for the retrofitted recurrence."
+  domain_tags:
+    values:
+      - efficiency
+      - language-modeling
+      - reasoning
+    rationale: "The method targets compute-efficient language-model training and evaluates mathematics reasoning."
+  tags:
+    values:
+      - depth-recurrent
+    rationale: "Depth recurrence is the architecture family named by the source."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the stored title and ten-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2025-11-10; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Figure 1, the Introduction, and experimental compute comparisons support retrofitting recurrence, lower total training compute, and improved mathematics performance over compute-matched continued post-training."
+  links:
+    status: verified
+    evidence: "The paper and official project materials identify the retained GitHub repository and Hugging Face collection."
+unresolved_questions: []

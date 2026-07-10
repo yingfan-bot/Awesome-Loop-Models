@@ -14,10 +14,10 @@ authors:
 - Se-Young Yun
 year: 2025
 published_date: '2025-07-14'
-venue: arXiv
+venue: NeurIPS
 category: designs
 mechanism_tags:
-- hierarchical-loop
+- flat-loop
 domain_tags:
 - language-modeling
 - reasoning
@@ -28,9 +28,9 @@ focus_tags:
 - architecture
 - inference-algorithm
 - training-algorithm
-desc: Introduces Mixture-of-Recursions, a recursive transformer with token-level routing
-  that adapts recursion depth and active-token attention so easy tokens exit early
-  while hard tokens keep thinking.
+desc: Introduces MoR, a recursive Transformer that reuses a shared layer stack while
+  routing each token to a learned recursion depth and restricting attention and KV
+  caching to tokens active at that depth.
 links:
   arxiv: https://arxiv.org/abs/2507.10524
   github: https://github.com/raymin0223/mixture_of_recursions

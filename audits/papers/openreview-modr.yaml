@@ -1,0 +1,52 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "openreview-modr"
+status: verified
+source:
+  url: https://openreview.net/forum?id=9Pba4rcQbE
+  version: "ICLR 2026 final; OpenReview last modified 2026-05-04"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "MoDr repeatedly reuses a shared rumination module while hard routing selects among parallel learned low-rank update branches at each recurrent step."
+  locator: "Introduction; Figure 1; MoDr method section"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the Mixture-of-Depth-Recurrent Transformer architecture."
+  mechanism_tags:
+    values:
+      - parallel-loop
+    rationale: "At each recurrent-depth step, hard routing selects one of several parallel LoRA update branches around the shared rumination module."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+      - training-algorithm
+    rationale: "The method changes recurrent architecture, trains routing branches, and allocates reasoning paths at test time."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+    rationale: "MoDr applies sparse mixture routing to efficient recurrent language-model reasoning."
+  tags:
+    values:
+      - MoDr
+      - MoE
+    rationale: "MoDr is the official method name, while MoE identifies its sparse mixture architecture; the source does not name the model MoUT."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The ICLR 2026 OpenReview final submission confirms the stored title and six-author order."
+  publication:
+    status: verified
+    evidence: "The official forum identifies the ICLR 2026 submission and a final revision last modified on 2026-05-04."
+  description:
+    status: verified
+    evidence: "Figure 1, the Introduction, and the MoDr method section support multi-branch routing over a shared depth-recurrent Transformer for adaptive test-time reasoning."
+  links:
+    status: verified
+    evidence: "The forum and PDF URLs share official OpenReview identifier 9Pba4rcQbE."
+unresolved_questions: []

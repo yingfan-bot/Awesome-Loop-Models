@@ -1,0 +1,49 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.11791"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.11791
+  version: "arXiv v1, 2026-04-13"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "The studied looped language models explicitly apply a fixed learned stack for multiple cycles within a forward reasoning computation."
+  locator: "Section 2.1, Equations 6-7"
+taxonomy:
+  category:
+    value: analysis
+    rationale: "The paper mechanistically analyzes already-trained looped reasoning language models."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "The explicit fixed stack is repeated across one cycle axis; it is not an equilibrium-defined implicit layer."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+    rationale: "The study relates recurrent architecture to inference trajectories and convergence behavior."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "The analyzed models perform language-model reasoning tasks."
+  tags:
+    values:
+      - mechanistic-analysis
+    rationale: "This alias names the paper's mechanistic study of recurrent inference."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the stored title and seven-author order."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-13; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "Section 4, Propositions 4.1-4.2, and Figures 2-5 support layer-specific cyclic fixed points, repeated feedforward-like stages, and the documented non-convergent cases."
+  links:
+    status: verified
+    evidence: "The arXiv URL identifies the paper, and the linked author post points to the same work."
+unresolved_questions: []

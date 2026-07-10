@@ -1,7 +1,7 @@
 title: Looped World Models
 authors:
 - Hongyuan Adam Lu
-- Z. L. Victor Wei
+- Z.L. Victor Wei
 - Qun Zhang
 - Jinrui Zeng
 - Bowen Cao
@@ -35,7 +35,7 @@ year: 2026
 published_date: '2026-06-16'
 added_date: '2026-06-16'
 venue: arXiv
-category: applications
+category: designs
 foundation: false
 mechanism_tags:
 - flat-loop
@@ -46,10 +46,12 @@ domain_tags:
 focus_tags:
 - architecture
 - inference-algorithm
+tags:
+- LoopWM
 desc: Introduces LoopWM, a world-model architecture that iteratively refines latent
   environment states through a parameter-shared Transformer block, using adaptive
   computation to scale latent depth per prediction step and reporting up to 100x parameter
-  efficiency over conventional world-modeling approaches.
+  efficiency over conventional approaches.
 links:
   arxiv: https://arxiv.org/abs/2606.18208
   alphaxiv: https://www.alphaxiv.org/abs/2606.18208

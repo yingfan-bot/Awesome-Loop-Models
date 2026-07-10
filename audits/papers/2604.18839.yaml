@@ -1,0 +1,53 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2604.18839"
+status: verified
+source:
+  url: https://arxiv.org/abs/2604.18839
+  version: "arXiv v1, 2026-04-20"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Denoising Recursion Models use a looped Transformer whose same learned block recursively refines a solution state over multiple steps in one prediction process."
+  locator: "Method section, recursive denoising trajectory; official repository model implementation"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces a training method for denoising recursion models."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "One Transformer block is reused sequentially along the recursive-refinement trajectory."
+  focus_tags:
+    values:
+      - objective-loss
+      - training-algorithm
+    rationale: "The contribution corrupts targets and optimizes a denoising objective across recursive training steps rather than changing the inference loop topology."
+  domain_tags:
+    values:
+      - reasoning
+      - algorithmic-reasoning
+    rationale: "The method is evaluated on ARC-AGI and related algorithmic reasoning tasks."
+  tags:
+    values:
+      - DRM
+      - TRM
+      - looped-transformer
+      - recursive-transformer
+      - latent-refinement
+    rationale: "DRM is the official method abbreviation; TRM identifies the comparison lineage, while the remaining aliases describe shared Transformer recurrence and iterative latent refinement."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v1 title page confirms the stored title and six unique authors; the prior duplicate Nikita Ivanov entry was incorrect."
+  publication:
+    status: verified
+    evidence: "The arXiv history records v1 on 2026-04-20; no formal venue is claimed."
+  description:
+    status: verified
+    evidence: "The Method section and official implementation support corrupting targets, training recursive denoising over multiple steps, and the reported ARC-AGI improvement over TRM."
+  links:
+    status: verified
+    evidence: "The arXiv paper identifies the official wwwwwwwwz/DenoisingRecursionModels repository."
+unresolved_questions: []

@@ -1,0 +1,51 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "2507.10524"
+status: verified
+source:
+  url: https://arxiv.org/abs/2507.10524
+  version: "arXiv v3, 2025-10-25; NeurIPS 2025 poster"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "Mixture-of-Recursions reuses a shared Transformer layer stack across recursive depth while routing individual tokens to learned recursion depths in one forward pass."
+  locator: "Figure 1; Method section; official repository README architecture description"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the MoR recursive Transformer architecture."
+  mechanism_tags:
+    values:
+      - flat-loop
+    rationale: "A single shared stack is revisited along one recursion-depth axis; token routing changes participation but does not create a nested loop."
+  focus_tags:
+    values:
+      - architecture
+      - inference-algorithm
+      - training-algorithm
+    rationale: "MoR defines shared-depth architecture, learns token routing, and restricts active-token attention and caching during inference."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+      - efficiency
+    rationale: "The work evaluates language modeling and reasoning while adapting token-level compute."
+  tags:
+    values:
+      - MoR
+    rationale: "MoR is the abbreviation used by the paper and official repository."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The arXiv v3 title page confirms the stored title and 11-author order."
+  publication:
+    status: verified
+    evidence: "The source records first submission on 2025-07-14, arXiv v3 on 2025-10-25, and NeurIPS 2025 poster publication."
+  description:
+    status: verified
+    evidence: "Figure 1 and the Method section support reuse of a shared layer stack, learned token recursion depth, and attention/KV-cache restriction to active tokens."
+  links:
+    status: verified
+    evidence: "The arXiv paper links the official raymin0223/mixture_of_recursions repository; the retained comment is labeled as a community reading-list link rather than primary evidence."
+unresolved_questions: []

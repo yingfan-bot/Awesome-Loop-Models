@@ -1,0 +1,50 @@
+# Primary-source audit record for the canonical paper entry.
+paper_id: "openreview-chaingpt"
+status: verified
+source:
+  url: https://openreview.net/forum?id=kdZbxizwGK
+  version: "ICLR 2026 final; OpenReview last modified 2026-04-11"
+  verified_on: "2026-07-10"
+reviewer: "codex-primary-source-audit-2026-07-10-batch-h"
+confidence: high
+scope:
+  verdict: in-scope
+  evidence: "ChainGPT shares its learned update across multiple substeps inside a layer and repeats the recurrent core across depth in one forward reasoning process."
+  locator: "Introduction, pages 1-2; Architecture section, recurrent-core definition"
+taxonomy:
+  category:
+    value: designs
+    rationale: "The paper introduces the ChainGPT dual-reasoning recurrent-depth architecture."
+  mechanism_tags:
+    values:
+      - hierarchical-loop
+    rationale: "Shared within-layer substeps are nested inside recurrence across depth."
+  focus_tags:
+    values:
+      - architecture
+      - training-algorithm
+      - inference-algorithm
+    rationale: "The contribution spans the recurrent architecture, its training procedure, and adaptive-stopping inference."
+  domain_tags:
+    values:
+      - language-modeling
+      - reasoning
+    rationale: "ChainGPT moves language-model reasoning into recurrent latent computation."
+  tags:
+    values:
+      - ChainGPT
+    rationale: "ChainGPT is the official model name."
+content_checks:
+  title_authors:
+    status: verified
+    evidence: "The ICLR 2026 OpenReview final submission confirms the stored title and four-author order."
+  publication:
+    status: verified
+    evidence: "The official OpenReview forum identifies the ICLR 2026 submission and a final revision last modified on 2026-04-11."
+  description:
+    status: verified
+    evidence: "The Introduction and Architecture section support multi-substep state updates, state-guided sparse attention, recurrent latent computation, and adaptive stopping."
+  links:
+    status: verified
+    evidence: "The forum and PDF URLs share the official OpenReview identifier kdZbxizwGK."
+unresolved_questions: []

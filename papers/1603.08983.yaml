@@ -14,10 +14,13 @@ domain_tags:
 tags:
 - ACT
 focus_tags:
+- objective-loss
 - architecture
+- training-algorithm
 - inference-algorithm
-desc: Introduces ACT, allowing RNNs to learn how many computational steps to take
-  per input, laying the groundwork for dynamic-depth recurrent computation.
+desc: Introduces ACT, a deterministic differentiable halting algorithm that lets
+  an RNN learn a variable number of shared state transitions between receiving each
+  input and emitting an output.
 links:
   arxiv: https://arxiv.org/abs/1603.08983
 citations: 769
