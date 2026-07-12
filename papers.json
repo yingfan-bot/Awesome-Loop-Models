@@ -5,7 +5,7 @@
     "blog_total": 7,
     "briefing_total": 33,
     "latest_briefing_date": "2026-07-12",
-    "generated": "2026-07-12T15:32:56.512921+00:00",
+    "generated": "2026-07-12T15:40:15.609033+00:00",
     "generated_local_date": "2026-07-12",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
@@ -246,12 +246,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 803,
+      "github_stars": 804,
       "star_sources": {
-        "github_api": 803
+        "github_api": 804
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-10",
+      "metrics_updated": "2026-07-12",
       "id": "1909.01377",
       "source_file": "1909.01377.yaml",
       "source_path": "papers/1909.01377.yaml",
@@ -291,14 +291,14 @@
         "github": "https://github.com/locuslab/mdeq",
         "alphaxiv": "https://www.alphaxiv.org/abs/2006.08656"
       },
-      "citations": 255,
+      "citations": 256,
       "citation_sources": {
-        "semantic_scholar": 255,
+        "semantic_scholar": 256,
         "openalex": 53,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-10",
+      "metrics_updated": "2026-07-12",
       "github_stars": 237,
       "star_sources": {
         "github_api": 237
@@ -1258,10 +1258,10 @@
         "alphaxiv": "https://www.alphaxiv.org/abs/2507.10524"
       },
       "citations": 90,
-      "metrics_updated": "2026-07-10",
-      "github_stars": 579,
+      "metrics_updated": "2026-07-12",
+      "github_stars": 577,
       "star_sources": {
-        "github_api": 579
+        "github_api": 577
       },
       "star_source_best": "github_api",
       "citation_sources": {
@@ -1383,10 +1383,10 @@
         "opencitations": 0
       },
       "citation_source_best": "openalex",
-      "metrics_updated": "2026-07-10",
-      "github_stars": 6561,
+      "metrics_updated": "2026-07-12",
+      "github_stars": 6558,
       "star_sources": {
-        "github_api": 6561
+        "github_api": 6558
       },
       "star_source_best": "github_api",
       "id": "2510.04871",
@@ -2067,10 +2067,10 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-10",
-      "github_stars": 5,
+      "metrics_updated": "2026-07-12",
+      "github_stars": 6,
       "star_sources": {
-        "github_api": 5
+        "github_api": 6
       },
       "star_source_best": "github_api",
       "id": "2602.10520",
@@ -2644,10 +2644,10 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-10",
-      "github_stars": 90,
+      "metrics_updated": "2026-07-12",
+      "github_stars": 91,
       "star_sources": {
-        "github_api": 90
+        "github_api": 91
       },
       "star_source_best": "github_api",
       "id": "2604.07822",
@@ -3833,10 +3833,10 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-07-10",
-      "github_stars": 26,
+      "metrics_updated": "2026-07-12",
+      "github_stars": 27,
       "star_sources": {
-        "github_api": 26
+        "github_api": 27
       },
       "star_source_best": "github_api",
       "id": "2605.12466",
@@ -4360,12 +4360,12 @@
         "hf": "https://huggingface.co/sapientinc/HRM-Text-1B",
         "alphaxiv": "https://www.alphaxiv.org/abs/2605.20613"
       },
-      "github_stars": 1648,
+      "github_stars": 1654,
       "star_sources": {
-        "github_api": 1648
+        "github_api": 1654
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-10",
+      "metrics_updated": "2026-07-12",
       "citations": 0,
       "citation_sources": {
         "semantic_scholar": 0,
@@ -4824,16 +4824,16 @@
         "github": "https://github.com/nv-tlabs/dvlt"
       },
       "citations": 0,
-      "metrics_updated": "2026-07-10",
+      "metrics_updated": "2026-07-12",
       "citation_sources": {
         "semantic_scholar": 0,
         "openalex": 0,
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 370,
+      "github_stars": 371,
       "star_sources": {
-        "github_api": 370
+        "github_api": 371
       },
       "star_source_best": "github_api",
       "id": "2605.30215",
@@ -5359,7 +5359,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "metrics_updated": "2026-06-17",
+      "metrics_updated": "2026-07-12",
+      "github_stars": 2,
+      "star_sources": {
+        "github_api": 2
+      },
+      "star_source_best": "github_api",
       "id": "2606.06245",
       "source_file": "2606.06245.yaml",
       "source_path": "papers/2606.06245.yaml",
@@ -5581,12 +5586,12 @@
         "opencitations": 0
       },
       "citation_source_best": "semantic_scholar",
-      "github_stars": 16,
+      "github_stars": 17,
       "star_sources": {
-        "github_api": 16
+        "github_api": 17
       },
       "star_source_best": "github_api",
-      "metrics_updated": "2026-07-03",
+      "metrics_updated": "2026-07-12",
       "id": "2606.18206",
       "source_file": "2606.18206.yaml",
       "source_path": "papers/2606.18206.yaml",
