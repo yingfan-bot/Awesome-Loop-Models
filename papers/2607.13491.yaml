@@ -1,0 +1,34 @@
+title: 'DeepLoop: Depth Scaling for Looped Transformers'
+authors:
+- Shuzhen Li
+- Yifan Zhang
+- Jiacheng Guo
+- Quanquan Gu
+- Mengdi Wang
+year: 2026
+published_date: '2026-07-15'
+added_date: '2026-07-16'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- scaling
+focus_tags:
+- architecture
+- training-algorithm
+tags:
+- DeepLoop
+desc: Studies depth scaling in looped Transformers, showing how residual scaling can
+  stabilize repeated use of compact physical blocks across many recurrent rounds.
+links:
+  arxiv: https://arxiv.org/abs/2607.13491
+  alphaxiv: https://www.alphaxiv.org/abs/2607.13491
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-07-16'
