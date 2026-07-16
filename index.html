@@ -3407,6 +3407,44 @@ function summarizeRecentStatsPeriods(series, periodLabel) {
 }
 
 /**
+ * Select sparse x-axis labels while preserving endpoints and pixel spacing.
+ * @param {number} seriesLength Number of timeline buckets.
+ * @param {number} plotWidth Available plot width in SVG units.
+ * @param {number} minPixelGap Minimum distance between adjacent label centers.
+ * @returns {Array<number>} Ordered bucket indices to label.
+ */
+function selectTimelineTickIndices(seriesLength, plotWidth, minPixelGap) {
+  var length = Math.max(0, Math.floor(Number(seriesLength) || 0));
+  if (length === 0) return [];
+  if (length === 1) return [0];
+
+  var width = Math.max(0, Number(plotWidth) || 0);
+  var minimumGap = Math.max(1, Number(minPixelGap) || 72);
+  var lastIndex = length - 1;
+  var targetStep = Math.max(1, Math.ceil(length / 7));
+  var candidates = [0];
+  for (var index = targetStep; index < lastIndex; index += targetStep) {
+    candidates.push(index);
+  }
+  candidates.push(lastIndex);
+
+  var stepWidth = width / length;
+  var selected = [0];
+  candidates.slice(1, -1).forEach(function(candidate) {
+    var previous = selected[selected.length - 1];
+    var clearsPrevious = (candidate - previous) * stepWidth >= minimumGap;
+    var clearsLast = (lastIndex - candidate) * stepWidth >= minimumGap;
+    if (clearsPrevious && clearsLast) selected.push(candidate);
+  });
+  while (selected.length > 1
+      && (lastIndex - selected[selected.length - 1]) * stepWidth < minimumGap) {
+    selected.pop();
+  }
+  selected.push(lastIndex);
+  return selected;
+}
+
+/**
  * Render a count-bar and cumulative-line timeline as accessible inline SVG.
  * @param {HTMLElement|null} container Chart container.
  * @param {Array<Object>} series Timeline buckets with count and cumulative values.
@@ -3521,9 +3559,9 @@ function renderTimelineChart(container, series, options) {
     points: linePoints.join(' ')
   }));
 
-  var xTickStep = Math.max(1, Math.ceil(safeSeries.length / 7));
-  safeSeries.forEach(function(bucket, index) {
-    if (index !== 0 && index !== safeSeries.length - 1 && index % xTickStep !== 0) return;
+  var xTickIndices = selectTimelineTickIndices(safeSeries.length, plotWidth, 72);
+  xTickIndices.forEach(function(index) {
+    var bucket = safeSeries[index];
     var tickX = margin.left + stepWidth * index + stepWidth / 2;
     appendStatsSvgText(svg, String(bucket.label || bucket.key || ''), {
       class: 'timeline-tick-label',
@@ -3545,7 +3583,9 @@ function renderStatsPanel() {
   if (!CATALOG_DATA_READY) {
     if (status) {
       status.hidden = false;
-      status.textContent = 'Loading catalog data…';
+      status.textContent = CATALOG_DATA_ERROR
+        ? 'Catalog data could not be loaded. Please refresh the page and try again.'
+        : 'Loading catalog data…';
     }
     return;
   }
@@ -3919,6 +3959,7 @@ let HAS_COMMENTS_ONLY = false;
 let ACTIVE_TOP_LEVEL_TAB = 'papers';
 let HAS_RENDERED_STATS = false;
 let CATALOG_DATA_READY = false;
+let CATALOG_DATA_ERROR = false;
 let CURRENT_VIEW = 'category';
 let FILTER_SIDEBAR_OPEN = false;
 let EXPANDED_TABLE_ROWS = new Set();
@@ -4993,6 +5034,7 @@ function buildDOM(data) {
     desc: (data.meta && data.meta.briefing_section_desc) || ''
   };
   ALL_PAPERS = (data.papers || []).map(preparePaperRecord);
+  CATALOG_DATA_ERROR = false;
   CATALOG_DATA_READY = true;
   ALL_BLOGS = (data.blogs || []).map(preparePaperRecord);
   ALL_BRIEFINGS = data.briefings || [];
@@ -5223,10 +5265,17 @@ function initScrollObserver() {
 
 // ── Bootstrap: fetch papers.json ─────────────────────────────────────────────
 fetch("papers.json")
-  .then(function(r) { return r.json(); })
+  .then(function(r) {
+    if (!r.ok) throw new Error("papers.json request failed with status " + r.status);
+    return r.json();
+  })
   .then(function(data) { buildDOM(data); })
   .catch(function(err) {
     console.error("Failed to load papers.json:", err);
+    CATALOG_DATA_ERROR = true;
+    if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS) {
+      renderStatsPanel();
+    }
     document.getElementById("sections-container").innerHTML =
       "<p style=\"color:var(--accent5);padding:20px\">Failed to load resource data. Please refresh or check the console.</p>";
   });

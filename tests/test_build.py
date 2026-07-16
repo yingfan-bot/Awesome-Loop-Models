@@ -874,6 +874,71 @@ process.stdout.write(JSON.stringify(result));
             build_source,
         )
 
+    def test_stats_panel_reports_catalog_fetch_failure(self):
+        """A rejected catalog request must replace the Stats loading message."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        state_start = html.index("let ALL_PAPERS = [];")
+        state_end = html.index("const TAG_GROUP_LABELS", state_start)
+        state_source = html[state_start:state_end]
+        stats_start = html.index("function renderStatsPanel() {")
+        stats_end = html.index("function escapeHtml(str) {", stats_start)
+        stats_source = html[stats_start:stats_end]
+        catch_start = html.index('.catch(function(err) {')
+        catch_end = html.index("\n  });", catch_start)
+        catch_source = html[catch_start:catch_end]
+
+        self.assertIn("let CATALOG_DATA_ERROR = false;", state_source)
+        self.assertIn("CATALOG_DATA_ERROR", stats_source)
+        self.assertIn("Catalog data could not be loaded", stats_source)
+        self.assertIn("CATALOG_DATA_ERROR = true;", catch_source)
+        self.assertIn("renderStatsPanel();", catch_source)
+        self.assertIn("Failed to load resource data", catch_source)
+        self.assertIn("if (!r.ok)", html)
+
+    def test_timeline_tick_indices_keep_endpoints_without_collisions(self):
+        """Tick selection must preserve first/last labels and enforce pixel spacing."""
+        result = self.run_stats_series_helpers("""(function() {
+  const plotWidth = 642;
+  const minGap = 72;
+  const indices = selectTimelineTickIndices(44, plotWidth, minGap);
+  const positions = indices.map(function(index) { return (index + 0.5) * plotWidth / 44; });
+  const gaps = positions.slice(1).map(function(position, index) {
+    return position - positions[index];
+  });
+  return {
+    indices: indices,
+    first: indices[0],
+    last: indices[indices.length - 1],
+    minGap: Math.min.apply(null, gaps),
+    singleton: selectTimelineTickIndices(1, 120, minGap),
+    empty: selectTimelineTickIndices(0, 120, minGap)
+  };
+})()""")
+
+        self.assertEqual(result["first"], 0)
+        self.assertEqual(result["last"], 43)
+        self.assertNotIn(42, result["indices"])
+        self.assertGreaterEqual(result["minGap"], 72)
+        self.assertEqual(result["singleton"], [0])
+        self.assertEqual(result["empty"], [])
+
+    def test_timeline_renderer_uses_pixel_spaced_tick_helper(self):
+        """SVG x labels must come from the shared collision-resistant selector."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        helper_start = html.index("function selectTimelineTickIndices(")
+        helper_end = html.index("function renderTimelineChart(", helper_start)
+        helper_source = html[helper_start:helper_end]
+        render_start = helper_end
+        render_end = html.index("function renderStatsPanel()", render_start)
+        render_source = html[render_start:render_end]
+
+        self.assertIn("minPixelGap", helper_source)
+        self.assertIn("plotWidth", helper_source)
+        self.assertIn("candidates", helper_source)
+        self.assertIn("lastIndex", helper_source)
+        self.assertIn("selectTimelineTickIndices", render_source)
+        self.assertNotIn("index % xTickStep", render_source)
+
     def test_stats_renderers_use_safe_accessible_inline_svg(self):
         """Timeline rendering must use DOM APIs and include axes plus text alternatives."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
