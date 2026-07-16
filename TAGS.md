@@ -18,35 +18,36 @@ This file is auto-generated from `papers/*.yaml` and `blogs/*.yaml` by `scripts/
 Loop Mechanism is a controlled loop-form tag set. Use only `hierarchical-loop`, `flat-loop`, `parallel-loop`, or `implicit-layer`.
 
 - `hierarchical-loop` (16)
-- `flat-loop` (98)
+- `flat-loop` (103)
 - `parallel-loop` (4)
-- `implicit-layer` (13)
+- `implicit-layer` (14)
 
 ## focus_tags
 
 Controlled vocabulary. The build validates these values, and the interactive browser uses them as filter chips.
 
 - `objective-loss` (16)
-- `training-algorithm` (54)
-- `architecture` (102)
+- `training-algorithm` (56)
+- `architecture` (108)
 - `data` (2)
-- `inference-algorithm` (78)
+- `inference-algorithm` (82)
 
 ## domain_tags
 
 Observed browser-facing domain tags currently used across the repo.
 
-- `language-modeling` (63)
-- `reasoning` (62)
+- `reasoning` (67)
+- `language-modeling` (66)
 - `efficiency` (52)
 - `algorithmic-reasoning` (28)
-- `scaling` (18)
+- `scaling` (19)
 - `theory` (14)
-- `adaptive-compute` (11)
+- `adaptive-compute` (12)
 - `memory-efficiency` (9)
 - `vision` (9)
 - `sequence-modeling` (5)
 - `graph-data` (4)
+- `recommendation` (2)
 - `robotics-vla` (2)
 - `tabular-data` (2)
 - `wireless-communications` (2)
@@ -58,6 +59,7 @@ Observed browser-facing domain tags currently used across the repo.
 - `hyperspectral-imaging` (1)
 - `multimodal` (1)
 - `neuroscience` (1)
+- `physics` (1)
 - `quantum-machine-learning` (1)
 - `RL` (1)
 - `rl-control` (1)
@@ -70,10 +72,10 @@ Observed alias tags currently used across the repo. These do not appear as brows
 
 - `looped-transformer` (27)
 - `TRM` (8)
+- `DEQ` (7)
 - `HRM` (7)
 - `looped-llm` (7)
 - `depth-recurrent` (6)
-- `DEQ` (6)
 - `MoE` (6)
 - `shared-weight-recurrence` (6)
 - `ACT` (5)
@@ -96,6 +98,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `mythos` (2)
 - `Parcae` (2)
 - `PLT` (2)
+- `RecRec` (2)
 - `universal-transformer` (2)
 - `AdaPonderLM` (1)
 - `adaptive-latent-iteration` (1)
@@ -114,6 +117,7 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `compositional-generalization` (1)
 - `compute-bounded-policy` (1)
 - `CoTFormer` (1)
+- `DeepLoop` (1)
 - `DEQ-Unmix` (1)
 - `detach` (1)
 - `DiscoLoop` (1)
@@ -146,6 +150,8 @@ Observed alias tags currently used across the repo. These do not appear as brows
 - `LoopCoder-v2` (1)
 - `looped-depth-up-scaling` (1)
 - `looped-gpt` (1)
+- `Looped-Mamba` (1)
+- `Looped-Transformer` (1)
 - `LoopFormer` (1)
 - `LoopMDM` (1)
 - `LoopMoE` (1)

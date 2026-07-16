@@ -115,6 +115,12 @@
     "papers/2607.00341.yaml",
     "papers/2607.02491.yaml",
     "papers/2607.06527.yaml",
+    "papers/2607.10110.yaml",
+    "papers/2607.10541.yaml",
+    "papers/2607.10681.yaml",
+    "papers/2607.11116.yaml",
+    "papers/2607.12945.yaml",
+    "papers/2607.13491.yaml",
     "papers/openreview-chaingpt.yaml",
     "papers/openreview-modr.yaml"
   ],
@@ -122,7 +128,7 @@
     "mechanism": [
       {
         "label": "flat-loop",
-        "count": 98
+        "count": 103
       },
       {
         "label": "hierarchical-loop",
@@ -130,7 +136,7 @@
       },
       {
         "label": "implicit-layer",
-        "count": 13
+        "count": 14
       },
       {
         "label": "parallel-loop",
@@ -140,15 +146,15 @@
     "focus": [
       {
         "label": "architecture",
-        "count": 102
+        "count": 108
       },
       {
         "label": "inference-algorithm",
-        "count": 78
+        "count": 82
       },
       {
         "label": "training-algorithm",
-        "count": 54
+        "count": 56
       },
       {
         "label": "objective-loss",
@@ -161,12 +167,12 @@
     ],
     "domain": [
       {
-        "label": "language-modeling",
-        "count": 63
+        "label": "reasoning",
+        "count": 67
       },
       {
-        "label": "reasoning",
-        "count": 62
+        "label": "language-modeling",
+        "count": 66
       },
       {
         "label": "efficiency",
@@ -178,7 +184,7 @@
       },
       {
         "label": "scaling",
-        "count": 18
+        "count": 19
       },
       {
         "label": "theory",
@@ -186,7 +192,7 @@
       },
       {
         "label": "adaptive-compute",
-        "count": 11
+        "count": 12
       },
       {
         "label": "memory-efficiency",
@@ -203,6 +209,10 @@
       {
         "label": "graph-data",
         "count": 4
+      },
+      {
+        "label": "recommendation",
+        "count": 2
       },
       {
         "label": "robotics-vla",
@@ -246,6 +256,10 @@
       },
       {
         "label": "neuroscience",
+        "count": 1
+      },
+      {
+        "label": "physics",
         "count": 1
       },
       {

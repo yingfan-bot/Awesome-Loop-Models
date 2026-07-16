@@ -1,12 +1,12 @@
 {
   "meta": {
-    "total": 117,
-    "paper_total": 110,
+    "total": 123,
+    "paper_total": 116,
     "blog_total": 7,
-    "briefing_total": 33,
-    "latest_briefing_date": "2026-07-12",
-    "generated": "2026-07-13T06:26:17.313551+00:00",
-    "generated_local_date": "2026-07-13",
+    "briefing_total": 34,
+    "latest_briefing_date": "2026-07-16",
+    "generated": "2026-07-16T13:12:20.983622+00:00",
+    "generated_local_date": "2026-07-16",
     "category_disclaimer": "The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure without introducing lineage buckets.",
     "foundation_label": "Foundation",
     "blog_section_title": "Blogs",
@@ -6153,6 +6153,306 @@
       "arxiv_id": "2607.06527"
     },
     {
+      "title": "Looped State-Space Language Models with Adaptive Exit-State Selection",
+      "authors": "Zhenxuan Yu, Takeshi Kojima, Yutaka Matsuo, Yusuke Iwasawa",
+      "year": 2026,
+      "published_date": "2026-07-11",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning",
+        "adaptive-compute"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "tags": [
+        "Looped-Mamba"
+      ],
+      "desc": "Introduces looped state-space language models that repeatedly apply shared Mamba or hybrid Mamba-Transformer blocks and select among exit states for adaptive inference.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.10110",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.10110"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.10110",
+      "source_file": "2607.10110.yaml",
+      "source_path": "papers/2607.10110.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Zhenxuan Yu",
+        "Takeshi Kojima",
+        "Yutaka Matsuo",
+        "Yusuke Iwasawa"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.10110"
+    },
+    {
+      "title": "RecRec: Recursive Refinement for Sequential Recommendation",
+      "authors": "Pervez Shaik, Prosenjit Biswas, Abhinav Thorat, Ravi Kolla, Niranjan Pedanekar",
+      "year": 2026,
+      "published_date": "2026-07-12",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "applications",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "recommendation",
+        "reasoning"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "tags": [
+        "RecRec"
+      ],
+      "desc": "Builds a recursive refinement recommender that repeatedly updates a compact latent state through a shared module conditioned on interaction evidence.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.10541",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.10541"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.10541",
+      "source_file": "2607.10541.yaml",
+      "source_path": "papers/2607.10541.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Pervez Shaik",
+        "Prosenjit Biswas",
+        "Abhinav Thorat",
+        "Ravi Kolla",
+        "Niranjan Pedanekar"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.10541"
+    },
+    {
+      "title": "LayerNorm as Implicit Gain Control in Looped Transformers",
+      "authors": "Matthias M. M. Buehlmaier",
+      "year": 2026,
+      "published_date": "2026-07-12",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "reasoning"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm"
+      ],
+      "tags": [
+        "Looped-Transformer"
+      ],
+      "desc": "Analyzes pre-LayerNorm looped Transformers as recurrent systems, arguing that LayerNorm acts as implicit gain control for stable memory routing.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.10681",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.10681"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.10681",
+      "source_file": "2607.10681.yaml",
+      "source_path": "papers/2607.10681.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Matthias M. M. Buehlmaier"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.10681"
+    },
+    {
+      "title": "The Equilibrium Is the Initialization: Lazy Identity Collapse in Physics-Structured Deep Equilibrium Reasoning",
+      "authors": "Joyjeet Singh",
+      "year": 2026,
+      "published_date": "2026-07-13",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "analysis",
+      "foundation": false,
+      "mechanism_tags": [
+        "implicit-layer"
+      ],
+      "domain_tags": [
+        "physics",
+        "reasoning"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "tags": [
+        "DEQ"
+      ],
+      "desc": "Audits physics-structured deep equilibrium reasoning and shows a lazy identity-collapse failure mode where fixed-point computation can degenerate around initialization.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.11116",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.11116",
+        "github": "https://github.com/joyjeet-singh/lazy-identity-deq"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "openalex": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "github_stars": 0,
+      "star_sources": {
+        "github_api": 0
+      },
+      "star_source_best": "github_api",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.11116",
+      "source_file": "2607.11116.yaml",
+      "source_path": "papers/2607.11116.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Joyjeet Singh"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.11116"
+    },
+    {
+      "title": "RecRec: Latent Interests Recursive Reasoning for Sequential Recommendation",
+      "authors": "Wenhao Deng, Junchen Fu, Hanwen Du, Alexandros Karatzoglou, Ioannis Arapakis, Hangjun Guo, Kaiwen Zheng, Yongxin Ni, Joemon M. Jose",
+      "year": 2026,
+      "published_date": "2026-07-14",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "applications",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "recommendation",
+        "reasoning"
+      ],
+      "focus_tags": [
+        "architecture",
+        "inference-algorithm"
+      ],
+      "tags": [
+        "RecRec"
+      ],
+      "desc": "Applies recursive latent-interest refinement to sequential recommendation, using adjustable-depth reasoning over compact user-interest state before prediction.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.12945",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.12945"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.12945",
+      "source_file": "2607.12945.yaml",
+      "source_path": "papers/2607.12945.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Wenhao Deng",
+        "Junchen Fu",
+        "Hanwen Du",
+        "Alexandros Karatzoglou",
+        "Ioannis Arapakis",
+        "Hangjun Guo",
+        "Kaiwen Zheng",
+        "Yongxin Ni",
+        "Joemon M. Jose"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.12945"
+    },
+    {
+      "title": "DeepLoop: Depth Scaling for Looped Transformers",
+      "authors": "Shuzhen Li, Yifan Zhang, Jiacheng Guo, Quanquan Gu, Mengdi Wang",
+      "year": 2026,
+      "published_date": "2026-07-15",
+      "added_date": "2026-07-16",
+      "venue": "arXiv",
+      "category": "designs",
+      "foundation": false,
+      "mechanism_tags": [
+        "flat-loop"
+      ],
+      "domain_tags": [
+        "language-modeling",
+        "scaling"
+      ],
+      "focus_tags": [
+        "architecture",
+        "training-algorithm"
+      ],
+      "tags": [
+        "DeepLoop"
+      ],
+      "desc": "Studies depth scaling in looped Transformers, showing how residual scaling can stabilize repeated use of compact physical blocks across many recurrent rounds.",
+      "links": {
+        "arxiv": "https://arxiv.org/abs/2607.13491",
+        "alphaxiv": "https://www.alphaxiv.org/abs/2607.13491"
+      },
+      "citations": 0,
+      "citation_sources": {
+        "semantic_scholar": 0,
+        "opencitations": 0
+      },
+      "citation_source_best": "semantic_scholar",
+      "metrics_updated": "2026-07-16",
+      "id": "2607.13491",
+      "source_file": "2607.13491.yaml",
+      "source_path": "papers/2607.13491.yaml",
+      "entry_type": "paper",
+      "authors_list": [
+        "Shuzhen Li",
+        "Yifan Zhang",
+        "Jiacheng Guo",
+        "Quanquan Gu",
+        "Mengdi Wang"
+      ],
+      "venueClass": "venue-arxiv",
+      "arxiv_id": "2607.13491"
+    },
+    {
       "title": "ChainGPT: Dual-Reasoning Model with Recurrent Depth and Multi-Rank State Updates",
       "authors": "Yunao Zheng, Xiaojie Wang, Lei Ren, Chen Wei",
       "year": 2026,
@@ -6501,40 +6801,70 @@
   ],
   "briefings": [
     {
-      "date": "2026-07-12",
-      "title": "Daily Loop-Model Briefing - 2026-07-12",
+      "date": "2026-07-16",
+      "title": "Daily Loop-Model Briefing - 2026-07-16",
       "status": "added",
-      "summary": "One recurrent knowledge-graph reasoner was added; its LLM generates answers, while the strict-scope loop lives in the GRU-guided graph module.",
-      "source_path": "briefings/2026/07/2026-07-12.md",
+      "summary": "Six recent strict-scope papers were added, led by looped Transformer depth scaling, looped state-space models, looped-Transformer stability analysis, a DEQ audit, and two recursive recommendation models.",
+      "source_path": "briefings/2026/07/2026-07-16.md",
       "highlights": [
-        "RSF repeatedly updates query state and propagates soft relevance through a knowledge graph.",
-        "The recurrent graph reasoner and LLM answer generator are explicitly decoupled.",
-        "Recent latent-stream, linear-attention-memory, and control papers remained outside the strict reused-module boundary."
+        "Looped language-model work is moving from architecture demos into scaling rules, state-space backbones, and stability diagnostics.",
+        "{'The DeepLoop and Looped Mamba papers both make parameter reuse explicit, but they test different parts of the design space': 'residual scaling for recurrent depth versus finite-depth recurrence over state-space blocks.'}",
+        "The two RecRec papers are application-side signals that recursive latent-state refinement is spreading into sequential recommendation."
       ],
       "candidates": [
         {
-          "id": "2607.06527",
-          "title": "RSF-GLLM: Bridging the Semantic Gap in Multi-Hop Knowledge Graph QA via Recurrent Soft-Flow and Decoupled LLM Generation",
+          "id": "2607.13491",
+          "title": "DeepLoop: Depth Scaling for Looped Transformers",
           "verdict": "added",
-          "url": "https://arxiv.org/abs/2607.06527"
+          "url": "https://arxiv.org/abs/2607.13491"
         },
         {
-          "id": "2607.08186",
-          "title": "Hidden Decoding at Scale: Towards Untapped Latent Reasoning Capabilities in Language Models",
-          "verdict": "near-miss",
-          "url": "https://arxiv.org/abs/2607.08186"
+          "id": "2607.10110",
+          "title": "Looped State-Space Language Models with Adaptive Exit-State Selection",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2607.10110"
         },
         {
-          "id": "2607.07953",
-          "title": "Linear Attention Architectures: From Recurrent Memory to Parallel Computation",
-          "verdict": "near-miss",
-          "url": "https://arxiv.org/abs/2607.07953"
+          "id": "2607.10681",
+          "title": "LayerNorm as Implicit Gain Control in Looped Transformers",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2607.10681"
         },
         {
-          "id": "2607.08724",
-          "title": "Latent Memory Palace: Test-Time Compute for Long-Horizon Control",
+          "id": "2607.11116",
+          "title": "The Equilibrium Is the Initialization: Lazy Identity Collapse in Physics-Structured Deep Equilibrium Reasoning",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2607.11116"
+        },
+        {
+          "id": "2607.12945",
+          "title": "RecRec: Latent Interests Recursive Reasoning for Sequential Recommendation",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2607.12945"
+        },
+        {
+          "id": "2607.10541",
+          "title": "RecRec: Recursive Refinement for Sequential Recommendation",
+          "verdict": "added",
+          "url": "https://arxiv.org/abs/2607.10541"
+        },
+        {
+          "id": "2607.14004",
+          "title": "Do Agent Optimizers Compound?",
+          "verdict": "out-of-scope",
+          "url": "https://arxiv.org/abs/2607.14004"
+        },
+        {
+          "id": "2607.13988",
+          "title": "TRACE",
+          "verdict": "out-of-scope",
+          "url": "https://arxiv.org/abs/2607.13988"
+        },
+        {
+          "id": "2607.13389",
+          "title": "Where Should RL Post-Training Compute Go?",
           "verdict": "near-miss",
-          "url": "https://arxiv.org/abs/2607.08724"
+          "url": "https://arxiv.org/abs/2607.13389"
         }
       ]
     }

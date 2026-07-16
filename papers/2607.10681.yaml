@@ -1,0 +1,31 @@
+title: LayerNorm as Implicit Gain Control in Looped Transformers
+authors:
+- Matthias M. M. Buehlmaier
+year: 2026
+published_date: '2026-07-12'
+added_date: '2026-07-16'
+venue: arXiv
+category: analysis
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+focus_tags:
+- architecture
+- training-algorithm
+tags:
+- Looped-Transformer
+desc: Analyzes pre-LayerNorm looped Transformers as recurrent systems, arguing that
+  LayerNorm acts as implicit gain control for stable memory routing.
+links:
+  arxiv: https://arxiv.org/abs/2607.10681
+  alphaxiv: https://www.alphaxiv.org/abs/2607.10681
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-07-16'

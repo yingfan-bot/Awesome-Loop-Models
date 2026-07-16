@@ -1,0 +1,35 @@
+title: Looped State-Space Language Models with Adaptive Exit-State Selection
+authors:
+- Zhenxuan Yu
+- Takeshi Kojima
+- Yutaka Matsuo
+- Yusuke Iwasawa
+year: 2026
+published_date: '2026-07-11'
+added_date: '2026-07-16'
+venue: arXiv
+category: designs
+foundation: false
+mechanism_tags:
+- flat-loop
+domain_tags:
+- language-modeling
+- reasoning
+- adaptive-compute
+focus_tags:
+- architecture
+- inference-algorithm
+tags:
+- Looped-Mamba
+desc: Introduces looped state-space language models that repeatedly apply shared Mamba
+  or hybrid Mamba-Transformer blocks and select among exit states for adaptive inference.
+links:
+  arxiv: https://arxiv.org/abs/2607.10110
+  alphaxiv: https://www.alphaxiv.org/abs/2607.10110
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+metrics_updated: '2026-07-16'

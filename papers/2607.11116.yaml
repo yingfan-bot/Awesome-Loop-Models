@@ -1,0 +1,37 @@
+title: 'The Equilibrium Is the Initialization: Lazy Identity Collapse in Physics-Structured
+  Deep Equilibrium Reasoning'
+authors:
+- Joyjeet Singh
+year: 2026
+published_date: '2026-07-13'
+added_date: '2026-07-16'
+venue: arXiv
+category: analysis
+foundation: false
+mechanism_tags:
+- implicit-layer
+domain_tags:
+- physics
+- reasoning
+focus_tags:
+- architecture
+- inference-algorithm
+tags:
+- DEQ
+desc: Audits physics-structured deep equilibrium reasoning and shows a lazy identity-collapse
+  failure mode where fixed-point computation can degenerate around initialization.
+links:
+  arxiv: https://arxiv.org/abs/2607.11116
+  alphaxiv: https://www.alphaxiv.org/abs/2607.11116
+  github: https://github.com/joyjeet-singh/lazy-identity-deq
+citations: 0
+citation_sources:
+  semantic_scholar: 0
+  openalex: 0
+  opencitations: 0
+citation_source_best: semantic_scholar
+github_stars: 0
+star_sources:
+  github_api: 0
+star_source_best: github_api
+metrics_updated: '2026-07-16'
