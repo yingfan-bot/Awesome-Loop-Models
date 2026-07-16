@@ -388,6 +388,22 @@ process.stdout.write(JSON.stringify(result));
         output = subprocess.check_output(["node", "-e", script], text=True)
         return json.loads(output)
 
+    @staticmethod
+    def run_top_level_tab_helpers(test_body: str):
+        """Evaluate the production hash and keyboard tab helpers in a Node fixture."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        hash_start = html.index("function getTopLevelTabFromHash(hash) {")
+        hash_end = html.index("function applyTopLevelTab() {", hash_start)
+        keyboard_start = html.index("function handleTopLevelTabKeydown(event) {")
+        keyboard_end = html.index("function initTopLevelTabInteractions() {", keyboard_start)
+        helpers = html[hash_start:hash_end] + html[keyboard_start:keyboard_end]
+        script = f"""
+{helpers}
+{test_body}
+"""
+        output = subprocess.check_output(["node", "-e", script], text=True)
+        return json.loads(output)
+
     def test_date_sort_is_default_active_sort(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         self.assertIn("let CURRENT_SORT = 'date';", html)
@@ -687,15 +703,7 @@ process.stdout.write(JSON.stringify(result));
         self.assertIn("return hash === '#stats' ? 'stats' : 'papers';", hash_helper)
 
         keyboard_start = html.index("function handleTopLevelTabKeydown(event) {")
-        keyboard_end = html.index("function initTopLevelTabInteractions() {", keyboard_start)
-        keyboard_helper = html[keyboard_start:keyboard_end]
-        for key in ("ArrowLeft", "ArrowRight", "Home", "End"):
-            self.assertIn(key, keyboard_helper)
-        self.assertIn("event.preventDefault()", keyboard_helper)
-        self.assertIn("nextTab.focus()", keyboard_helper)
-        self.assertIn("setTopLevelTab(", keyboard_helper)
-
-        init_start = keyboard_end
+        init_start = html.index("function initTopLevelTabInteractions() {", keyboard_start)
         init_end = html.index("applyTopLevelTab();", init_start)
         init_helper = html[init_start:init_end]
         self.assertIn("addEventListener('click'", init_helper)
@@ -726,6 +734,102 @@ process.stdout.write(JSON.stringify(result));
         setter_helper = html[setter_start:setter_end]
         self.assertIn("window.location.hash !== nextHash", setter_helper)
         self.assertIn("window.location.hash = nextHash", setter_helper)
+
+    def test_top_level_hash_mapping_behavior(self):
+        """Only the dedicated Stats hash may select Stats; all other hashes select Papers."""
+        result = self.run_top_level_tab_helpers("""
+const hashes = ['#stats', '#papers', '', '#section-designs'];
+const result = hashes.map(function(hash) {
+  return { hash: hash, tab: getTopLevelTabFromHash(hash) };
+});
+process.stdout.write(JSON.stringify(result));
+""")
+        self.assertEqual(
+            result,
+            [
+                {"hash": "#stats", "tab": "stats"},
+                {"hash": "#papers", "tab": "papers"},
+                {"hash": "", "tab": "papers"},
+                {"hash": "#section-designs", "tab": "papers"},
+            ],
+        )
+
+    def test_top_level_keyboard_navigation_behavior(self):
+        """Arrow/Home/End activate and focus tabs while Enter/Space retain native click."""
+        result = self.run_top_level_tab_helpers("""
+let focusedTabId = null;
+let activationCalls = [];
+const tabs = [
+  { id: 'papers-tab', focus: function() { focusedTabId = this.id; } },
+  { id: 'stats-tab', focus: function() { focusedTabId = this.id; } }
+];
+const document = {
+  querySelectorAll: function() { return tabs; }
+};
+function setTopLevelTab(tab, options) {
+  activationCalls.push({ tab: tab, options: options });
+}
+function runKey(tabIndex, key) {
+  focusedTabId = null;
+  activationCalls = [];
+  let prevented = false;
+  handleTopLevelTabKeydown({
+    key: key,
+    currentTarget: tabs[tabIndex],
+    preventDefault: function() { prevented = true; }
+  });
+  return {
+    key: key,
+    from: tabs[tabIndex].id,
+    prevented: prevented,
+    focused: focusedTabId,
+    activation: activationCalls.length ? activationCalls[0] : null
+  };
+}
+const result = [
+  runKey(0, 'ArrowRight'),
+  runKey(1, 'ArrowRight'),
+  runKey(0, 'ArrowLeft'),
+  runKey(1, 'ArrowLeft'),
+  runKey(1, 'Home'),
+  runKey(0, 'End'),
+  runKey(0, 'Enter'),
+  runKey(0, ' ')
+];
+process.stdout.write(JSON.stringify(result));
+""")
+        expected = []
+        for key, source, target in (
+            ("ArrowRight", "papers-tab", "stats"),
+            ("ArrowRight", "stats-tab", "papers"),
+            ("ArrowLeft", "papers-tab", "stats"),
+            ("ArrowLeft", "stats-tab", "papers"),
+            ("Home", "stats-tab", "papers"),
+            ("End", "papers-tab", "stats"),
+        ):
+            expected.append(
+                {
+                    "key": key,
+                    "from": source,
+                    "prevented": True,
+                    "focused": f"{target}-tab",
+                    "activation": {"tab": target, "options": {"userInitiated": True}},
+                }
+            )
+        expected.extend(
+            {
+                "key": key,
+                "from": "papers-tab",
+                "prevented": False,
+                "focused": None,
+                "activation": None,
+            }
+            for key in ("Enter", " ")
+        )
+        self.assertEqual(
+            result,
+            expected,
+        )
 
     def test_stats_series_helpers_use_strict_utc_date_parsing(self):
         """Stats helpers must reject normalized-looking but impossible dates."""
