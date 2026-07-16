@@ -824,6 +824,107 @@ process.stdout.write(JSON.stringify(result));
         self.assertEqual(result["summary"]["peakDay"]["key"], "2026-07-01")
         self.assertEqual(result["summary"]["peakDay"]["count"], 2)
 
+    def test_stats_panel_has_kpis_charts_and_accessible_fallback_summaries(self):
+        """Stats markup must expose useful values beyond SVG color or hover states."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        stats_start = html.index('<section class="top-level-panel stats-panel"')
+        stats_end = html.index("</section>", stats_start)
+        stats_markup = html[stats_start:stats_end]
+
+        for marker in (
+            'class="stats-kpis"',
+            'id="stats-total-papers"',
+            'id="stats-latest-seven"',
+            'id="stats-date-coverage"',
+            'id="stats-peak-day"',
+            'id="catalog-growth-chart"',
+            'id="publication-trend-chart"',
+            'id="catalog-growth-summary"',
+            'id="publication-trend-summary"',
+            "Catalog Growth",
+            "Publication Trend",
+            "Papers in this catalog by publication month",
+            "latest 7 recorded days",
+        ):
+            self.assertIn(marker, stats_markup)
+        self.assertIn('aria-live="polite"', stats_markup)
+        self.assertNotIn("stats-panel-placeholder", stats_markup)
+
+    def test_stats_panel_lazy_render_waits_for_catalog_data(self):
+        """Activating Stats before fetch completion must not lock an empty render."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        state_start = html.index("let ALL_PAPERS = [];")
+        state_end = html.index("const TAG_GROUP_LABELS", state_start)
+        tab_source = html[state_start:state_end]
+        build_start = html.index("function buildDOM(data) {")
+        build_end = html.index("// ── Bootstrap: fetch papers.json", build_start)
+        build_source = html[build_start:build_end]
+
+        self.assertIn("let HAS_RENDERED_STATS = false;", tab_source)
+        self.assertIn("let CATALOG_DATA_READY = false;", tab_source)
+        self.assertIn(
+            "if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS) {",
+            tab_source,
+        )
+        self.assertIn("renderStatsPanel();", tab_source)
+        self.assertNotIn("typeof renderStatsPanel", tab_source)
+        self.assertIn("CATALOG_DATA_READY = true;", build_source)
+        self.assertIn(
+            "if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS)",
+            build_source,
+        )
+
+    def test_stats_renderers_use_safe_accessible_inline_svg(self):
+        """Timeline rendering must use DOM APIs and include axes plus text alternatives."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        timeline_start = html.index("function renderTimelineChart(container, series, options) {")
+        timeline_end = html.index("function renderStatsPanel() {", timeline_start)
+        timeline_source = html[timeline_start:timeline_end]
+        stats_start = timeline_end
+        stats_end = html.index("function escapeHtml(str) {", stats_start)
+        stats_source = html[stats_start:stats_end]
+
+        for marker in (
+            "createElementNS",
+            "'title'",
+            "'desc'",
+            "'viewBox'",
+            "timeline-grid",
+            "timeline-bar",
+            "timeline-line",
+            "timeline-axis-left",
+            "timeline-axis-right",
+            "timeline-empty",
+            "textContent",
+        ):
+            self.assertIn(marker, timeline_source)
+        self.assertIn("setAttribute", timeline_source)
+        self.assertNotIn("innerHTML", timeline_source)
+        self.assertNotIn("innerHTML", stats_source)
+        self.assertIn("buildDailyPaperSeries(ALL_PAPERS)", stats_source)
+        self.assertIn("buildMonthlyPublicationSeries(ALL_PAPERS)", stats_source)
+        self.assertIn("HAS_RENDERED_STATS = true;", stats_source)
+        self.assertIn("if (!CATALOG_DATA_READY)", stats_source)
+
+    def test_stats_charts_are_editorial_responsive_and_scroll_locally(self):
+        """Chart CSS must retain readable SVG width without overflowing the page."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        css_end = html.index("</style>")
+        css = html[:css_end]
+        for marker in (
+            ".stats-kpis",
+            ".stats-chart-card",
+            ".stats-chart-scroll",
+            "overflow-x: auto",
+            ".timeline-chart",
+            "min-width:",
+            "var(--accent)",
+            "var(--accent2)",
+            "var(--border)",
+        ):
+            self.assertIn(marker, css)
+        self.assertNotIn("animation:", css[css.index(".stats-kpis"):])
+
     def test_table_header_sort_buttons_exist_for_date_citations_and_stars_with_direction_controls(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         self.assertIn('data-sort="date" onclick="setSort(\'date\')">&#128197; Date</button>', html)
