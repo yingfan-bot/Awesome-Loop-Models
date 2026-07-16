@@ -645,12 +645,15 @@ class TagFilterUiTests(unittest.TestCase):
     def test_top_level_papers_and_stats_tab_shell_exists(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         for snippet in (
+            '<button type="button" class="top-level-tab active" id="papers-tab" role="tab" aria-controls="papers-panel" aria-selected="true" tabindex="0"',
+            '<button type="button" class="top-level-tab" id="stats-tab" role="tab" aria-controls="stats-panel" aria-selected="false" tabindex="-1"',
+            '<div class="top-level-panel" id="papers-panel" role="tabpanel" aria-labelledby="papers-tab" tabindex="0">',
+            '<section class="top-level-panel stats-panel" id="stats-panel" role="tabpanel" aria-labelledby="stats-tab" tabindex="0" hidden>',
+        ):
+            self.assertIn(snippet, html)
+
+        for snippet in (
             'role="tablist"',
-            'id="papers-tab"',
-            'id="stats-tab"',
-            'id="papers-panel"',
-            'id="stats-panel"',
-            'role="tabpanel"',
             "let ACTIVE_TOP_LEVEL_TAB = 'papers';",
             "function setTopLevelTab(tab, options) {",
             "function applyTopLevelTab() {",
