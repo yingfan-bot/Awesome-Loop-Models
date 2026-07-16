@@ -974,21 +974,57 @@ process.stdout.write(JSON.stringify(result));
     def test_stats_charts_are_editorial_responsive_and_scroll_locally(self):
         """Chart CSS must retain readable SVG width without overflowing the page."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        css_end = html.index("</style>")
-        css = html[:css_end]
-        for marker in (
-            ".stats-kpis",
-            ".stats-chart-card",
-            ".stats-chart-scroll",
-            "overflow-x: auto",
-            ".timeline-chart",
-            "min-width:",
-            "var(--accent)",
-            "var(--accent2)",
-            "var(--border)",
-        ):
-            self.assertIn(marker, css)
-        self.assertNotIn("animation:", css[css.index(".stats-kpis"):])
+        stats_start = html.index("    .stats-panel {")
+        stats_end = html.index("    /* ── Category Section ── */", stats_start)
+        stats_css = html[stats_start:stats_end]
+
+        scroll_start = stats_css.index("    .stats-chart-scroll {")
+        scroll_end = stats_css.index("\n    }", scroll_start)
+        scroll_rule = stats_css[scroll_start:scroll_end]
+        chart_start = stats_css.index("    .timeline-chart {")
+        chart_end = stats_css.index("\n    }", chart_start)
+        chart_rule = stats_css[chart_start:chart_end]
+        card_start = stats_css.index("    .stats-chart-card {")
+        card_end = stats_css.index("\n    }", card_start)
+        card_rule = stats_css[card_start:card_end]
+        grid_start = stats_css.index("    .timeline-grid {")
+        grid_end = stats_css.index("\n    }", grid_start)
+        grid_rule = stats_css[grid_start:grid_end]
+        bar_start = stats_css.index("    .timeline-bar {")
+        bar_end = stats_css.index("\n    }", bar_start)
+        bar_rule = stats_css[bar_start:bar_end]
+        line_start = stats_css.index("    .timeline-line {")
+        line_end = stats_css.index("\n    }", line_start)
+        line_rule = stats_css[line_start:line_end]
+
+        self.assertIn("width: 100%;", scroll_rule)
+        self.assertIn("max-width: 100%;", scroll_rule)
+        self.assertIn("overflow-x: auto;", scroll_rule)
+        self.assertIn("min-width: 760px;", chart_rule)
+        self.assertIn("color: var(--text-muted);", chart_rule)
+        self.assertIn("border: 1px solid var(--border);", card_rule)
+        self.assertIn("stroke: var(--border);", grid_rule)
+        self.assertIn("fill: var(--accent);", bar_rule)
+        self.assertIn("stroke: var(--accent2);", line_rule)
+        self.assertNotIn("animation:", stats_css)
+
+    def test_stats_small_text_uses_accessible_muted_color(self):
+        """Small Stats labels must avoid the lower-contrast decorative text token."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        stats_start = html.index("    .stats-panel {")
+        stats_end = html.index("    /* ── Category Section ── */", stats_start)
+        stats_css = html[stats_start:stats_end]
+        note_start = stats_css.index("    .stats-kpi-note {")
+        note_end = stats_css.index("\n    }", note_start)
+        note_rule = stats_css[note_start:note_end]
+        ticks_start = stats_css.index("    .timeline-axis-label,")
+        ticks_end = stats_css.index("\n    }", ticks_start)
+        ticks_rule = stats_css[ticks_start:ticks_end]
+
+        self.assertIn("color: var(--text-muted);", note_rule)
+        self.assertNotIn("var(--text-dim)", note_rule)
+        self.assertIn("fill: var(--text-muted);", ticks_rule)
+        self.assertNotIn("var(--text-dim)", ticks_rule)
 
     def test_table_header_sort_buttons_exist_for_date_citations_and_stars_with_direction_controls(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
