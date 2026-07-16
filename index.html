@@ -4063,6 +4063,8 @@ function restoreCategoryHashPosition(hash) {
   const sectionId = hash.slice(1);
   if (!document.getElementById(sectionId)) return;
   window.requestAnimationFrame(function() {
+    if (window.location.hash !== hash || ACTIVE_TOP_LEVEL_TAB !== 'papers') return;
+    if (!document.getElementById(sectionId)) return;
     scrollToSection(sectionId);
   });
 }

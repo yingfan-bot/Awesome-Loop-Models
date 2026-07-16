@@ -978,12 +978,25 @@ const categoryHistoryBeforeFrame = {
 flushAnimationFrames();
 const categoryHistoryAfterFrame = { scrolls: scrollRequests.slice() };
 
+scrollRequests.length = 0;
+setBrowserHash('#section-designs');
+dispatchWindowEvent('hashchange');
+setBrowserHash('#stats');
+dispatchWindowEvent('hashchange');
+flushAnimationFrames();
+const staleCategoryFrame = {
+  active: ACTIVE_TOP_LEVEL_TAB,
+  hash: window.location.hash,
+  scrolls: scrollRequests.slice()
+};
+
 const result = {
   firstClick: firstClick,
   repeatedClick: repeatedClick,
   statsHistory: statsHistory,
   categoryHistoryBeforeFrame: categoryHistoryBeforeFrame,
-  categoryHistoryAfterFrame: categoryHistoryAfterFrame
+  categoryHistoryAfterFrame: categoryHistoryAfterFrame,
+  staleCategoryFrame: staleCategoryFrame
 };
 process.stdout.write(JSON.stringify(result));
 """)
@@ -1001,6 +1014,10 @@ process.stdout.write(JSON.stringify(result));
             },
         )
         self.assertEqual(result["categoryHistoryAfterFrame"], {"scrolls": ["section-designs"]})
+        self.assertEqual(
+            result["staleCategoryFrame"],
+            {"active": "stats", "hash": "#stats", "scrolls": []},
+        )
 
     def test_catalog_load_reconcile_preserves_empty_hash_user_choice_but_honors_hash(self):
         """Load completion preserves an unrepresented user choice unless a hash drives state."""
