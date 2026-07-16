@@ -389,16 +389,89 @@ process.stdout.write(JSON.stringify(result));
         return json.loads(output)
 
     @staticmethod
-    def run_top_level_tab_helpers(test_body: str):
-        """Evaluate the production hash and keyboard tab helpers in a Node fixture."""
+    def run_top_level_tab_block(initial_hash: str, test_body: str):
+        """Evaluate the complete production tab state and interaction block in Node."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        hash_start = html.index("function getTopLevelTabFromHash(hash) {")
-        hash_end = html.index("function applyTopLevelTab() {", hash_start)
-        keyboard_start = html.index("function handleTopLevelTabKeydown(event) {")
-        keyboard_end = html.index("function initTopLevelTabInteractions() {", keyboard_start)
-        helpers = html[hash_start:hash_end] + html[keyboard_start:keyboard_end]
+        state_start = html.index("let ACTIVE_TOP_LEVEL_TAB = 'papers';")
+        state_end = html.index("let CURRENT_VIEW = 'category';", state_start)
+        block_start = html.index("function normalizeTopLevelTab(tab) {")
+        block_end = html.index("const TAG_GROUP_LABELS = {", block_start)
+        production_block = html[state_start:state_end] + html[block_start:block_end]
         script = f"""
-{helpers}
+let browserHash = {json.dumps(initial_hash)};
+let focusedTabId = null;
+const hashWrites = [];
+const renderStatsCalls = [];
+const scrollRequests = [];
+const animationFrameCallbacks = [];
+const windowListeners = {{}};
+
+function makeTab(id, selected, tabIndex) {{
+  return {{
+    id: id,
+    tabIndex: tabIndex,
+    attributes: {{ 'aria-selected': selected ? 'true' : 'false' }},
+    listeners: {{}},
+    classList: {{
+      active: selected,
+      toggle: function(name, enabled) {{
+        if (name === 'active') this.active = Boolean(enabled);
+      }}
+    }},
+    setAttribute: function(name, value) {{ this.attributes[name] = value; }},
+    addEventListener: function(name, listener) {{
+      if (!this.listeners[name]) this.listeners[name] = [];
+      this.listeners[name].push(listener);
+    }},
+    focus: function() {{ focusedTabId = this.id; }}
+  }};
+}}
+
+const tabs = [makeTab('papers-tab', true, 0), makeTab('stats-tab', false, -1)];
+const papersPanel = {{ hidden: false }};
+const statsPanel = {{ hidden: true }};
+const elements = {{
+  'papers-tab': tabs[0],
+  'stats-tab': tabs[1],
+  'papers-panel': papersPanel,
+  'stats-panel': statsPanel,
+  'section-designs': {{}},
+  'section-blogs': {{}}
+}};
+const document = {{
+  querySelectorAll: function(selector) {{
+    return selector === '.top-level-tab[role="tab"]' ? tabs : [];
+  }},
+  getElementById: function(id) {{ return elements[id] || null; }}
+}};
+const window = {{
+  location: {{}},
+  addEventListener: function(name, listener) {{
+    if (!windowListeners[name]) windowListeners[name] = [];
+    windowListeners[name].push(listener);
+  }},
+  requestAnimationFrame: function(callback) {{ animationFrameCallbacks.push(callback); }}
+}};
+Object.defineProperty(window.location, 'hash', {{
+  get: function() {{ return browserHash; }},
+  set: function(value) {{
+    hashWrites.push(value);
+    browserHash = value;
+  }}
+}});
+function setBrowserHash(value) {{ browserHash = value; }}
+function dispatchWindowEvent(name) {{
+  (windowListeners[name] || []).forEach(function(listener) {{ listener(); }});
+}}
+function flushAnimationFrames() {{
+  while (animationFrameCallbacks.length) animationFrameCallbacks.shift()();
+}}
+function renderStatsPanel() {{
+  renderStatsCalls.push({{ ready: CATALOG_DATA_READY, error: CATALOG_DATA_ERROR }});
+}}
+function scrollToSection(sectionId) {{ scrollRequests.push(sectionId); }}
+
+{production_block}
 {test_body}
 """
         output = subprocess.check_output(["node", "-e", script], text=True)
@@ -704,7 +777,7 @@ process.stdout.write(JSON.stringify(result));
 
         keyboard_start = html.index("function handleTopLevelTabKeydown(event) {")
         init_start = html.index("function initTopLevelTabInteractions() {", keyboard_start)
-        init_end = html.index("applyTopLevelTab();", init_start)
+        init_end = html.index("function restoreTopLevelTabAfterCatalogLoad() {", init_start)
         init_helper = html[init_start:init_end]
         self.assertIn("addEventListener('click'", init_helper)
         self.assertIn("addEventListener('keydown', handleTopLevelTabKeydown)", init_helper)
@@ -713,6 +786,7 @@ process.stdout.write(JSON.stringify(result));
             "setTopLevelTab(getTopLevelTabFromHash(window.location.hash), { updateHash: false })",
             init_helper,
         )
+        self.assertIn("restoreCategoryHashPosition(window.location.hash)", init_helper)
 
         restore_start = html.index("function restoreTopLevelTabAfterCatalogLoad() {")
         restore_end = html.index("initTopLevelTabInteractions();", restore_start)
@@ -726,8 +800,20 @@ process.stdout.write(JSON.stringify(result));
         build_end = html.index("// ── Search", build_start)
         build_helper = html[build_start:build_end]
         data_ready_index = build_helper.index("CATALOG_DATA_READY = true;")
+        sections_created_index = build_helper.index("container.appendChild(section)")
         restore_index = build_helper.index("restoreTopLevelTabAfterCatalogLoad();")
+        category_restore_index = build_helper.index("restoreCategoryHashPosition(window.location.hash);")
         self.assertLess(data_ready_index, restore_index)
+        self.assertLess(sections_created_index, category_restore_index)
+        self.assertLess(restore_index, category_restore_index)
+
+        bootstrap_start = html.index("initTopLevelTabInteractions();", restore_end)
+        bootstrap_end = html.index("const TAG_GROUP_LABELS = {", bootstrap_start)
+        bootstrap_helper = html[bootstrap_start:bootstrap_end]
+        self.assertIn(
+            "initTopLevelTabInteractions();\nsetTopLevelTab(getTopLevelTabFromHash(window.location.hash), { updateHash: false });",
+            bootstrap_helper,
+        )
 
         setter_start = html.index("function setTopLevelTab(tab, options) {")
         setter_end = html.index("function handleTopLevelTabKeydown(event) {", setter_start)
@@ -737,7 +823,7 @@ process.stdout.write(JSON.stringify(result));
 
     def test_top_level_hash_mapping_behavior(self):
         """Only the dedicated Stats hash may select Stats; all other hashes select Papers."""
-        result = self.run_top_level_tab_helpers("""
+        result = self.run_top_level_tab_block("", """
 const hashes = ['#stats', '#papers', '', '#section-designs'];
 const result = hashes.map(function(hash) {
   return { hash: hash, tab: getTopLevelTabFromHash(hash) };
@@ -756,24 +842,14 @@ process.stdout.write(JSON.stringify(result));
 
     def test_top_level_keyboard_navigation_behavior(self):
         """Arrow/Home/End activate and focus tabs while Enter/Space retain native click."""
-        result = self.run_top_level_tab_helpers("""
-let focusedTabId = null;
-let activationCalls = [];
-const tabs = [
-  { id: 'papers-tab', focus: function() { focusedTabId = this.id; } },
-  { id: 'stats-tab', focus: function() { focusedTabId = this.id; } }
-];
-const document = {
-  querySelectorAll: function() { return tabs; }
-};
-function setTopLevelTab(tab, options) {
-  activationCalls.push({ tab: tab, options: options });
-}
+        result = self.run_top_level_tab_block("", """
 function runKey(tabIndex, key) {
+  setBrowserHash(tabIndex === 0 ? '#papers' : '#stats');
+  dispatchWindowEvent('hashchange');
   focusedTabId = null;
-  activationCalls = [];
+  hashWrites.length = 0;
   let prevented = false;
-  handleTopLevelTabKeydown({
+  tabs[tabIndex].listeners.keydown[0]({
     key: key,
     currentTarget: tabs[tabIndex],
     preventDefault: function() { prevented = true; }
@@ -783,7 +859,9 @@ function runKey(tabIndex, key) {
     from: tabs[tabIndex].id,
     prevented: prevented,
     focused: focusedTabId,
-    activation: activationCalls.length ? activationCalls[0] : null
+    active: ACTIVE_TOP_LEVEL_TAB,
+    hash: window.location.hash,
+    hashWrites: hashWrites.slice()
   };
 }
 const result = [
@@ -813,7 +891,9 @@ process.stdout.write(JSON.stringify(result));
                     "from": source,
                     "prevented": True,
                     "focused": f"{target}-tab",
-                    "activation": {"tab": target, "options": {"userInitiated": True}},
+                    "active": target,
+                    "hash": f"#{target}",
+                    "hashWrites": [f"#{target}"],
                 }
             )
         expected.extend(
@@ -822,13 +902,142 @@ process.stdout.write(JSON.stringify(result));
                 "from": "papers-tab",
                 "prevented": False,
                 "focused": None,
-                "activation": None,
+                "active": "papers",
+                "hash": "#papers",
+                "hashWrites": [],
             }
             for key in ("Enter", " ")
         )
         self.assertEqual(
             result,
             expected,
+        )
+
+    def test_initial_stats_hash_activates_loading_panel_before_catalog_data(self):
+        """A direct Stats URL must reveal its panel and enter the loading path immediately."""
+        result = self.run_top_level_tab_block("#stats", """
+const result = {
+  active: ACTIVE_TOP_LEVEL_TAB,
+  papersHidden: papersPanel.hidden,
+  statsHidden: statsPanel.hidden,
+  papersSelected: tabs[0].attributes['aria-selected'],
+  statsSelected: tabs[1].attributes['aria-selected'],
+  renderCalls: renderStatsCalls,
+  hashWrites: hashWrites,
+  listeners: {
+    papersClick: (tabs[0].listeners.click || []).length,
+    papersKeydown: (tabs[0].listeners.keydown || []).length,
+    statsClick: (tabs[1].listeners.click || []).length,
+    statsKeydown: (tabs[1].listeners.keydown || []).length,
+    hashchange: (windowListeners.hashchange || []).length
+  }
+};
+process.stdout.write(JSON.stringify(result));
+""")
+        self.assertEqual(result["active"], "stats")
+        self.assertTrue(result["papersHidden"])
+        self.assertFalse(result["statsHidden"])
+        self.assertEqual(result["papersSelected"], "false")
+        self.assertEqual(result["statsSelected"], "true")
+        self.assertEqual(result["renderCalls"], [{"ready": False, "error": False}])
+        self.assertEqual(result["hashWrites"], [])
+        self.assertEqual(
+            result["listeners"],
+            {
+                "papersClick": 1,
+                "papersKeydown": 1,
+                "statsClick": 1,
+                "statsKeydown": 1,
+                "hashchange": 1,
+            },
+        )
+
+    def test_top_level_click_history_reconcile_and_category_restore_behavior(self):
+        """Clicks write once; history restores state and section position without rewriting."""
+        result = self.run_top_level_tab_block("", """
+tabs[1].listeners.click[0]();
+const firstClick = { active: ACTIVE_TOP_LEVEL_TAB, writes: hashWrites.slice() };
+tabs[1].listeners.click[0]();
+const repeatedClick = { active: ACTIVE_TOP_LEVEL_TAB, writes: hashWrites.slice() };
+
+hashWrites.length = 0;
+setBrowserHash('#stats');
+dispatchWindowEvent('hashchange');
+const statsHistory = { active: ACTIVE_TOP_LEVEL_TAB, writes: hashWrites.slice() };
+
+CATALOG_DATA_READY = true;
+setBrowserHash('#section-designs');
+dispatchWindowEvent('hashchange');
+const categoryHistoryBeforeFrame = {
+  active: ACTIVE_TOP_LEVEL_TAB,
+  hash: window.location.hash,
+  writes: hashWrites.slice(),
+  queuedFrames: animationFrameCallbacks.length,
+  scrolls: scrollRequests.slice()
+};
+flushAnimationFrames();
+const categoryHistoryAfterFrame = { scrolls: scrollRequests.slice() };
+
+const result = {
+  firstClick: firstClick,
+  repeatedClick: repeatedClick,
+  statsHistory: statsHistory,
+  categoryHistoryBeforeFrame: categoryHistoryBeforeFrame,
+  categoryHistoryAfterFrame: categoryHistoryAfterFrame
+};
+process.stdout.write(JSON.stringify(result));
+""")
+        self.assertEqual(result["firstClick"], {"active": "stats", "writes": ["#stats"]})
+        self.assertEqual(result["repeatedClick"], {"active": "stats", "writes": ["#stats"]})
+        self.assertEqual(result["statsHistory"], {"active": "stats", "writes": []})
+        self.assertEqual(
+            result["categoryHistoryBeforeFrame"],
+            {
+                "active": "papers",
+                "hash": "#section-designs",
+                "writes": [],
+                "queuedFrames": 1,
+                "scrolls": [],
+            },
+        )
+        self.assertEqual(result["categoryHistoryAfterFrame"], {"scrolls": ["section-designs"]})
+
+    def test_catalog_load_reconcile_preserves_empty_hash_user_choice_but_honors_hash(self):
+        """Load completion preserves an unrepresented user choice unless a hash drives state."""
+        result = self.run_top_level_tab_block("", """
+tabs[1].listeners.click[0]();
+setBrowserHash('');
+CATALOG_DATA_READY = true;
+restoreTopLevelTabAfterCatalogLoad();
+const emptyHashAfterClick = ACTIVE_TOP_LEVEL_TAB;
+
+setBrowserHash('#papers');
+restoreTopLevelTabAfterCatalogLoad();
+const explicitPapers = ACTIVE_TOP_LEVEL_TAB;
+
+setBrowserHash('#stats');
+restoreTopLevelTabAfterCatalogLoad();
+const explicitStats = ACTIVE_TOP_LEVEL_TAB;
+
+setBrowserHash('#section-blogs');
+restoreTopLevelTabAfterCatalogLoad();
+const explicitCategory = ACTIVE_TOP_LEVEL_TAB;
+
+process.stdout.write(JSON.stringify({
+  emptyHashAfterClick: emptyHashAfterClick,
+  explicitPapers: explicitPapers,
+  explicitStats: explicitStats,
+  explicitCategory: explicitCategory
+}));
+""")
+        self.assertEqual(
+            result,
+            {
+                "emptyHashAfterClick": "stats",
+                "explicitPapers": "papers",
+                "explicitStats": "stats",
+                "explicitCategory": "papers",
+            },
         )
 
     def test_stats_series_helpers_use_strict_utc_date_parsing(self):

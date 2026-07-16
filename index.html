@@ -4053,6 +4053,20 @@ function handleTopLevelTabKeydown(event) {
   nextTab.focus();
 }
 
+/**
+ * Restores a catalog section fragment after dynamic paper sections are available.
+ * @param {string} hash URL fragment that may identify a generated catalog section.
+ * @returns {void}
+ */
+function restoreCategoryHashPosition(hash) {
+  if (!CATALOG_DATA_READY || typeof hash !== 'string' || !hash.startsWith('#section-')) return;
+  const sectionId = hash.slice(1);
+  if (!document.getElementById(sectionId)) return;
+  window.requestAnimationFrame(function() {
+    scrollToSection(sectionId);
+  });
+}
+
 /** Registers pointer, keyboard, and browser-history behavior for the top-level tabs. */
 function initTopLevelTabInteractions() {
   document.querySelectorAll('.top-level-tab[role="tab"]').forEach(function(tab) {
@@ -4064,6 +4078,7 @@ function initTopLevelTabInteractions() {
 
   window.addEventListener('hashchange', function() {
     setTopLevelTab(getTopLevelTabFromHash(window.location.hash), { updateHash: false });
+    restoreCategoryHashPosition(window.location.hash);
   });
 }
 
@@ -4080,7 +4095,7 @@ function restoreTopLevelTabAfterCatalogLoad() {
 }
 
 initTopLevelTabInteractions();
-applyTopLevelTab();
+setTopLevelTab(getTopLevelTabFromHash(window.location.hash), { updateHash: false });
 
 const TAG_GROUP_LABELS = {
   mechanism: 'Loop Mechanism',
@@ -5134,6 +5149,7 @@ function buildDOM(data) {
   applyViewMode();
   doSearch(document.getElementById("search").value || "");
   restoreTopLevelTabAfterCatalogLoad();
+  restoreCategoryHashPosition(window.location.hash);
 }
 
 // ── Search ────────────────────────────────────────────────────────────────────
