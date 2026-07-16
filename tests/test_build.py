@@ -1057,6 +1057,64 @@ process.stdout.write(JSON.stringify({
             },
         )
 
+    def test_paper_section_navigation_leaves_stats_and_restores_repeated_hash(self):
+        """Sidebar navigation must reveal Papers and restore even when the hash is unchanged."""
+        result = self.run_top_level_tab_block("#stats", """
+CATALOG_DATA_READY = true;
+navigateToPaperSection('section-designs');
+const firstNavigation = {
+  active: ACTIVE_TOP_LEVEL_TAB,
+  hash: window.location.hash,
+  writes: hashWrites.slice(),
+  papersHidden: papersPanel.hidden,
+  statsHidden: statsPanel.hidden,
+  queuedFrames: animationFrameCallbacks.length
+};
+dispatchWindowEvent('hashchange');
+flushAnimationFrames();
+const firstScrolls = scrollRequests.slice();
+
+hashWrites.length = 0;
+scrollRequests.length = 0;
+navigateToPaperSection('section-designs');
+const repeatedNavigation = {
+  active: ACTIVE_TOP_LEVEL_TAB,
+  hash: window.location.hash,
+  writes: hashWrites.slice(),
+  queuedFrames: animationFrameCallbacks.length
+};
+flushAnimationFrames();
+
+process.stdout.write(JSON.stringify({
+  firstNavigation: firstNavigation,
+  firstScrolls: firstScrolls,
+  repeatedNavigation: repeatedNavigation,
+  repeatedScrolls: scrollRequests
+}));
+""")
+        self.assertEqual(
+            result["firstNavigation"],
+            {
+                "active": "papers",
+                "hash": "#section-designs",
+                "writes": ["#section-designs"],
+                "papersHidden": False,
+                "statsHidden": True,
+                "queuedFrames": 0,
+            },
+        )
+        self.assertEqual(result["firstScrolls"], ["section-designs"])
+        self.assertEqual(
+            result["repeatedNavigation"],
+            {
+                "active": "papers",
+                "hash": "#section-designs",
+                "writes": [],
+                "queuedFrames": 1,
+            },
+        )
+        self.assertEqual(result["repeatedScrolls"], ["section-designs"])
+
     def test_stats_series_helpers_use_strict_utc_date_parsing(self):
         """Stats helpers must reject normalized-looking but impossible dates."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
@@ -1233,26 +1291,32 @@ process.stdout.write(JSON.stringify({
     def test_stats_panel_lazy_render_waits_for_catalog_data(self):
         """Activating Stats before fetch completion must not lock an empty render."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        state_start = html.index("let ALL_PAPERS = [];")
-        state_end = html.index("const TAG_GROUP_LABELS", state_start)
-        tab_source = html[state_start:state_end]
+        state_start = html.index("let ACTIVE_TOP_LEVEL_TAB = 'papers';")
+        setter_start = html.index("function setTopLevelTab(tab, options) {", state_start)
+        setter_end = html.index("function handleTopLevelTabKeydown(event) {", setter_start)
+        setter_source = html[setter_start:setter_end]
+        restore_start = html.index("function restoreTopLevelTabAfterCatalogLoad() {", setter_end)
+        restore_end = html.index("initTopLevelTabInteractions();", restore_start)
+        restore_source = html[restore_start:restore_end]
         build_start = html.index("function buildDOM(data) {")
         build_end = html.index("// ── Bootstrap: fetch papers.json", build_start)
         build_source = html[build_start:build_end]
 
-        self.assertIn("let HAS_RENDERED_STATS = false;", tab_source)
-        self.assertIn("let CATALOG_DATA_READY = false;", tab_source)
+        state_source = html[state_start:setter_start]
+        self.assertIn("let HAS_RENDERED_STATS = false;", state_source)
+        self.assertIn("let CATALOG_DATA_READY = false;", state_source)
         self.assertIn(
-            "if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS) {",
-            tab_source,
+            "if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS) {\n"
+            "    renderStatsPanel();\n"
+            "  }",
+            setter_source,
         )
-        self.assertIn("renderStatsPanel();", tab_source)
-        self.assertNotIn("typeof renderStatsPanel", tab_source)
-        self.assertIn("CATALOG_DATA_READY = true;", build_source)
-        self.assertIn(
-            "if (ACTIVE_TOP_LEVEL_TAB === 'stats' && !HAS_RENDERED_STATS)",
-            build_source,
-        )
+        self.assertNotIn("typeof renderStatsPanel", setter_source)
+        self.assertIn("setTopLevelTab(requestedTab, { updateHash: false });", restore_source)
+        ready_index = build_source.index("CATALOG_DATA_READY = true;")
+        reconcile_index = build_source.index("restoreTopLevelTabAfterCatalogLoad();")
+        self.assertLess(ready_index, reconcile_index)
+        self.assertNotIn("renderStatsPanel();", build_source)
 
     def test_stats_panel_reports_catalog_fetch_failure(self):
         """A rejected catalog request must replace the Stats loading message."""
@@ -1270,8 +1334,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn("let CATALOG_DATA_ERROR = false;", state_source)
         self.assertIn("CATALOG_DATA_ERROR", stats_source)
         self.assertIn("Catalog data could not be loaded", stats_source)
-        self.assertIn("CATALOG_DATA_ERROR = true;", catch_source)
-        self.assertIn("renderStatsPanel();", catch_source)
+        error_index = catch_source.index("CATALOG_DATA_ERROR = true;")
+        reconcile_index = catch_source.index("restoreTopLevelTabAfterCatalogLoad();")
+        self.assertLess(error_index, reconcile_index)
+        self.assertNotIn("renderStatsPanel();", catch_source)
         self.assertIn("Failed to load resource data", catch_source)
         self.assertIn("if (!r.ok)", html)
 
@@ -1553,6 +1619,16 @@ process.stdout.write(JSON.stringify({
         self.assertIn("window.innerWidth <= 768", scroll_snippet)
         self.assertIn("window.scrollTo", scroll_snippet)
         self.assertIn("scrollRoot.scrollTo", scroll_snippet)
+
+    def test_tree_links_use_top_level_paper_section_navigation(self):
+        """Tree links must route through the tab/hash state machine before scrolling."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        init_start = html.index("function initTreeInteractions()")
+        init_end = html.index("function initScrollObserver()", init_start)
+        init_source = html[init_start:init_end]
+
+        self.assertIn("navigateToPaperSection(sectionId);", init_source)
+        self.assertNotIn("scrollToSection(sectionId);", init_source)
 
     def test_search_count_is_not_table_view_only(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")

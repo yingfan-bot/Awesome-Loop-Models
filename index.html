@@ -4069,6 +4069,22 @@ function restoreCategoryHashPosition(hash) {
   });
 }
 
+/**
+ * Reveals the Papers tab and routes a directory selection through category hash restoration.
+ * @param {string} sectionId Catalog section element identifier.
+ * @returns {void}
+ */
+function navigateToPaperSection(sectionId) {
+  if (typeof sectionId !== 'string' || !sectionId) return;
+  setTopLevelTab('papers', { updateHash: false, userInitiated: true });
+  const nextHash = '#' + sectionId;
+  if (window.location.hash === nextHash) {
+    restoreCategoryHashPosition(nextHash);
+    return;
+  }
+  window.location.hash = nextHash;
+}
+
 /** Registers pointer, keyboard, and browser-history behavior for the top-level tabs. */
 function initTopLevelTabInteractions() {
   document.querySelectorAll('.top-level-tab[role="tab"]').forEach(function(tab) {
@@ -5299,7 +5315,7 @@ function initTreeInteractions() {
         if (toggle) toggle.setAttribute("aria-expanded", "true");
       }
       activateTreeLinks(sectionId);
-      scrollToSection(sectionId);
+      navigateToPaperSection(sectionId);
 
       const mobileDirectory = document.getElementById("mobile-directory");
       const mobileToggle = document.getElementById("mobile-directory-toggle");
