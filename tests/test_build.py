@@ -662,6 +662,66 @@ class TagFilterUiTests(unittest.TestCase):
         ):
             self.assertIn(snippet, html)
 
+    def test_stats_series_helpers_use_strict_utc_date_parsing(self):
+        """Stats helpers must reject normalized-looking but impossible dates."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        parse_start = html.index("function parseIsoDate(value) {")
+        parse_end = html.index("function formatIsoDateUtc(date) {", parse_start)
+        parse_helper = html[parse_start:parse_end]
+        format_start = parse_end
+        format_end = html.index("function buildDailyPaperSeries(papers) {", format_start)
+        format_helper = html[format_start:format_end]
+
+        self.assertIn("/^\\d{4}-\\d{2}-\\d{2}$/", parse_helper)
+        self.assertIn("Date.UTC", parse_helper)
+        self.assertIn("getUTCFullYear()", parse_helper)
+        self.assertIn("getUTCMonth()", parse_helper)
+        self.assertIn("getUTCDate()", parse_helper)
+        self.assertNotIn("new Date(value)", parse_helper)
+        self.assertIn("getUTCFullYear()", format_helper)
+        self.assertIn("getUTCMonth()", format_helper)
+        self.assertIn("getUTCDate()", format_helper)
+
+    def test_daily_stats_series_uses_only_added_date_and_fills_utc_days(self):
+        """Catalog growth must not substitute publication dates for intake dates."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        daily_start = html.index("function buildDailyPaperSeries(papers) {")
+        daily_end = html.index("function buildMonthlyPublicationSeries(papers) {", daily_start)
+        daily_helper = html[daily_start:daily_end]
+
+        self.assertIn("paper.added_date", daily_helper)
+        self.assertNotIn("paper.published_date", daily_helper)
+        self.assertIn("setUTCDate", daily_helper)
+        for field in ("key:", "label:", "count:", "cumulative:"):
+            self.assertIn(field, daily_helper)
+
+    def test_monthly_stats_series_uses_publication_dates_and_fills_utc_months(self):
+        """Publication history must use monthly published-date buckets only."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        monthly_start = html.index("function buildMonthlyPublicationSeries(papers) {")
+        monthly_end = html.index("function buildStatsSummary(dailySeries, totalPapers) {", monthly_start)
+        monthly_helper = html[monthly_start:monthly_end]
+
+        self.assertIn("paper.published_date", monthly_helper)
+        self.assertNotIn("paper.added_date", monthly_helper)
+        self.assertIn("setUTCMonth", monthly_helper)
+        for field in ("key:", "label:", "count:", "cumulative:"):
+            self.assertIn(field, monthly_helper)
+
+    def test_stats_summary_is_deterministic_for_empty_and_tied_series(self):
+        """Summary source must cover empty data, trailing seven days, and stable peaks."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        summary_start = html.index("function buildStatsSummary(dailySeries, totalPapers) {")
+        summary_end = html.index("function escapeHtml(str) {", summary_start)
+        summary_helper = html[summary_start:summary_end]
+
+        for field in ("totalPapers:", "datedPapers:", "lastSevenDays:", "peakDay:"):
+            self.assertIn(field, summary_helper)
+        self.assertIn("var series = Array.isArray(dailySeries) ? dailySeries : [];", summary_helper)
+        self.assertIn("series.slice(-7)", summary_helper)
+        self.assertIn("bucket.count > peakDay.count", summary_helper)
+        self.assertNotIn("bucket.count >= peakDay.count", summary_helper)
+
     def test_table_header_sort_buttons_exist_for_date_citations_and_stars_with_direction_controls(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         self.assertIn('data-sort="date" onclick="setSort(\'date\')">&#128197; Date</button>', html)

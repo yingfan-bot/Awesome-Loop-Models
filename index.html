@@ -2917,6 +2917,141 @@ const LINK_CONFIG = {
   twitter:     { label: "Twitter",     cls: "link-twitter",    icon: "🐦" },
 };
 
+/**
+ * Parse an exact calendar date as midnight UTC.
+ * @param {*} value Candidate YYYY-MM-DD value.
+ * @returns {Date|null} A valid UTC date, or null for invalid input.
+ */
+function parseIsoDate(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  var parts = value.split('-');
+  var year = Number(parts[0]);
+  var month = Number(parts[1]);
+  var day = Number(parts[2]);
+  var parsed = new Date(Date.UTC(year, month - 1, day));
+  if (parsed.getUTCFullYear() !== year
+      || parsed.getUTCMonth() !== month - 1
+      || parsed.getUTCDate() !== day) {
+    return null;
+  }
+  return parsed;
+}
+
+/**
+ * Format a Date with UTC calendar fields.
+ * @param {Date} date Date to format.
+ * @returns {string} YYYY-MM-DD, or an empty string for an invalid Date.
+ */
+function formatIsoDateUtc(date) {
+  if (!(date instanceof Date) || !Number.isFinite(date.getTime())) return '';
+  var year = String(date.getUTCFullYear()).padStart(4, '0');
+  var month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  var day = String(date.getUTCDate()).padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
+
+/**
+ * Aggregate catalog additions into a gap-free daily series.
+ * @param {Array<Object>} papers Paper records from the catalog.
+ * @returns {Array<Object>} Daily count and cumulative-count buckets.
+ */
+function buildDailyPaperSeries(papers) {
+  if (!Array.isArray(papers) || papers.length === 0) return [];
+  var counts = Object.create(null);
+  var firstTime = null;
+  var lastTime = null;
+
+  papers.forEach(function(paper) {
+    var addedDate = parseIsoDate(paper && paper.added_date);
+    if (!addedDate) return;
+    var key = formatIsoDateUtc(addedDate);
+    var timestamp = addedDate.getTime();
+    counts[key] = (counts[key] || 0) + 1;
+    if (firstTime === null || timestamp < firstTime) firstTime = timestamp;
+    if (lastTime === null || timestamp > lastTime) lastTime = timestamp;
+  });
+
+  if (firstTime === null || lastTime === null) return [];
+  var series = [];
+  var cumulative = 0;
+  var cursor = new Date(firstTime);
+  while (cursor.getTime() <= lastTime) {
+    var key = formatIsoDateUtc(cursor);
+    var count = counts[key] || 0;
+    cumulative += count;
+    series.push({ key: key, label: key, count: count, cumulative: cumulative });
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  return series;
+}
+
+/**
+ * Aggregate paper publication dates into a gap-free monthly series.
+ * @param {Array<Object>} papers Paper records from the catalog.
+ * @returns {Array<Object>} Monthly count and cumulative-count buckets.
+ */
+function buildMonthlyPublicationSeries(papers) {
+  if (!Array.isArray(papers) || papers.length === 0) return [];
+  var counts = Object.create(null);
+  var firstTime = null;
+  var lastTime = null;
+
+  papers.forEach(function(paper) {
+    var publishedDate = parseIsoDate(paper && paper.published_date);
+    if (!publishedDate) return;
+    var monthStart = new Date(Date.UTC(publishedDate.getUTCFullYear(), publishedDate.getUTCMonth(), 1));
+    var key = formatIsoDateUtc(monthStart).slice(0, 7);
+    var timestamp = monthStart.getTime();
+    counts[key] = (counts[key] || 0) + 1;
+    if (firstTime === null || timestamp < firstTime) firstTime = timestamp;
+    if (lastTime === null || timestamp > lastTime) lastTime = timestamp;
+  });
+
+  if (firstTime === null || lastTime === null) return [];
+  var series = [];
+  var cumulative = 0;
+  var cursor = new Date(firstTime);
+  while (cursor.getTime() <= lastTime) {
+    var key = formatIsoDateUtc(cursor).slice(0, 7);
+    var count = counts[key] || 0;
+    cumulative += count;
+    series.push({ key: key, label: key, count: count, cumulative: cumulative });
+    cursor.setUTCMonth(cursor.getUTCMonth() + 1);
+  }
+  return series;
+}
+
+/**
+ * Summarize the daily catalog-growth series for headline metrics.
+ * @param {Array<Object>} dailySeries Gap-free daily paper buckets.
+ * @param {number} totalPapers Total number of catalog papers.
+ * @returns {Object} Deterministic totals, recent additions, and peak day.
+ */
+function buildStatsSummary(dailySeries, totalPapers) {
+  var series = Array.isArray(dailySeries) ? dailySeries : [];
+  var lastBucket = series.length ? series[series.length - 1] : null;
+  var datedPapers = lastBucket && Number.isFinite(lastBucket.cumulative)
+    ? lastBucket.cumulative
+    : 0;
+  var lastSevenDays = series.slice(-7).reduce(function(total, bucket) {
+    return total + (Number(bucket.count) || 0);
+  }, 0);
+  var peakDay = null;
+  series.forEach(function(bucket) {
+    if (!peakDay
+        || bucket.count > peakDay.count
+        || (bucket.count === peakDay.count && bucket.key < peakDay.key)) {
+      peakDay = bucket;
+    }
+  });
+  return {
+    totalPapers: Number.isFinite(totalPapers) ? totalPapers : 0,
+    datedPapers: datedPapers,
+    lastSevenDays: lastSevenDays,
+    peakDay: peakDay
+  };
+}
+
 function escapeHtml(str) {
   return String(str == null ? '' : str)
     .replace(/&/g, '&amp;')
