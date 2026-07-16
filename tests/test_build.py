@@ -752,6 +752,10 @@ process.stdout.write(JSON.stringify(result));
     { published_date: '2026-01-01' },
     { added_date: '2025-12-01' }
   ]);
+  const lowYearMonthly = buildMonthlyPublicationSeries([
+    { published_date: '0099-12-15' },
+    { published_date: '0100-01-01' }
+  ]);
   const summarySeries = buildDailyPaperSeries([
     { added_date: '2026-07-01' },
     { added_date: '2026-07-01' },
@@ -771,6 +775,7 @@ process.stdout.write(JSON.stringify(result));
     },
     daily: daily,
     monthly: monthly,
+    lowYearMonthly: lowYearMonthly,
     emptySummary: buildStatsSummary([], 4),
     summary: buildStatsSummary(summarySeries, 10)
   };
@@ -801,6 +806,13 @@ process.stdout.write(JSON.stringify(result));
                 {"key": "2025-11", "label": "2025-11", "count": 1, "cumulative": 1},
                 {"key": "2025-12", "label": "2025-12", "count": 0, "cumulative": 1},
                 {"key": "2026-01", "label": "2026-01", "count": 1, "cumulative": 2},
+            ],
+        )
+        self.assertEqual(
+            result["lowYearMonthly"],
+            [
+                {"key": "0099-12", "label": "0099-12", "count": 1, "cumulative": 1},
+                {"key": "0100-01", "label": "0100-01", "count": 1, "cumulative": 2},
             ],
         )
         self.assertEqual(
