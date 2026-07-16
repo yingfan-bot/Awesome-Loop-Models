@@ -3256,21 +3256,21 @@ function formatIsoDateUtc(date) {
 }
 
 /**
- * Aggregate catalog additions into a gap-free daily series.
+ * Aggregate paper publication dates into a gap-free daily series.
  * @param {Array<Object>} papers Paper records from the catalog.
  * @returns {Array<Object>} Daily count and cumulative-count buckets.
  */
-function buildDailyPaperSeries(papers) {
+function buildDailyPublicationSeries(papers) {
   if (!Array.isArray(papers) || papers.length === 0) return [];
   var counts = Object.create(null);
   var firstTime = null;
   var lastTime = null;
 
   papers.forEach(function(paper) {
-    var addedDate = parseIsoDate(paper && paper.added_date);
-    if (!addedDate) return;
-    var key = formatIsoDateUtc(addedDate);
-    var timestamp = addedDate.getTime();
+    var publishedDate = parseIsoDate(paper && paper.published_date);
+    if (!publishedDate) return;
+    var key = formatIsoDateUtc(publishedDate);
+    var timestamp = publishedDate.getTime();
     counts[key] = (counts[key] || 0) + 1;
     if (firstTime === null || timestamp < firstTime) firstTime = timestamp;
     if (lastTime === null || timestamp > lastTime) lastTime = timestamp;
@@ -3328,34 +3328,159 @@ function buildMonthlyPublicationSeries(papers) {
 }
 
 /**
- * Summarize the daily catalog-growth series for headline metrics.
- * @param {Array<Object>} dailySeries Gap-free daily paper buckets.
- * @param {number} totalPapers Total number of catalog papers.
- * @returns {Object} Deterministic totals, recent additions, and peak day.
+ * Add a trailing average to count buckets without understating early periods.
+ * @param {Array<Object>} series Chronological count buckets.
+ * @param {number} windowSize Maximum number of buckets in each average.
+ * @returns {Array<Object>} Cloned buckets with an average field.
  */
-function buildStatsSummary(dailySeries, totalPapers) {
-  var series = Array.isArray(dailySeries) ? dailySeries : [];
-  var lastBucket = series.length ? series[series.length - 1] : null;
-  var datedPapers = lastBucket && Number.isFinite(lastBucket.cumulative)
-    ? lastBucket.cumulative
-    : 0;
-  var lastSevenDays = series.slice(-7).reduce(function(total, bucket) {
-    return total + (Number(bucket.count) || 0);
+function addTrailingAverage(series, windowSize) {
+  if (!Array.isArray(series) || series.length === 0) return [];
+  var normalizedWindow = Number.isFinite(windowSize) && windowSize > 0
+    ? Math.max(1, Math.floor(windowSize))
+    : 1;
+  var runningTotal = 0;
+  return series.map(function(bucket, index) {
+    runningTotal += Number(bucket && bucket.count) || 0;
+    if (index >= normalizedWindow) {
+      var expiredBucket = series[index - normalizedWindow];
+      runningTotal -= Number(expiredBucket && expiredBucket.count) || 0;
+    }
+    var divisor = Math.min(index + 1, normalizedWindow);
+    return Object.assign({}, bucket, { average: runningTotal / divisor });
+  });
+}
+
+/**
+ * Select the release series and trailing-average window for a Stats range.
+ * @param {Array<Object>} dailySeries Gap-free daily publication buckets.
+ * @param {Array<Object>} monthlySeries Gap-free monthly publication buckets.
+ * @param {string} requestedRange Requested 90d, 1y, or all range.
+ * @returns {Object} Normalized range metadata and averaged buckets.
+ */
+function slicePublicationRange(dailySeries, monthlySeries, requestedRange) {
+  var range = typeof requestedRange === 'string' ? requestedRange.toLowerCase() : '';
+  if (range !== '90d' && range !== '1y' && range !== 'all') range = '1y';
+
+  var daily = Array.isArray(dailySeries) ? dailySeries : [];
+  var monthly = Array.isArray(monthlySeries) ? monthlySeries : [];
+  var source;
+  var granularity;
+  var windowSize;
+
+  if (range === '90d') {
+    source = daily.slice(-90);
+    granularity = 'day';
+    windowSize = 14;
+  } else if (range === 'all') {
+    source = monthly.slice();
+    granularity = 'month';
+    windowSize = 6;
+  } else {
+    source = daily.slice(-365);
+    granularity = 'day';
+    windowSize = 30;
+  }
+
+  return {
+    range: range,
+    granularity: granularity,
+    windowSize: windowSize,
+    series: addTrailingAverage(source, windowSize)
+  };
+}
+
+/**
+ * Build headline release metrics anchored to the latest recorded publication.
+ * @param {Array<Object>} papers Paper records from the catalog.
+ * @param {Array<Object>} dailySeries Gap-free daily publication buckets.
+ * @param {Array<Object>} monthlySeries Gap-free monthly publication buckets.
+ * @returns {Object} Total, recent releases, latest date, and peak month.
+ */
+function buildReleaseStatsSummary(papers, dailySeries, monthlySeries) {
+  var catalog = Array.isArray(papers) ? papers : [];
+  var daily = Array.isArray(dailySeries) ? dailySeries : [];
+  var monthly = Array.isArray(monthlySeries) ? monthlySeries : [];
+  var latestBucket = daily.length ? daily[daily.length - 1] : null;
+  var releasesLast30Days = daily.slice(-30).reduce(function(total, bucket) {
+    return total + (Number(bucket && bucket.count) || 0);
   }, 0);
-  var peakDay = null;
-  series.forEach(function(bucket) {
-    if (!peakDay
-        || bucket.count > peakDay.count
-        || (bucket.count === peakDay.count && bucket.key < peakDay.key)) {
-      peakDay = bucket;
+  var peakMonth = null;
+
+  monthly.forEach(function(bucket) {
+    var count = Number(bucket && bucket.count) || 0;
+    var peakCount = peakMonth ? Number(peakMonth.count) || 0 : -1;
+    if (!peakMonth
+        || count > peakCount
+        || (count === peakCount && String(bucket.key || '') < String(peakMonth.key || ''))) {
+      peakMonth = bucket;
     }
   });
+
   return {
-    totalPapers: Number.isFinite(totalPapers) ? totalPapers : 0,
-    datedPapers: datedPapers,
-    lastSevenDays: lastSevenDays,
-    peakDay: peakDay
+    totalPapers: catalog.length,
+    releasesLast30Days: releasesLast30Days,
+    latestReleaseDate: latestBucket && typeof latestBucket.key === 'string'
+      ? latestBucket.key
+      : null,
+    peakMonth: peakMonth
   };
+}
+
+/**
+ * Count valid paper releases by UTC publication year.
+ * @param {Array<Object>} papers Paper records from the catalog.
+ * @returns {Array<Object>} Chronologically ordered annual count buckets.
+ */
+function buildAnnualReleaseSeries(papers) {
+  if (!Array.isArray(papers) || papers.length === 0) return [];
+  var counts = Object.create(null);
+  papers.forEach(function(paper) {
+    var publishedDate = parseIsoDate(paper && paper.published_date);
+    if (!publishedDate) return;
+    var year = formatIsoDateUtc(publishedDate).slice(0, 4);
+    counts[year] = (counts[year] || 0) + 1;
+  });
+  return Object.keys(counts).sort().map(function(year) {
+    return { key: year, label: year, count: counts[year] };
+  });
+}
+
+/**
+ * Return the newest valid releases with deterministic same-day ordering.
+ * @param {Array<Object>} papers Paper records from the catalog.
+ * @param {number} limit Maximum number of papers to return.
+ * @returns {Array<Object>} Paper records sorted by date, title, id, and input order.
+ */
+function getLatestReleasedPapers(papers, limit) {
+  if (!Array.isArray(papers) || papers.length === 0) return [];
+  var normalizedLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 6;
+  if (normalizedLimit === 0) return [];
+
+  return papers.map(function(paper, index) {
+    return {
+      paper: paper,
+      publishedDate: parseIsoDate(paper && paper.published_date),
+      index: index
+    };
+  }).filter(function(entry) {
+    return entry.publishedDate !== null;
+  }).sort(function(left, right) {
+    var dateOrder = right.publishedDate.getTime() - left.publishedDate.getTime();
+    if (dateOrder !== 0) return dateOrder;
+
+    var leftTitle = String(left.paper.title || '').trim().toLowerCase();
+    var rightTitle = String(right.paper.title || '').trim().toLowerCase();
+    if (leftTitle < rightTitle) return -1;
+    if (leftTitle > rightTitle) return 1;
+
+    var leftId = String(left.paper.id || '').trim().toLowerCase();
+    var rightId = String(right.paper.id || '').trim().toLowerCase();
+    if (leftId < rightId) return -1;
+    if (leftId > rightId) return 1;
+    return left.index - right.index;
+  }).slice(0, normalizedLimit).map(function(entry) {
+    return entry.paper;
+  });
 }
 
 /**
@@ -3590,13 +3715,14 @@ function renderStatsPanel() {
     return;
   }
 
-  var dailySeries = buildDailyPaperSeries(ALL_PAPERS);
+  var dailySeries = buildDailyPublicationSeries(ALL_PAPERS);
   var monthlySeries = buildMonthlyPublicationSeries(ALL_PAPERS);
-  var summary = buildStatsSummary(dailySeries, ALL_PAPERS.length);
+  var summary = buildReleaseStatsSummary(ALL_PAPERS, dailySeries, monthlySeries);
   var totalPapers = summary.totalPapers;
-  var coverage = totalPapers > 0 ? Math.round(summary.datedPapers / totalPapers * 100) : 0;
-  var latestWindow = dailySeries.slice(-7);
-  var peakDay = summary.peakDay;
+  var datedPapers = dailySeries.length ? dailySeries[dailySeries.length - 1].cumulative : 0;
+  var coverage = totalPapers > 0 ? Math.round(datedPapers / totalPapers * 100) : 0;
+  var latestWindow = dailySeries.slice(-30);
+  var peakMonth = summary.peakMonth;
   var totalElement = document.getElementById('stats-total-papers');
   var latestElement = document.getElementById('stats-latest-seven');
   var latestNote = document.getElementById('stats-latest-seven-note');
@@ -3606,30 +3732,30 @@ function renderStatsPanel() {
   var peakNote = document.getElementById('stats-peak-day-note');
 
   if (totalElement) totalElement.textContent = totalPapers.toLocaleString('en-US');
-  if (latestElement) latestElement.textContent = summary.lastSevenDays.toLocaleString('en-US');
+  if (latestElement) latestElement.textContent = summary.releasesLast30Days.toLocaleString('en-US');
   if (latestNote) {
     latestNote.textContent = latestWindow.length
-      ? latestWindow[0].key + ' to ' + latestWindow[latestWindow.length - 1].key + ' — latest recorded window, not wall-clock time'
-      : 'No valid intake-date window';
+      ? latestWindow[0].key + ' to ' + latestWindow[latestWindow.length - 1].key + ' — latest 30 recorded days'
+      : 'No valid publication-date window';
   }
   if (coverageElement) coverageElement.textContent = coverage + '%';
   if (coverageNote) {
-    coverageNote.textContent = summary.datedPapers + ' of ' + totalPapers + ' papers have an added date';
+    coverageNote.textContent = datedPapers + ' of ' + totalPapers + ' papers have a publication date';
   }
-  if (peakElement) peakElement.textContent = peakDay ? peakDay.key : 'No data';
+  if (peakElement) peakElement.textContent = peakMonth ? peakMonth.key : 'No data';
   if (peakNote) {
-    peakNote.textContent = peakDay
-      ? peakDay.count + ' paper' + (peakDay.count === 1 ? '' : 's') + ' added'
-      : 'No valid intake dates';
+    peakNote.textContent = peakMonth
+      ? peakMonth.count + ' paper' + (peakMonth.count === 1 ? '' : 's') + ' released'
+      : 'No valid publication dates';
   }
 
   renderTimelineChart(document.getElementById('catalog-growth-chart'), dailySeries, {
     idPrefix: 'catalog-growth',
-    title: 'Catalog Growth',
-    description: 'Daily additions appear as blue bars; cumulative catalog size appears as a green line.',
-    countLabel: 'Daily additions',
+    title: 'Release Pulse',
+    description: 'Daily paper releases appear as blue bars; cumulative releases appear as a green line.',
+    countLabel: 'Daily releases',
     cumulativeLabel: 'Cumulative papers',
-    emptyMessage: 'No valid paper intake dates are available.'
+    emptyMessage: 'No valid paper publication dates are available.'
   });
   renderTimelineChart(document.getElementById('publication-trend-chart'), monthlySeries, {
     idPrefix: 'publication-trend',
@@ -3642,7 +3768,7 @@ function renderStatsPanel() {
 
   var catalogSummary = document.getElementById('catalog-growth-summary');
   var publicationSummary = document.getElementById('publication-trend-summary');
-  if (catalogSummary) catalogSummary.textContent = summarizeRecentStatsPeriods(dailySeries, 'intake days');
+  if (catalogSummary) catalogSummary.textContent = summarizeRecentStatsPeriods(dailySeries, 'release days');
   if (publicationSummary) publicationSummary.textContent = summarizeRecentStatsPeriods(monthlySeries, 'publication months');
   if (status) status.hidden = true;
   HAS_RENDERED_STATS = true;

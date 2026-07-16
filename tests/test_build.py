@@ -1122,7 +1122,7 @@ process.stdout.write(JSON.stringify({
         parse_end = html.index("function formatIsoDateUtc(date) {", parse_start)
         parse_helper = html[parse_start:parse_end]
         format_start = parse_end
-        format_end = html.index("function buildDailyPaperSeries(papers) {", format_start)
+        format_end = html.index("function buildDailyPublicationSeries(papers) {", format_start)
         format_helper = html[format_start:format_end]
 
         self.assertIn("/^\\d{4}-\\d{2}-\\d{2}$/", parse_helper)
@@ -1136,15 +1136,15 @@ process.stdout.write(JSON.stringify({
         self.assertIn("getUTCMonth()", format_helper)
         self.assertIn("getUTCDate()", format_helper)
 
-    def test_daily_stats_series_uses_only_added_date_and_fills_utc_days(self):
-        """Catalog growth must not substitute publication dates for intake dates."""
+    def test_daily_stats_series_uses_only_publication_dates_and_fills_utc_days(self):
+        """Release cadence must use published dates without intake-date fallback."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        daily_start = html.index("function buildDailyPaperSeries(papers) {")
+        daily_start = html.index("function buildDailyPublicationSeries(papers) {")
         daily_end = html.index("function buildMonthlyPublicationSeries(papers) {", daily_start)
         daily_helper = html[daily_start:daily_end]
 
-        self.assertIn("parseIsoDate(paper && paper.added_date)", daily_helper)
-        self.assertNotIn("paper.published_date", daily_helper)
+        self.assertIn("parseIsoDate(paper && paper.published_date)", daily_helper)
+        self.assertNotIn("added_date", daily_helper)
         self.assertIn("setUTCDate", daily_helper)
         for field in ("key:", "label:", "count:", "cumulative:"):
             self.assertIn(field, daily_helper)
@@ -1153,37 +1153,48 @@ process.stdout.write(JSON.stringify({
         """Publication history must use monthly published-date buckets only."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         monthly_start = html.index("function buildMonthlyPublicationSeries(papers) {")
-        monthly_end = html.index("function buildStatsSummary(dailySeries, totalPapers) {", monthly_start)
+        monthly_end = html.index("function addTrailingAverage(series, windowSize) {", monthly_start)
         monthly_helper = html[monthly_start:monthly_end]
 
         self.assertIn("paper.published_date", monthly_helper)
-        self.assertNotIn("paper.added_date", monthly_helper)
+        self.assertNotIn("added_date", monthly_helper)
         self.assertIn("setUTCMonth", monthly_helper)
         for field in ("key:", "label:", "count:", "cumulative:"):
             self.assertIn(field, monthly_helper)
 
-    def test_stats_summary_is_deterministic_for_empty_and_tied_series(self):
-        """Summary source must cover empty data, trailing seven days, and stable peaks."""
+    def test_release_helpers_exclude_intake_dates_and_define_range_contracts(self):
+        """All pure Stats derivation must be release-only and range-aware."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        summary_start = html.index("function buildStatsSummary(dailySeries, totalPapers) {")
-        summary_end = html.index("function escapeHtml(str) {", summary_start)
-        summary_helper = html[summary_start:summary_end]
+        helpers_start = html.index("function buildDailyPublicationSeries(papers) {")
+        helpers_end = html.index("function createStatsSvgElement(", helpers_start)
+        helpers = html[helpers_start:helpers_end]
 
-        for field in ("totalPapers:", "datedPapers:", "lastSevenDays:", "peakDay:"):
-            self.assertIn(field, summary_helper)
-        self.assertIn("var series = Array.isArray(dailySeries) ? dailySeries : [];", summary_helper)
-        self.assertIn("series.slice(-7)", summary_helper)
-        self.assertIn("bucket.count > peakDay.count", summary_helper)
-        self.assertNotIn("bucket.count >= peakDay.count", summary_helper)
+        for function_name in (
+            "buildDailyPublicationSeries",
+            "buildMonthlyPublicationSeries",
+            "addTrailingAverage",
+            "slicePublicationRange",
+            "buildReleaseStatsSummary",
+            "buildAnnualReleaseSeries",
+            "getLatestReleasedPapers",
+        ):
+            self.assertIn(f"function {function_name}(", helpers)
+        self.assertNotIn("added_date", helpers)
+        self.assertIn("range === '90d'", helpers)
+        self.assertIn("range === 'all'", helpers)
+        self.assertIn("windowSize = 14", helpers)
+        self.assertIn("windowSize = 30", helpers)
+        self.assertIn("windowSize = 6", helpers)
 
     def test_stats_helpers_execute_date_series_and_summary_boundaries(self):
-        """Execute strict dates, gap filling, field isolation, and summary ties."""
+        """Execute strict dates, gap filling, release KPIs, and stable ordering."""
         result = self.run_stats_series_helpers("""(function() {
-  const daily = buildDailyPaperSeries([
-    { added_date: '2026-07-01' },
-    { added_date: '2026-07-03' },
-    { added_date: '2026-07-03' },
-    { published_date: '2026-07-02' }
+  const daily = buildDailyPublicationSeries([
+    { published_date: '2026-07-01' },
+    { published_date: '2026-07-03' },
+    { published_date: '2026-07-03' },
+    { added_date: '2026-07-02' },
+    { published_date: '2026-02-29' }
   ]);
   const monthly = buildMonthlyPublicationSeries([
     { published_date: '2025-11-15' },
@@ -1194,14 +1205,31 @@ process.stdout.write(JSON.stringify({
     { published_date: '0099-12-15' },
     { published_date: '0100-01-01' }
   ]);
-  const summarySeries = buildDailyPaperSeries([
-    { added_date: '2026-07-01' },
-    { added_date: '2026-07-01' },
-    { added_date: '2026-07-03' },
-    { added_date: '2026-07-07' },
-    { added_date: '2026-07-07' },
-    { added_date: '2026-07-08' }
+  const summaryPapers = [
+    { id: 'jan-b', title: 'Beta', published_date: '2026-01-02' },
+    { id: 'jan-a', title: 'Alpha', published_date: '2026-01-01' },
+    { id: 'jan-c', title: 'Gamma', published_date: '2026-01-03' },
+    { id: 'mar-b', title: 'Beta', published_date: '2026-03-02' },
+    { id: 'mar-a', title: 'Alpha', published_date: '2026-03-01' },
+    { id: 'june', title: 'Older', published_date: '2026-06-03' },
+    { id: 'latest-b', title: 'Beta', published_date: '2026-07-03' },
+    { id: 'latest-a2', title: 'Alpha', published_date: '2026-07-03' },
+    { id: 'latest-a1', title: 'Alpha', published_date: '2026-07-03' },
+    { id: 'intake-only', title: 'Ignored', added_date: '2026-07-04' },
+    { id: 'invalid', title: 'Invalid', published_date: '2026-02-29' }
+  ];
+  const summaryDaily = buildDailyPublicationSeries(summaryPapers);
+  const summaryMonthly = buildMonthlyPublicationSeries(summaryPapers);
+  const rangeDaily = Array.from({ length: 400 }, function(_, index) {
+    var count = index === 35 ? 8 : (index === 36 ? 2 : (index === 310 ? 5 : (index === 311 ? 1 : 0)));
+    return { key: 'd' + index, label: 'd' + index, count: count, cumulative: index };
+  });
+  const rangeMonthly = Array.from({ length: 12 }, function(_, index) {
+    return { key: 'm' + index, label: 'm' + index, count: index === 0 ? 6 : 0, cumulative: index };
   ]);
+  const ninetyDays = slicePublicationRange(rangeDaily, rangeMonthly, '90d');
+  const oneYear = slicePublicationRange(rangeDaily, rangeMonthly, '1y');
+  const allTime = slicePublicationRange(rangeDaily, rangeMonthly, 'all');
   return {
     dates: {
       invalidType: parseIsoDate(null),
@@ -1214,8 +1242,53 @@ process.stdout.write(JSON.stringify({
     daily: daily,
     monthly: monthly,
     lowYearMonthly: lowYearMonthly,
-    emptySummary: buildStatsSummary([], 4),
-    summary: buildStatsSummary(summarySeries, 10)
+    averages: addTrailingAverage([
+      { key: 'a', count: 2 },
+      { key: 'b', count: 4 },
+      { key: 'c', count: 0 }
+    ], 14).map(function(bucket) { return bucket.average; }),
+    ranges: {
+      ninetyDays: {
+        range: ninetyDays.range,
+        granularity: ninetyDays.granularity,
+        windowSize: ninetyDays.windowSize,
+        length: ninetyDays.series.length,
+        firstKey: ninetyDays.series[0].key,
+        lastKey: ninetyDays.series[ninetyDays.series.length - 1].key,
+        firstAverages: ninetyDays.series.slice(0, 2).map(function(bucket) { return bucket.average; })
+      },
+      oneYear: {
+        range: oneYear.range,
+        granularity: oneYear.granularity,
+        windowSize: oneYear.windowSize,
+        length: oneYear.series.length,
+        firstKey: oneYear.series[0].key,
+        lastKey: oneYear.series[oneYear.series.length - 1].key,
+        firstAverages: oneYear.series.slice(0, 2).map(function(bucket) { return bucket.average; })
+      },
+      allTime: {
+        range: allTime.range,
+        granularity: allTime.granularity,
+        windowSize: allTime.windowSize,
+        length: allTime.series.length,
+        firstKey: allTime.series[0].key,
+        lastKey: allTime.series[allTime.series.length - 1].key,
+        firstAverages: allTime.series.slice(0, 2).map(function(bucket) { return bucket.average; })
+      }
+    },
+    emptyRange: slicePublicationRange(null, null, 'unexpected'),
+    emptySummary: buildReleaseStatsSummary(null, null, null),
+    summary: buildReleaseStatsSummary(summaryPapers, summaryDaily, summaryMonthly),
+    annual: buildAnnualReleaseSeries([
+      { published_date: '2026-01-01' },
+      { published_date: '2024-12-31' },
+      { published_date: '2025-06-15' },
+      { published_date: '2024-01-01' },
+      { published_date: 'invalid' },
+      { added_date: '2023-01-01' }
+    ]),
+    latest: getLatestReleasedPapers(summaryPapers, 5).map(function(paper) { return paper.id; }),
+    noLatest: getLatestReleasedPapers(null, -1)
   };
 })()""")
 
@@ -1255,12 +1328,70 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(
             result["emptySummary"],
-            {"totalPapers": 4, "datedPapers": 0, "lastSevenDays": 0, "peakDay": None},
+            {
+                "totalPapers": 0,
+                "releasesLast30Days": 0,
+                "latestReleaseDate": None,
+                "peakMonth": None,
+            },
         )
-        self.assertEqual(result["summary"]["datedPapers"], 6)
-        self.assertEqual(result["summary"]["lastSevenDays"], 4)
-        self.assertEqual(result["summary"]["peakDay"]["key"], "2026-07-01")
-        self.assertEqual(result["summary"]["peakDay"]["count"], 2)
+        self.assertEqual(result["averages"], [2, 3, 2])
+        self.assertEqual(
+            result["ranges"],
+            {
+                "ninetyDays": {
+                    "range": "90d",
+                    "granularity": "day",
+                    "windowSize": 14,
+                    "length": 90,
+                    "firstKey": "d310",
+                    "lastKey": "d399",
+                    "firstAverages": [5, 3],
+                },
+                "oneYear": {
+                    "range": "1y",
+                    "granularity": "day",
+                    "windowSize": 30,
+                    "length": 365,
+                    "firstKey": "d35",
+                    "lastKey": "d399",
+                    "firstAverages": [8, 5],
+                },
+                "allTime": {
+                    "range": "all",
+                    "granularity": "month",
+                    "windowSize": 6,
+                    "length": 12,
+                    "firstKey": "m0",
+                    "lastKey": "m11",
+                    "firstAverages": [6, 3],
+                },
+            },
+        )
+        self.assertEqual(
+            result["emptyRange"],
+            {"range": "1y", "granularity": "day", "windowSize": 30, "series": []},
+        )
+        self.assertEqual(result["summary"]["totalPapers"], 11)
+        self.assertEqual(result["summary"]["releasesLast30Days"], 3)
+        self.assertEqual(result["summary"]["latestReleaseDate"], "2026-07-03")
+        self.assertEqual(
+            result["summary"]["peakMonth"],
+            {"key": "2026-01", "label": "2026-01", "count": 3, "cumulative": 3},
+        )
+        self.assertEqual(
+            result["annual"],
+            [
+                {"key": "2024", "label": "2024", "count": 2},
+                {"key": "2025", "label": "2025", "count": 1},
+                {"key": "2026", "label": "2026", "count": 1},
+            ],
+        )
+        self.assertEqual(
+            result["latest"],
+            ["latest-a1", "latest-a2", "latest-b", "june", "mar-a"],
+        )
+        self.assertEqual(result["noLatest"], [])
 
     def test_stats_panel_has_kpis_charts_and_accessible_fallback_summaries(self):
         """Stats markup must expose useful values beyond SVG color or hover states."""
@@ -1412,7 +1543,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn("setAttribute", timeline_source)
         self.assertNotIn("innerHTML", timeline_source)
         self.assertNotIn("innerHTML", stats_source)
-        self.assertIn("buildDailyPaperSeries(ALL_PAPERS)", stats_source)
+        self.assertIn("buildDailyPublicationSeries(ALL_PAPERS)", stats_source)
         self.assertIn("buildMonthlyPublicationSeries(ALL_PAPERS)", stats_source)
         self.assertIn("HAS_RENDERED_STATS = true;", stats_source)
         self.assertIn("if (!CATALOG_DATA_READY)", stats_source)
