@@ -940,14 +940,16 @@ class CanonicalPaperMetadataTests(unittest.TestCase):
         self.assertEqual(violations, [])
 
     def test_all_repo_paper_yaml_files_have_intake_dates(self):
-        """Require every canonical paper source to record its catalog intake date."""
+        """Require every canonical paper source to record a valid catalog intake date."""
         violations = []
-        for yaml_path in sorted((REPO_ROOT / "papers").glob("*.yaml")):
-            if yaml_path.name.startswith("_"):
+        for paper_path in sorted((REPO_ROOT / "papers").glob("*.yaml")):
+            if paper_path.name.startswith("_"):
                 continue
-            data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
-            if data.get("added_date") in (None, ""):
-                violations.append(f"{yaml_path.name}: missing added_date")
+            data = yaml.safe_load(paper_path.read_text(encoding="utf-8")) or {}
+            try:
+                build.normalize_required_date_string(data.get("added_date"), "added_date", paper_path.name)
+            except ValueError as exc:
+                violations.append(str(exc))
 
         self.assertEqual(violations, [])
 
