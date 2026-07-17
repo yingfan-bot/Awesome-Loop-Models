@@ -1342,6 +1342,12 @@ process.stdout.write(JSON.stringify({
       { key: 'b', count: 4 },
       { key: 'c', count: 0 }
     ], 14).map(function(bucket) { return bucket.average; }),
+    normalizedAverages: addTrailingAverage([
+      { key: 'a', count: Infinity },
+      { key: 'b', count: -4 },
+      { key: 'c', count: '3' },
+      { key: 'd', count: NaN }
+    ], 2).map(function(bucket) { return bucket.average; }),
     ranges: {
       ninetyDays: {
         range: ninetyDays.range,
@@ -1374,6 +1380,7 @@ process.stdout.write(JSON.stringify({
     emptyRange: slicePublicationRange(null, null, 'unexpected'),
     emptySummary: buildReleaseStatsSummary(null, null, null),
     summary: buildReleaseStatsSummary(summaryPapers, summaryDaily, summaryMonthly),
+    peakIsCopy: buildReleaseStatsSummary(summaryPapers, summaryDaily, summaryMonthly).peakMonth !== summaryMonthly[0],
     annual: buildAnnualReleaseSeries([
       { published_date: '2026-01-01' },
       { published_date: '2024-12-31' },
@@ -1383,6 +1390,7 @@ process.stdout.write(JSON.stringify({
       { added_date: '2023-01-01' }
     ]),
     latest: getLatestReleasedPapers(summaryPapers, 5).map(function(paper) { return paper.id; }),
+    latestIsCopy: getLatestReleasedPapers(summaryPapers, 1)[0] !== summaryPapers[8],
     noLatest: getLatestReleasedPapers(null, -1)
   };
 })()""")
@@ -1431,6 +1439,7 @@ process.stdout.write(JSON.stringify({
             },
         )
         self.assertEqual(result["averages"], [2, 3, 2])
+        self.assertEqual(result["normalizedAverages"], [0, 0, 1.5, 1.5])
         self.assertEqual(
             result["ranges"],
             {
@@ -1474,6 +1483,7 @@ process.stdout.write(JSON.stringify({
             result["summary"]["peakMonth"],
             {"key": "2026-01", "label": "2026-01", "count": 3, "cumulative": 3},
         )
+        self.assertTrue(result["peakIsCopy"])
         self.assertEqual(
             result["annual"],
             [
@@ -1486,33 +1496,95 @@ process.stdout.write(JSON.stringify({
             result["latest"],
             ["latest-a1", "latest-a2", "latest-b", "june", "mar-a"],
         )
+        self.assertTrue(result["latestIsCopy"])
         self.assertEqual(result["noLatest"], [])
 
     def test_stats_panel_has_kpis_charts_and_accessible_fallback_summaries(self):
-        """Stats markup must expose useful values beyond SVG color or hover states."""
+        """Stats markup must expose a complete release-intelligence experience."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         stats_start = html.index('<section class="top-level-panel stats-panel"')
         stats_end = html.index("</section>", stats_start)
         stats_markup = html[stats_start:stats_end]
 
         for marker in (
-            'class="stats-kpis"',
+            "Release intelligence",
+            "The rhythm of loop-model research",
+            "papers represented in this curated catalog",
+            'class="stats-metric-rail"',
             'id="stats-total-papers"',
-            'id="stats-latest-seven"',
-            'id="stats-date-coverage"',
-            'id="stats-peak-day"',
-            'id="catalog-growth-chart"',
-            'id="publication-trend-chart"',
-            'id="catalog-growth-summary"',
-            'id="publication-trend-summary"',
-            "Catalog Growth",
-            "Publication Trend",
-            "Papers in this catalog by publication month",
-            "latest 7 recorded days",
+            'id="stats-latest-thirty"',
+            'id="stats-latest-release"',
+            'id="stats-peak-month"',
+            'id="release-pulse-chart"',
+            'id="release-pulse-summary"',
+            'id="annual-release-volume"',
+            'id="latest-releases-list"',
+            'id="long-arc-chart"',
+            'id="long-arc-summary"',
+            'class="stats-range-control"',
+            'data-stats-range="90d"',
+            'data-stats-range="1y"',
+            'data-stats-range="all"',
+            'aria-pressed="true">1Y</button>',
+            "Release Pulse",
+            "Annual volume",
+            "Latest releases",
+            "Long arc",
         ):
             self.assertIn(marker, stats_markup)
         self.assertIn('aria-live="polite"', stats_markup)
         self.assertNotIn("stats-panel-placeholder", stats_markup)
+        for obsolete in (
+            "Catalog Growth",
+            "Collection telemetry",
+            "added date",
+            "intake",
+            "stats-latest-seven",
+            "stats-date-coverage",
+            "stats-peak-day",
+            "catalog-growth-chart",
+            "publication-trend-chart",
+        ):
+            self.assertNotIn(obsolete, stats_markup)
+
+    def test_stats_range_control_rerenders_only_the_selected_release_window(self):
+        """Range changes must stay local to Stats and never pass full daily history."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        state_start = html.index("let ACTIVE_TOP_LEVEL_TAB = 'papers';")
+        state_end = html.index("let CURRENT_VIEW = 'category';", state_start)
+        state_source = html[state_start:state_end]
+        bind_start = html.index("function initStatsRangeInteractions() {")
+        bind_end = html.index("function renderStatsPanel() {", bind_start)
+        bind_source = html[bind_start:bind_end]
+        pulse_start = html.index("function renderReleasePulse(")
+        pulse_end = html.index("function initStatsRangeInteractions() {", pulse_start)
+        pulse_source = html[pulse_start:pulse_end]
+
+        self.assertIn("let CURRENT_STATS_RANGE = '1y';", state_source)
+        self.assertIn("let STATS_RANGE_LISTENERS_BOUND = false;", state_source)
+        self.assertIn("if (STATS_RANGE_LISTENERS_BOUND) return;", bind_source)
+        self.assertIn("STATS_RANGE_LISTENERS_BOUND = true;", bind_source)
+        self.assertIn("CURRENT_STATS_RANGE = button.dataset.statsRange;", bind_source)
+        self.assertIn("setAttribute('aria-pressed'", bind_source)
+        self.assertIn("renderReleasePulse();", bind_source)
+        self.assertNotIn("location.hash", bind_source)
+        self.assertIn(
+            "slicePublicationRange(STATS_DAILY_RELEASES, STATS_MONTHLY_RELEASES, CURRENT_STATS_RANGE)",
+            pulse_source,
+        )
+        self.assertIn("rangeData.series", pulse_source)
+        self.assertNotIn("renderReleasePulseChart(container, STATS_DAILY_RELEASES", pulse_source)
+
+    def test_stats_render_slice_is_release_only(self):
+        """The entire Stats render path must remain independent of catalog intake dates."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        stats_start = html.index("function buildDailyPublicationSeries(papers) {")
+        stats_end = html.index("function escapeHtml(str) {", stats_start)
+        stats_source = html[stats_start:stats_end]
+
+        self.assertNotIn("added_date", stats_source)
+        self.assertNotIn("Catalog Growth", stats_source)
+        self.assertNotIn("intake", stats_source.lower())
 
     def test_stats_panel_lazy_render_waits_for_catalog_data(self):
         """Activating Stats before fetch completion must not lock an empty render."""
@@ -1594,11 +1666,11 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(result["singleton"], [0])
         self.assertEqual(result["empty"], [])
 
-    def test_timeline_renderer_uses_pixel_spaced_tick_helper(self):
+    def test_release_renderers_use_pixel_spaced_tick_helper(self):
         """SVG x labels must come from the shared collision-resistant selector."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         helper_start = html.index("function selectTimelineTickIndices(")
-        helper_end = html.index("function renderTimelineChart(", helper_start)
+        helper_end = html.index("function renderReleasePulseChart(", helper_start)
         helper_source = html[helper_start:helper_end]
         render_start = helper_end
         render_end = html.index("function renderStatsPanel()", render_start)
@@ -1611,10 +1683,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn("selectTimelineTickIndices", render_source)
         self.assertNotIn("index % xTickStep", render_source)
 
-    def test_stats_renderers_use_safe_accessible_inline_svg(self):
-        """Timeline rendering must use DOM APIs and include axes plus text alternatives."""
+    def test_stats_renderers_use_safe_accessible_inline_svg_and_dom(self):
+        """Stats rendering must use safe DOM APIs, SVG text alternatives, and visible summaries."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
-        timeline_start = html.index("function renderTimelineChart(container, series, options) {")
+        timeline_start = html.index("function renderReleasePulseChart(container, series, options) {")
         timeline_end = html.index("function renderStatsPanel() {", timeline_start)
         timeline_source = html[timeline_start:timeline_end]
         stats_start = timeline_end
@@ -1622,17 +1694,21 @@ process.stdout.write(JSON.stringify({
         stats_source = html[stats_start:stats_end]
 
         for marker in (
-            "createElementNS",
+            "createStatsSvgElement",
             "'title'",
             "'desc'",
             "'viewBox'",
             "timeline-grid",
             "timeline-bar",
             "timeline-line",
-            "timeline-axis-left",
-            "timeline-axis-right",
+            "timeline-axis-count",
+            "timeline-axis-average",
             "timeline-empty",
             "textContent",
+            "renderAnnualReleaseVolume",
+            "renderLatestReleases",
+            "renderLongArcChart",
+            "getSafeStatsPaperUrl",
         ):
             self.assertIn(marker, timeline_source)
         self.assertIn("setAttribute", timeline_source)
@@ -1642,9 +1718,13 @@ process.stdout.write(JSON.stringify({
         self.assertIn("buildMonthlyPublicationSeries(ALL_PAPERS)", stats_source)
         self.assertIn("HAS_RENDERED_STATS = true;", stats_source)
         self.assertIn("if (!CATALOG_DATA_READY)", stats_source)
+        self.assertIn("release-pulse-summary", html)
+        self.assertIn("long-arc-summary", html)
+        self.assertIn("'title'", timeline_source)
+        self.assertIn("'desc'", timeline_source)
 
-    def test_stats_charts_are_editorial_responsive_and_scroll_locally(self):
-        """Chart CSS must retain readable SVG width without overflowing the page."""
+    def test_stats_charts_are_editorial_full_width_and_scroll_locally(self):
+        """Stats CSS must form a full-width editorial observatory without generic cards."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         stats_start = html.index("    .stats-panel {")
         stats_end = html.index("    /* ── Category Section ── */", stats_start)
@@ -1656,9 +1736,9 @@ process.stdout.write(JSON.stringify({
         chart_start = stats_css.index("    .timeline-chart {")
         chart_end = stats_css.index("\n    }", chart_start)
         chart_rule = stats_css[chart_start:chart_end]
-        card_start = stats_css.index("    .stats-chart-card {")
-        card_end = stats_css.index("\n    }", card_start)
-        card_rule = stats_css[card_start:card_end]
+        primary_start = stats_css.index("    .stats-primary-chart {")
+        primary_end = stats_css.index("\n    }", primary_start)
+        primary_rule = stats_css[primary_start:primary_end]
         grid_start = stats_css.index("    .timeline-grid {")
         grid_end = stats_css.index("\n    }", grid_start)
         grid_rule = stats_css[grid_start:grid_end]
@@ -1674,11 +1754,16 @@ process.stdout.write(JSON.stringify({
         self.assertIn("overflow-x: auto;", scroll_rule)
         self.assertIn("min-width: 760px;", chart_rule)
         self.assertIn("color: var(--text-muted);", chart_rule)
-        self.assertIn("border: 1px solid var(--border);", card_rule)
+        self.assertIn("border-top: 1px solid var(--border);", primary_rule)
+        self.assertIn("border-bottom: 1px solid var(--border);", primary_rule)
         self.assertIn("stroke: var(--border);", grid_rule)
         self.assertIn("fill: var(--accent);", bar_rule)
         self.assertIn("stroke: var(--accent2);", line_rule)
         self.assertNotIn("animation:", stats_css)
+        self.assertNotIn("linear-gradient", stats_css)
+        self.assertNotIn("backdrop-filter", stats_css)
+        self.assertIn(".stats-lower-grid", stats_css)
+        self.assertIn("grid-template-columns", stats_css)
 
     def test_stats_small_text_uses_accessible_muted_color(self):
         """Small Stats labels must avoid the lower-contrast decorative text token."""
@@ -1686,7 +1771,7 @@ process.stdout.write(JSON.stringify({
         stats_start = html.index("    .stats-panel {")
         stats_end = html.index("    /* ── Category Section ── */", stats_start)
         stats_css = html[stats_start:stats_end]
-        note_start = stats_css.index("    .stats-kpi-note {")
+        note_start = stats_css.index("    .stats-metric-note {")
         note_end = stats_css.index("\n    }", note_start)
         note_rule = stats_css[note_start:note_end]
         ticks_start = stats_css.index("    .timeline-axis-label,")
