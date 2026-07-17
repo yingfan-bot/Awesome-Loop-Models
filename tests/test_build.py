@@ -379,7 +379,9 @@ class TagFilterUiTests(unittest.TestCase):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         helper_start = html.index("function parseIsoDate(value) {")
         helper_end = html.index("function createStatsSvgElement(", helper_start)
-        helpers = html[helper_start:helper_end]
+        tick_start = html.index("function selectTimelineTickIndices(", helper_end)
+        tick_end = html.index("function renderReleasePulseChart(", tick_start)
+        helpers = html[helper_start:helper_end] + html[tick_start:tick_end]
         script = f"""
 {helpers}
 const result = {expression};
@@ -1324,7 +1326,7 @@ process.stdout.write(JSON.stringify({
   });
   const rangeMonthly = Array.from({ length: 12 }, function(_, index) {
     return { key: 'm' + index, label: 'm' + index, count: index === 0 ? 6 : 0, cumulative: index };
-  ]);
+  });
   const ninetyDays = slicePublicationRange(rangeDaily, rangeMonthly, '90d');
   const oneYear = slicePublicationRange(rangeDaily, rangeMonthly, '1y');
   const allTime = slicePublicationRange(rangeDaily, rangeMonthly, 'all');
