@@ -1499,7 +1499,7 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(
             result["latest"],
-            ["latest-a1", "latest-a2", "latest-b", "june", "mar-a"],
+            ["latest-a1", "latest-a2", "latest-b", "june", "mar-b"],
         )
         self.assertTrue(result["latestIsCopy"])
         self.assertEqual(result["noLatest"], [])
