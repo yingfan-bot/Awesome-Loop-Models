@@ -691,28 +691,39 @@
       position: relative;
       width: 100%;
       max-width: 100%;
+      overflow-x: clip;
       padding-bottom: 42px;
     }
 
     .stats-panel::before {
       position: absolute;
       z-index: -1;
-      top: -30px;
-      right: 0;
-      width: min(46vw, 680px);
-      height: 330px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='2' cy='2' r='1' fill='%230969da' fill-opacity='.16'/%3E%3C/svg%3E");
+      top: -118px;
+      right: -86px;
+      width: min(44vw, 620px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: repeating-radial-gradient(
+        circle,
+        color-mix(in srgb, var(--accent) 18%, transparent) 0 1px,
+        transparent 1px 24px
+      );
+      opacity: 0.48;
       content: '';
       pointer-events: none;
     }
 
     .stats-hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.45fr);
-      align-items: end;
-      gap: clamp(32px, 6vw, 96px);
-      min-height: 250px;
-      padding: clamp(34px, 5vw, 74px) 0 clamp(30px, 4vw, 58px);
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.6fr);
+      align-items: center;
+      gap: clamp(34px, 6vw, 92px);
+      min-height: 292px;
+      padding: clamp(34px, 5vw, 68px) 0 clamp(32px, 4vw, 54px);
+    }
+
+    .stats-hero-copy {
+      min-width: 0;
     }
 
     .stats-eyebrow {
@@ -728,19 +739,119 @@
       max-width: 960px;
       color: var(--text);
       font-family: var(--font-display);
-      font-size: clamp(44px, 6.2vw, 92px);
+      font-size: clamp(44px, 5.8vw, 86px);
       font-weight: 520;
       letter-spacing: -0.038em;
       line-height: 0.94;
     }
 
-    .stats-scope {
-      max-width: 420px;
-      padding-top: 16px;
-      border-top: 2px solid var(--text);
+    .stats-signal-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      padding: 22px 24px 24px;
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--bg) 92%, var(--accent) 8%);
+      box-shadow: 0 22px 54px rgba(31, 35, 40, 0.09);
+    }
+
+    .stats-signal-card::after {
+      position: absolute;
+      right: -54px;
+      bottom: -70px;
+      width: 190px;
+      aspect-ratio: 1;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 24px color-mix(in srgb, var(--accent) 7%, transparent),
+        0 0 0 48px color-mix(in srgb, var(--accent) 4%, transparent);
+      content: '';
+      pointer-events: none;
+    }
+
+    .stats-signal-card-topline {
+      display: flex;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
       color: var(--text-muted);
-      font-size: 13px;
-      line-height: 1.65;
+      font-size: 9.5px;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .stats-signal-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent2);
+    }
+
+    .stats-signal-live i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent2) 14%, transparent);
+    }
+
+    .stats-signal-date {
+      display: block;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stats-signal-title {
+      display: block;
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2vw, 29px);
+      font-weight: 600;
+      letter-spacing: -0.018em;
+      line-height: 1.12;
+      text-decoration: none;
+    }
+
+    .stats-signal-title[href]:hover {
+      color: var(--accent);
+    }
+
+    .stats-signal-meta {
+      position: relative;
+      z-index: 1;
+      margin-top: 13px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .stats-scope {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+      color: var(--text-muted);
+      font-size: 11.5px;
+      line-height: 1.55;
     }
 
     .stats-status {
@@ -760,19 +871,43 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       margin: 0 0 clamp(48px, 7vw, 92px);
-      border-top: 1px solid var(--text);
-      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg);
+      box-shadow: 0 18px 48px rgba(31, 35, 40, 0.055);
+      counter-reset: stats-metric;
     }
 
     .stats-metric {
+      counter-increment: stats-metric;
       min-width: 0;
       padding: 20px clamp(16px, 2vw, 30px) 22px;
       border-left: 1px solid var(--border);
     }
 
     .stats-metric:first-child {
-      padding-left: 0;
       border-left: 0;
+    }
+
+    .stats-metric::before {
+      display: block;
+      margin-bottom: 22px;
+      color: var(--text-dim);
+      content: '0' counter(stats-metric);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .stats-metric:nth-child(2) {
+      background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+    }
+
+    .stats-metric:nth-child(2)::before,
+    .stats-metric:nth-child(2) .stats-metric-value {
+      color: var(--accent);
     }
 
     .stats-metric-label {
@@ -786,10 +921,10 @@
 
     .stats-metric-value {
       display: block;
-      margin-top: 10px;
+      margin-top: 9px;
       color: var(--text);
       font-family: var(--font-display);
-      font-size: clamp(29px, 3.2vw, 48px);
+      font-size: clamp(27px, 3vw, 44px);
       font-variant-numeric: tabular-nums;
       font-weight: 560;
       letter-spacing: -0.025em;
@@ -813,10 +948,19 @@
     }
 
     .stats-primary-chart {
+      position: relative;
       min-width: 0;
-      padding: clamp(26px, 3.5vw, 46px) 0 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: clamp(26px, 3.5vw, 42px) clamp(20px, 3vw, 38px) 0;
+      border: 1px solid #253650;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 84% -12%, rgba(88, 166, 255, 0.28), transparent 34%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 52px),
+        #0f1929;
+      box-shadow: 0 28px 68px rgba(15, 25, 41, 0.2);
+      color: #edf5ff;
     }
 
     .stats-chart-header {
@@ -837,11 +981,25 @@
       line-height: 1.05;
     }
 
+    .stats-primary-chart .stats-section-index {
+      color: #75b8ff;
+    }
+
+    .stats-primary-chart .stats-chart-heading h3 {
+      color: #f4f8ff;
+    }
+
     .stats-chart-heading p {
       max-width: 660px;
       margin-top: 9px;
       color: var(--text-muted);
       font-size: 12.5px;
+    }
+
+    .stats-primary-chart .stats-chart-heading p,
+    .stats-primary-chart .stats-chart-legend,
+    .stats-primary-chart .stats-period-summary {
+      color: #aab8ca;
     }
 
     .stats-chart-actions {
@@ -856,6 +1014,11 @@
       padding: 3px;
       border: 1px solid var(--border);
       background: var(--surface);
+    }
+
+    .stats-primary-chart .stats-range-control {
+      border-color: rgba(196, 214, 237, 0.2);
+      background: rgba(255, 255, 255, 0.055);
     }
 
     .stats-range-button {
@@ -878,6 +1041,19 @@
     .stats-range-button[aria-pressed="true"] {
       background: var(--text);
       color: var(--bg);
+    }
+
+    .stats-primary-chart .stats-range-button {
+      color: #aab8ca;
+    }
+
+    .stats-primary-chart .stats-range-button:hover {
+      color: #ffffff;
+    }
+
+    .stats-primary-chart .stats-range-button[aria-pressed="true"] {
+      background: #65aefc;
+      color: #0b1422;
     }
 
     .stats-range-button:focus-visible {
@@ -972,6 +1148,33 @@
       vector-effect: non-scaling-stroke;
     }
 
+    .stats-primary-chart .timeline-grid {
+      stroke: rgba(185, 204, 229, 0.14);
+    }
+
+    .stats-primary-chart .timeline-axis-label,
+    .stats-primary-chart .timeline-tick-label {
+      fill: #96a7bd;
+    }
+
+    .stats-primary-chart .timeline-axis-count {
+      fill: #70b7ff;
+    }
+
+    .stats-primary-chart .timeline-axis-average {
+      fill: #7de4aa;
+    }
+
+    .stats-primary-chart .timeline-bar {
+      fill: #5faaff;
+      opacity: 0.92;
+    }
+
+    .stats-primary-chart .timeline-line {
+      stroke: #77dfa6;
+      filter: drop-shadow(0 0 4px rgba(119, 223, 166, 0.28));
+    }
+
     .stats-panel .long-arc-line {
       fill: none;
       stroke: var(--accent);
@@ -1005,31 +1208,49 @@
       line-height: 1.55;
     }
 
+    .stats-primary-chart .stats-period-summary {
+      border-top-color: rgba(196, 214, 237, 0.16);
+    }
+
     .stats-period-summary strong {
       color: var(--text);
     }
 
     .stats-lower-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-      margin-top: clamp(58px, 8vw, 108px);
-      border-top: 1px solid var(--text);
-      border-bottom: 1px solid var(--border);
+      grid-template-columns: minmax(0, 1fr);
+      gap: clamp(34px, 5vw, 64px);
+      margin-top: clamp(58px, 8vw, 104px);
     }
 
     .stats-secondary-block {
       min-width: 0;
-      padding: clamp(28px, 4vw, 50px) clamp(24px, 4vw, 58px) clamp(34px, 5vw, 62px) 0;
+      padding: clamp(26px, 3.5vw, 42px);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--surface) 68%, var(--bg));
     }
 
     .stats-secondary-block + .stats-secondary-block {
-      padding-right: 0;
-      padding-left: clamp(24px, 4vw, 58px);
       border-left: 1px solid var(--border);
     }
 
+    .stats-secondary-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 0.55fr);
+      align-items: end;
+      gap: 34px;
+      margin-bottom: 28px;
+    }
+
+    .stats-secondary-header p {
+      color: var(--text-muted);
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+
     .stats-secondary-heading {
-      margin: 7px 0 24px;
+      margin: 7px 0 0;
       color: var(--text);
       font-family: var(--font-display);
       font-size: clamp(25px, 2.4vw, 36px);
@@ -1040,12 +1261,13 @@
 
     .annual-volume-list {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px 28px;
     }
 
     .annual-volume-row {
       display: grid;
-      grid-template-columns: 46px minmax(0, 1fr) 34px;
+      grid-template-columns: 46px minmax(0, 1fr) 38px;
       align-items: center;
       gap: 12px;
       color: var(--text-muted);
@@ -1055,12 +1277,24 @@
 
     .annual-volume-track {
       height: 7px;
-      background: var(--surface2);
+      overflow: hidden;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface2) 76%, var(--bg));
     }
 
     .annual-volume-bar {
       display: block;
       height: 100%;
+      border-radius: inherit;
+      background: color-mix(in srgb, var(--text-muted) 54%, transparent);
+    }
+
+    .annual-volume-row.is-latest-year {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .annual-volume-row.is-latest-year .annual-volume-bar {
       background: var(--accent);
     }
 
@@ -1072,47 +1306,238 @@
 
     .latest-releases-list {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
 
     .latest-release-item {
+      isolation: isolate;
+      position: relative;
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr);
-      gap: 16px;
-      padding: 14px 0;
-      border-top: 1px solid var(--border);
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 18px;
+      min-height: 226px;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: var(--bg);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .latest-release-item:first-child {
-      padding-top: 0;
-      border-top: 0;
+      grid-column: 1 / -1;
+      grid-template-columns: 104px minmax(0, 1fr);
+      min-height: 238px;
+      padding: clamp(24px, 3vw, 34px);
+      border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+      background:
+        radial-gradient(circle at 96% 10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 34%),
+        var(--bg);
+      box-shadow: 0 20px 44px rgba(31, 35, 40, 0.07);
+    }
+
+    .latest-release-item:hover {
+      z-index: 1;
+      border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+      box-shadow: 0 18px 42px rgba(31, 35, 40, 0.09);
+      transform: translateY(-2px);
+    }
+
+    .latest-release-index {
+      position: absolute;
+      top: 13px;
+      right: 15px;
+      color: var(--text-dim);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+    }
+
+    .latest-release-date-rail {
+      position: relative;
+      min-width: 0;
+      padding-right: 16px;
+      border-right: 1px solid var(--border);
     }
 
     .latest-release-date {
-      color: var(--text-muted);
-      font-size: 10.5px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      color: var(--text);
       font-variant-numeric: tabular-nums;
-      letter-spacing: 0.025em;
+      line-height: 1;
+    }
+
+    .latest-release-day {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 560;
+      letter-spacing: -0.045em;
+    }
+
+    .latest-release-month-year {
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .latest-release-item:first-child .latest-release-day {
+      color: var(--accent);
+      font-size: 46px;
+    }
+
+    .latest-release-date-node {
+      position: absolute;
+      top: 72px;
+      right: -5px;
+      width: 9px;
+      height: 9px;
+      border: 2px solid var(--bg);
+      border-radius: 50%;
+      background: var(--text-dim);
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    .latest-release-item:first-child .latest-release-date-node {
+      background: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 0 0 6px color-mix(in srgb, var(--accent) 11%, transparent);
+    }
+
+    .latest-release-body {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .latest-release-meta-line {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 9px;
+    }
+
+    .latest-release-venue {
+      padding: 2px 7px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      line-height: 1.35;
+      text-transform: uppercase;
     }
 
     .latest-release-title,
     .latest-release-title-static {
+      display: block;
+      max-width: 720px;
       color: var(--text);
       font-family: var(--font-display);
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 600;
-      line-height: 1.32;
+      line-height: 1.24;
+      text-decoration: none;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
+    }
+
+    .latest-release-item:first-child .latest-release-title,
+    .latest-release-item:first-child .latest-release-title-static {
+      max-width: 920px;
+      font-size: clamp(23px, 2.5vw, 34px);
+      line-height: 1.14;
     }
 
     .latest-release-title:hover {
       color: var(--accent);
     }
 
-    .latest-release-venue {
-      margin-top: 4px;
+    .latest-release-authors {
+      margin-top: 8px;
       color: var(--text-muted);
       font-size: 10.5px;
+      line-height: 1.4;
+    }
+
+    .latest-release-desc {
+      display: -webkit-box;
+      margin-top: 12px;
+      overflow: hidden;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+    .latest-release-item:first-child .latest-release-desc {
+      max-width: 900px;
+      font-size: 12.5px;
+      -webkit-line-clamp: 2;
+    }
+
+    .latest-release-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 14px;
+    }
+
+    .latest-release-tag {
+      padding: 2px 7px;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+      color: color-mix(in srgb, var(--accent) 72%, var(--text));
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .latest-release-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px 12px;
+      width: 100%;
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .latest-release-metric {
+      color: var(--text-muted);
+      font-size: 9.5px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
+
+    .latest-release-read {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 2px;
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.035em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .latest-release-read:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .stats-long-arc {
@@ -1150,11 +1575,14 @@
       .stats-scope {
         max-width: 620px;
       }
+      .stats-signal-card {
+        max-width: 720px;
+      }
       .stats-metric-rail {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .stats-metric:nth-child(3) {
-        padding-left: 0;
+        padding-left: clamp(16px, 2vw, 30px);
         border-left: 0;
         border-top: 1px solid var(--border);
       }
@@ -1166,19 +1594,36 @@
       }
       .stats-secondary-block,
       .stats-secondary-block + .stats-secondary-block {
-        padding-right: 0;
-        padding-left: 0;
-        border-left: 0;
+        padding: 28px;
       }
-      .stats-secondary-block + .stats-secondary-block {
-        border-top: 1px solid var(--border);
+      .stats-secondary-header {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.7fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-secondary-header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .latest-releases-list {
+        grid-template-columns: 1fr;
+      }
+      .latest-release-item:first-child {
+        grid-column: auto;
+      }
+      .latest-release-read {
+        min-height: 44px;
+        padding-right: 8px;
+        padding-left: 8px;
       }
     }
 
     @media (max-width: 560px) {
       .stats-panel::before {
-        width: 84vw;
-        height: 220px;
+        top: -30px;
+        right: -12px;
+        width: 100vw;
       }
       .stats-hero {
         gap: 28px;
@@ -1191,11 +1636,13 @@
         padding: 16px 12px 18px;
       }
       .stats-metric:nth-child(odd) {
-        padding-left: 0;
         border-left: 0;
       }
       .stats-metric-value {
         font-size: 28px;
+      }
+      .stats-metric::before {
+        margin-bottom: 14px;
       }
       .stats-chart-header {
         display: block;
@@ -1217,19 +1664,63 @@
       .stats-period-summary {
         padding: 12px 0 16px;
       }
+      .stats-primary-chart {
+        margin-right: -6px;
+        margin-left: -6px;
+        padding-right: 16px;
+        padding-left: 16px;
+        border-radius: 18px;
+      }
       .stats-long-arc-header {
         grid-template-columns: 1fr;
         gap: 12px;
       }
+      .stats-secondary-block,
+      .stats-secondary-block + .stats-secondary-block {
+        padding: 18px;
+        border-radius: 18px;
+      }
+      .stats-secondary-header {
+        grid-template-columns: 1fr;
+        gap: 11px;
+      }
+      .annual-volume-list,
+      .latest-releases-list {
+        grid-template-columns: 1fr;
+      }
       .latest-release-item {
-        grid-template-columns: 76px minmax(0, 1fr);
-        gap: 10px;
+        grid-template-columns: 66px minmax(0, 1fr);
+        gap: 13px;
+        min-height: 0;
+        padding: 17px 15px;
+      }
+      .latest-release-item:first-child {
+        grid-column: auto;
+        grid-template-columns: 66px minmax(0, 1fr);
+        min-height: 0;
+        padding: 18px 15px;
+      }
+      .latest-release-item:first-child .latest-release-day {
+        font-size: 36px;
+      }
+      .latest-release-item:first-child .latest-release-title,
+      .latest-release-item:first-child .latest-release-title-static {
+        font-size: 20px;
+      }
+      .latest-release-footer {
+        flex-wrap: wrap;
       }
     }
 
     @media (prefers-color-scheme: dark) {
       .stats-panel::before {
         opacity: 0.7;
+      }
+      .stats-signal-card {
+        box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+      }
+      .stats-primary-chart {
+        box-shadow: 0 28px 68px rgba(0, 0, 0, 0.34);
       }
     }
 
@@ -3807,11 +4298,20 @@
 
     <section class="top-level-panel stats-panel" id="stats-panel" role="tabpanel" aria-labelledby="stats-tab" tabindex="0" hidden>
       <header class="stats-hero">
-        <div>
+        <div class="stats-hero-copy">
           <div class="stats-eyebrow">Release intelligence</div>
           <h2>The rhythm of<br />loop-model research</h2>
         </div>
-        <p class="stats-scope">A publication-time view of papers represented in this curated catalog—showing when ideas surfaced, where momentum gathered, and how the field’s recorded cadence has changed.</p>
+        <aside class="stats-signal-card" aria-label="Latest catalog signal">
+          <div class="stats-signal-card-topline">
+            <span>Latest signal</span>
+            <span class="stats-signal-live"><i aria-hidden="true"></i> Live catalog</span>
+          </div>
+          <time class="stats-signal-date" id="stats-hero-latest-date">—</time>
+          <a class="stats-signal-title" id="stats-hero-latest-title" target="_blank" rel="noopener">Loading the latest release…</a>
+          <p class="stats-signal-meta" id="stats-hero-latest-meta">The current publication signal will appear after the catalog loads.</p>
+          <p class="stats-scope">Publication-time intelligence for seeing when ideas surfaced, where momentum gathered, and which papers are moving the field now.</p>
+        </aside>
       </header>
       <p class="stats-status" id="stats-status" aria-live="polite">Loading catalog data…</p>
 
@@ -3862,16 +4362,26 @@
       </article>
 
       <div class="stats-lower-grid">
-        <article class="stats-secondary-block" aria-labelledby="annual-volume-heading">
-          <div class="stats-section-index">02 — Year by year</div>
-          <h3 class="stats-secondary-heading" id="annual-volume-heading">Annual volume</h3>
-          <div id="annual-release-volume" aria-live="polite"></div>
+        <article class="stats-secondary-block stats-latest-block" aria-labelledby="latest-releases-heading">
+          <header class="stats-secondary-header">
+            <div>
+              <div class="stats-section-index">02 — Release dossiers</div>
+              <h3 class="stats-secondary-heading" id="latest-releases-heading">Latest releases</h3>
+            </div>
+            <p>New papers, decoded at a glance: who made them, what they contribute, and where they sit in the loop-model landscape.</p>
+          </header>
+          <div class="latest-releases-list" id="latest-releases-list" role="list" aria-live="polite"></div>
         </article>
 
-        <article class="stats-secondary-block" aria-labelledby="latest-releases-heading">
-          <div class="stats-section-index">03 — Read the signal</div>
-          <h3 class="stats-secondary-heading" id="latest-releases-heading">Latest releases</h3>
-          <div class="latest-releases-list" id="latest-releases-list" role="list" aria-live="polite"></div>
+        <article class="stats-secondary-block stats-annual-block" aria-labelledby="annual-volume-heading">
+          <header class="stats-secondary-header">
+            <div>
+              <div class="stats-section-index">03 — Year by year</div>
+              <h3 class="stats-secondary-heading" id="annual-volume-heading">Annual volume</h3>
+            </div>
+            <p>Recorded publication volume by year, normalized against the most active year in the catalog.</p>
+          </header>
+          <div id="annual-release-volume" aria-live="polite"></div>
         </article>
       </div>
 
@@ -4471,10 +4981,11 @@ function renderAnnualReleaseVolume(container, series) {
   var maxCount = Math.max(1, Math.max.apply(null, safeSeries.map(function(bucket) {
     return normalizeReleaseCount(bucket && bucket.count);
   })));
-  safeSeries.forEach(function(bucket) {
+  safeSeries.forEach(function(bucket, bucketIndex) {
     var count = normalizeReleaseCount(bucket && bucket.count);
     var row = document.createElement('div');
     row.className = 'annual-volume-row';
+    if (bucketIndex === safeSeries.length - 1) row.classList.add('is-latest-year');
     row.setAttribute('role', 'listitem');
     row.setAttribute('aria-label', bucket.label + ': ' + count + ' papers');
 
@@ -4512,6 +5023,80 @@ function getSafeStatsPaperUrl(paper) {
 }
 
 /**
+ * Split an ISO publication date into an editorial day and month-year label.
+ * @param {string} value ISO publication date.
+ * @returns {{day: string, monthYear: string, iso: string}} Safe display parts.
+ */
+function getStatsReleaseDateParts(value) {
+  var text = typeof value === 'string' ? value.trim() : '';
+  var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text);
+  if (!match) return { day: '—', monthYear: 'Date unknown', iso: '' };
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var monthIndex = Number(match[2]) - 1;
+  var month = monthNames[monthIndex] || match[2];
+  return { day: match[3], monthYear: month + ' · ' + match[1], iso: text };
+}
+
+/**
+ * Condense an author list while preserving the first two reader-facing names.
+ * @param {Object} paper Paper record.
+ * @returns {string} Compact author summary.
+ */
+function summarizeStatsReleaseAuthors(paper) {
+  var source = Array.isArray(paper && paper.authors_list) && paper.authors_list.length
+    ? paper.authors_list
+    : String((paper && paper.authors) || '').split(',');
+  var authors = source.map(function(author) { return String(author || '').trim(); }).filter(Boolean);
+  if (authors.length === 0) return 'Authors not listed';
+  if (authors.length <= 2) return authors.join(', ');
+  return authors.slice(0, 2).join(', ') + ' +' + (authors.length - 2) + ' authors';
+}
+
+/**
+ * Select a compact, de-duplicated taxonomy signal for a release dossier.
+ * @param {Object} paper Paper record.
+ * @param {number} limit Maximum number of tags.
+ * @returns {Array<string>} Ordered tag labels.
+ */
+function getStatsReleaseTags(paper, limit) {
+  var maxTags = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 4;
+  var groups = [paper && paper.mechanism_tags, paper && paper.focus_tags, paper && paper.domain_tags];
+  var seen = new Set();
+  var tags = [];
+  groups.forEach(function(group) {
+    (Array.isArray(group) ? group : []).forEach(function(tag) {
+      var label = String(tag || '').trim();
+      var key = label.toLowerCase();
+      if (!label || seen.has(key) || tags.length >= maxTags) return;
+      seen.add(key);
+      tags.push(label);
+    });
+  });
+  return tags;
+}
+
+/**
+ * Compare the latest recorded 30-day release volume with the preceding window.
+ * @param {Array<Object>} dailySeries Complete daily publication series.
+ * @returns {string} Reader-facing momentum summary.
+ */
+function summarizeStatsReleaseMomentum(dailySeries) {
+  var series = Array.isArray(dailySeries) ? dailySeries : [];
+  if (series.length === 0) return 'No release momentum available';
+  var recent = series.slice(-30).reduce(function(total, bucket) {
+    return total + normalizeReleaseCount(bucket && bucket.count);
+  }, 0);
+  var previous = series.slice(-60, -30).reduce(function(total, bucket) {
+    return total + normalizeReleaseCount(bucket && bucket.count);
+  }, 0);
+  if (recent === 0 && previous === 0) return 'No release momentum available';
+  if (previous === 0) return recent + ' papers in the latest 30 days · momentum forming';
+  var change = Math.round((recent - previous) / previous * 100);
+  var direction = change > 0 ? '+' : '';
+  return recent + ' papers in the latest 30 days · ' + direction + change + '% vs prior 30';
+}
+
+/**
  * Render newest releases with safe text nodes and links.
  * @param {HTMLElement|null} container Latest-releases list container.
  * @param {Array<Object>} papers Newest release records.
@@ -4529,15 +5114,43 @@ function renderLatestReleases(container, papers) {
     return;
   }
 
-  releases.forEach(function(paper) {
+  releases.forEach(function(paper, releaseIndex) {
     var item = document.createElement('article');
     item.className = 'latest-release-item';
     item.setAttribute('role', 'listitem');
+    item.setAttribute('aria-label', 'Release ' + (releaseIndex + 1) + ': ' + String(paper.title || 'Untitled paper'));
+
+    var indexLabel = document.createElement('span');
+    indexLabel.className = 'latest-release-index';
+    indexLabel.textContent = String(releaseIndex + 1).padStart(2, '0');
+
+    var dateRail = document.createElement('div');
+    dateRail.className = 'latest-release-date-rail';
     var date = document.createElement('time');
     date.className = 'latest-release-date';
-    date.dateTime = String(paper.published_date || '');
-    date.textContent = String(paper.published_date || 'Date unknown');
+    var dateParts = getStatsReleaseDateParts(paper.published_date);
+    date.dateTime = dateParts.iso;
+    var day = document.createElement('span');
+    day.className = 'latest-release-day';
+    day.textContent = dateParts.day;
+    var monthYear = document.createElement('span');
+    monthYear.className = 'latest-release-month-year';
+    monthYear.textContent = dateParts.monthYear;
+    date.append(day, monthYear);
+    var dateNode = document.createElement('i');
+    dateNode.className = 'latest-release-date-node';
+    dateNode.setAttribute('aria-hidden', 'true');
+    dateRail.append(date, dateNode);
+
     var body = document.createElement('div');
+    body.className = 'latest-release-body';
+    var metaLine = document.createElement('div');
+    metaLine.className = 'latest-release-meta-line';
+    var venue = document.createElement('span');
+    venue.className = 'latest-release-venue';
+    venue.textContent = String(paper.venue || 'Venue not listed');
+    metaLine.appendChild(venue);
+
     var url = getSafeStatsPaperUrl(paper);
     var title;
     if (url) {
@@ -4552,11 +5165,52 @@ function renderLatestReleases(container, papers) {
       title.className = 'latest-release-title-static';
     }
     title.textContent = String(paper.title || 'Untitled paper');
-    var venue = document.createElement('p');
-    venue.className = 'latest-release-venue';
-    venue.textContent = String(paper.venue || 'Venue not listed');
-    body.append(title, venue);
-    item.append(date, body);
+
+    var authors = document.createElement('p');
+    authors.className = 'latest-release-authors';
+    authors.textContent = summarizeStatsReleaseAuthors(paper);
+
+    var description = document.createElement('p');
+    description.className = 'latest-release-desc';
+    description.textContent = String(paper.desc || 'No catalog summary is available yet.');
+
+    var tags = document.createElement('div');
+    tags.className = 'latest-release-tags';
+    getStatsReleaseTags(paper, 4).forEach(function(label) {
+      var tag = document.createElement('span');
+      tag.className = 'latest-release-tag';
+      tag.textContent = label;
+      tags.appendChild(tag);
+    });
+
+    var footer = document.createElement('div');
+    footer.className = 'latest-release-footer';
+    if (paper.citations != null) {
+      var citations = document.createElement('span');
+      citations.className = 'latest-release-metric';
+      citations.textContent = 'Citations · ' + formatMetricCount(paper.citations);
+      footer.appendChild(citations);
+    }
+    if (paper.github_stars != null) {
+      var stars = document.createElement('span');
+      stars.className = 'latest-release-metric';
+      stars.textContent = 'Stars · ' + formatMetricCount(paper.github_stars);
+      footer.appendChild(stars);
+    }
+    if (url) {
+      var readLink = document.createElement('a');
+      readLink.className = 'latest-release-read';
+      readLink.href = url;
+      readLink.target = '_blank';
+      readLink.rel = 'noopener';
+      readLink.textContent = 'Read paper ↗';
+      footer.appendChild(readLink);
+    }
+
+    body.append(metaLine, title, authors, description);
+    if (tags.childElementCount) body.appendChild(tags);
+    body.appendChild(footer);
+    item.append(indexLabel, dateRail, body);
     container.appendChild(item);
   });
 }
@@ -4711,6 +5365,8 @@ function renderStatsPanel() {
   STATS_MONTHLY_RELEASES = buildMonthlyPublicationSeries(ALL_PAPERS);
   var summary = buildReleaseStatsSummary(ALL_PAPERS, STATS_DAILY_RELEASES, STATS_MONTHLY_RELEASES);
   var latestWindow = STATS_DAILY_RELEASES.slice(-30);
+  var latestPapers = getLatestReleasedPapers(ALL_PAPERS, 5);
+  var latestPaper = latestPapers[0] || null;
   var peakMonth = summary.peakMonth;
   var totalElement = document.getElementById('stats-total-papers');
   var latestThirtyElement = document.getElementById('stats-latest-thirty');
@@ -4734,6 +5390,27 @@ function renderStatsPanel() {
       : 'No valid publication dates';
   }
 
+  var heroLatestDate = document.getElementById('stats-hero-latest-date');
+  var heroLatestTitle = document.getElementById('stats-hero-latest-title');
+  var heroLatestMeta = document.getElementById('stats-hero-latest-meta');
+  if (heroLatestDate) {
+    var heroDateParts = getStatsReleaseDateParts(latestPaper && latestPaper.published_date);
+    heroLatestDate.textContent = heroDateParts.iso
+      ? heroDateParts.day + ' ' + heroDateParts.monthYear
+      : 'No dated release';
+    heroLatestDate.dateTime = heroDateParts.iso;
+  }
+  if (heroLatestTitle) {
+    var heroPaperUrl = getSafeStatsPaperUrl(latestPaper);
+    heroLatestTitle.textContent = latestPaper ? String(latestPaper.title || 'Untitled paper') : 'No release available';
+    if (heroPaperUrl) heroLatestTitle.href = heroPaperUrl;
+    else heroLatestTitle.removeAttribute('href');
+  }
+  if (heroLatestMeta) {
+    var heroVenue = latestPaper ? String(latestPaper.venue || 'Venue not listed') : 'Catalog status';
+    heroLatestMeta.textContent = heroVenue + ' · ' + summarizeStatsReleaseMomentum(STATS_DAILY_RELEASES);
+  }
+
   renderReleasePulse();
   renderAnnualReleaseVolume(
     document.getElementById('annual-release-volume'),
@@ -4741,7 +5418,7 @@ function renderStatsPanel() {
   );
   renderLatestReleases(
     document.getElementById('latest-releases-list'),
-    getLatestReleasedPapers(ALL_PAPERS, 6)
+    latestPapers
   );
   renderLongArcChart(document.getElementById('long-arc-chart'), STATS_MONTHLY_RELEASES);
   var longArcSummary = document.getElementById('long-arc-summary');

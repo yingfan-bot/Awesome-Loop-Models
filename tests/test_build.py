@@ -1509,7 +1509,10 @@ process.stdout.write(JSON.stringify({
         for marker in (
             "Release intelligence",
             "The rhythm of loop-model research",
-            "papers represented in this curated catalog",
+            "Publication-time intelligence",
+            'id="stats-hero-latest-date"',
+            'id="stats-hero-latest-title"',
+            'id="stats-hero-latest-meta"',
             'class="stats-metric-rail"',
             'id="stats-total-papers"',
             'id="stats-latest-thirty"',
@@ -1723,8 +1726,33 @@ process.stdout.write(JSON.stringify({
         self.assertIn("'title'", timeline_source)
         self.assertIn("'desc'", timeline_source)
 
+    def test_latest_release_dossiers_surface_catalog_context(self):
+        """Latest releases should expose authors, summaries, taxonomy, and metrics."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        render_start = html.index("function getStatsReleaseDateParts(value) {")
+        render_end = html.index("function renderLongArcChart(", render_start)
+        render_source = html[render_start:render_end]
+
+        for marker in (
+            "function summarizeStatsReleaseAuthors(paper)",
+            "function getStatsReleaseTags(paper, limit)",
+            "function summarizeStatsReleaseMomentum(dailySeries)",
+            "if (series.length === 0) return 'No release momentum available';",
+            "latest-release-date-rail",
+            "latest-release-authors",
+            "latest-release-desc",
+            "latest-release-tags",
+            "latest-release-footer",
+            "paper.citations",
+            "paper.github_stars",
+            "Read paper ↗",
+        ):
+            self.assertIn(marker, render_source)
+        self.assertNotIn("innerHTML", render_source)
+        self.assertIn("getLatestReleasedPapers(ALL_PAPERS, 5)", html)
+
     def test_stats_charts_are_editorial_full_width_and_scroll_locally(self):
-        """Stats CSS must form a full-width editorial observatory without generic cards."""
+        """Stats CSS must form a full-width editorial observatory with an instrument panel."""
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         stats_start = html.index("    .stats-panel {")
         stats_end = html.index("    /* ── Category Section ── */", stats_start)
@@ -1733,19 +1761,19 @@ process.stdout.write(JSON.stringify({
         scroll_start = stats_css.index("    .stats-chart-scroll {")
         scroll_end = stats_css.index("\n    }", scroll_start)
         scroll_rule = stats_css[scroll_start:scroll_end]
-        chart_start = stats_css.index("    .timeline-chart {")
+        chart_start = stats_css.index("    .stats-panel .timeline-chart {")
         chart_end = stats_css.index("\n    }", chart_start)
         chart_rule = stats_css[chart_start:chart_end]
         primary_start = stats_css.index("    .stats-primary-chart {")
         primary_end = stats_css.index("\n    }", primary_start)
         primary_rule = stats_css[primary_start:primary_end]
-        grid_start = stats_css.index("    .timeline-grid {")
+        grid_start = stats_css.index("    .stats-panel .timeline-grid {")
         grid_end = stats_css.index("\n    }", grid_start)
         grid_rule = stats_css[grid_start:grid_end]
-        bar_start = stats_css.index("    .timeline-bar {")
+        bar_start = stats_css.index("    .stats-panel .timeline-bar {")
         bar_end = stats_css.index("\n    }", bar_start)
         bar_rule = stats_css[bar_start:bar_end]
-        line_start = stats_css.index("    .timeline-line {")
+        line_start = stats_css.index("    .stats-panel .timeline-line {")
         line_end = stats_css.index("\n    }", line_start)
         line_rule = stats_css[line_start:line_end]
 
@@ -1754,16 +1782,21 @@ process.stdout.write(JSON.stringify({
         self.assertIn("overflow-x: auto;", scroll_rule)
         self.assertIn("min-width: 760px;", chart_rule)
         self.assertIn("color: var(--text-muted);", chart_rule)
-        self.assertIn("border-top: 1px solid var(--border);", primary_rule)
-        self.assertIn("border-bottom: 1px solid var(--border);", primary_rule)
+        self.assertIn("border: 1px solid #253650;", primary_rule)
+        self.assertIn("border-radius: 24px;", primary_rule)
+        self.assertIn("#0f1929", primary_rule)
         self.assertIn("stroke: var(--border);", grid_rule)
         self.assertIn("fill: var(--accent);", bar_rule)
         self.assertIn("stroke: var(--accent2);", line_rule)
         self.assertNotIn("animation:", stats_css)
-        self.assertNotIn("linear-gradient", stats_css)
+        self.assertIn("repeating-radial-gradient", stats_css)
+        self.assertIn("repeating-linear-gradient", stats_css)
         self.assertNotIn("backdrop-filter", stats_css)
         self.assertIn(".stats-lower-grid", stats_css)
         self.assertIn("grid-template-columns", stats_css)
+        self.assertIn(".latest-release-item:first-child", stats_css)
+        self.assertIn("@media (max-width: 768px)", stats_css)
+        self.assertIn("min-height: 44px;", stats_css)
 
     def test_stats_small_text_uses_accessible_muted_color(self):
         """Small Stats labels must avoid the lower-contrast decorative text token."""
@@ -1774,7 +1807,7 @@ process.stdout.write(JSON.stringify({
         note_start = stats_css.index("    .stats-metric-note {")
         note_end = stats_css.index("\n    }", note_start)
         note_rule = stats_css[note_start:note_end]
-        ticks_start = stats_css.index("    .timeline-axis-label,")
+        ticks_start = stats_css.index("    .stats-panel .timeline-axis-label,")
         ticks_end = stats_css.index("\n    }", ticks_start)
         ticks_rule = stats_css[ticks_start:ticks_end]
 
