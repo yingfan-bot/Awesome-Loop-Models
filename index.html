@@ -136,7 +136,7 @@
     }
 
     .header-inner {
-      max-width: 1440px;
+      max-width: 1640px;
       margin: 0 auto;
     }
 
@@ -444,11 +444,11 @@
     .layout {
       display: flex;
       align-items: stretch;
-      max-width: 1200px;
-      width: min(1200px, 100%);
+      max-width: 1640px;
+      width: min(1640px, 100%);
       margin: 0 auto;
-      padding: 24px 16px;
-      gap: 24px;
+      padding: 18px 24px;
+      gap: 22px;
       flex: 1;
       min-height: 0;
       overflow: hidden;
@@ -456,7 +456,7 @@
 
     /* ── Sidebar ── */
     .sidebar {
-      width: 292px;
+      width: 248px;
       flex-shrink: 0;
       align-self: stretch;
       position: sticky;
@@ -2672,8 +2672,8 @@
     }
 
     .layout.table-view-active {
-      max-width: 1440px;
-      width: min(1440px, 100%);
+      max-width: 1640px;
+      width: min(1640px, 100%);
     }
 
     .layout.table-view-active .sidebar {
@@ -3306,9 +3306,310 @@
         font-size: 10.5px;
       }
     }
+
+    /* ── Paper browsing density ── */
+    .filter-sidebar-toggle-row {
+      width: min(760px, 100%);
+      margin-left: auto;
+      margin-right: auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-sidebar-toggle-row .filter-sidebar-toggle {
+      width: auto;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .paper-density-toggle {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      padding: 3px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface2);
+    }
+
+    .paper-density-button {
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 10.5px;
+      font-weight: 750;
+      letter-spacing: 0.035em;
+      cursor: pointer;
+    }
+
+    .paper-density-button:hover {
+      color: var(--text);
+    }
+
+    .paper-density-button.active,
+    .paper-density-button[aria-pressed="true"] {
+      border-color: var(--border);
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+    }
+
+    .paper-density-button:focus-visible,
+    .paper-tag-overflow:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .paper-signal-row {
+      min-width: 0;
+    }
+
+    .paper-tag-overflow {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      padding: 2px 7px;
+      border: 1px dashed var(--tag-border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 10.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .paper-tag-overflow:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (min-width: 769px) {
+      body:not(.stats-mode) > header {
+        padding: 10px 28px 12px;
+      }
+
+      body:not(.stats-mode) .papers-only-tools {
+        margin-top: 8px;
+      }
+
+      body:not(.stats-mode) .header-sub {
+        margin-bottom: 9px;
+        font-size: 12px;
+      }
+
+      body:not(.stats-mode) .search-wrap {
+        max-width: 680px;
+      }
+
+      body:not(.stats-mode) #search {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      body:not(.stats-mode) .filter-sidebar-toggle-row {
+        margin-top: 8px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category {
+        margin-bottom: 28px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-header {
+        gap: 10px;
+        margin-bottom: 10px;
+        padding: 11px 14px;
+        border-radius: 9px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-title {
+        font-size: 16px;
+        line-height: 1.25;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-copy {
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-desc {
+        max-width: 920px;
+        margin-top: 1px;
+        overflow: hidden;
+        font-size: 11.5px;
+        line-height: 1.35;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-body,
+      #papers-panel[data-card-density="compact"] .category-node-body {
+        gap: 8px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-node {
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+
+      #papers-panel[data-card-density="compact"] .category-node-header {
+        margin-bottom: 8px;
+      }
+
+      #papers-panel[data-card-density="compact"] .papers-grid {
+        gap: 6px;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-card {
+        padding: 9px 12px;
+        border-radius: 7px;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-top {
+        align-items: baseline;
+        margin-bottom: 3px;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-title {
+        min-width: 0;
+        flex-wrap: nowrap;
+        font-size: 13.5px;
+        line-height: 1.3;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-title-link {
+        display: -webkit-box;
+        min-width: 0;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-meta {
+        margin-bottom: 4px;
+        overflow: hidden;
+        color: var(--text-muted);
+        font-size: 10.75px;
+        line-height: 1.35;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-signal-row {
+        display: flex;
+        align-items: center;
+        gap: 4px 6px;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-metrics,
+      #papers-panel[data-card-density="compact"] .paper-tags {
+        margin: 0;
+        gap: 4px;
+      }
+
+      #papers-panel[data-card-density="compact"] .metric-badge,
+      #papers-panel[data-card-density="compact"] .paper-tag {
+        padding: 1px 6px;
+        font-size: 10px;
+        line-height: 1.25;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-tags .paper-tag:nth-of-type(n+5) {
+        display: none;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-tag-overflow {
+        display: inline-flex;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-desc {
+        display: -webkit-box;
+        margin-bottom: 6px;
+        overflow: hidden;
+        color: var(--text-muted);
+        font-size: 11.75px;
+        line-height: 1.4;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-card .paper-links {
+        gap: 4px;
+      }
+
+      #papers-panel[data-card-density="compact"] .paper-card .link-btn {
+        padding: 2px 7px;
+        font-size: 10.5px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1344px) {
+      body:not(.stats-mode) .papers-only-tools {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+          "subtitle subtitle"
+          "briefing countdown"
+          "search search"
+          "controls controls"
+          "filters filters";
+        gap: 8px 10px;
+      }
+
+      body:not(.stats-mode) .header-sub { grid-area: subtitle; }
+      body:not(.stats-mode) .daily-briefing-notice { grid-area: briefing; }
+      body:not(.stats-mode) .daily-watch-countdown { grid-area: countdown; }
+      body:not(.stats-mode) .search-wrap { grid-area: search; width: 100%; }
+      body:not(.stats-mode) .filter-sidebar-toggle-row { grid-area: controls; }
+      body:not(.stats-mode) .filter-sidebar { grid-area: filters; }
+
+      body:not(.stats-mode) .daily-briefing-notice,
+      body:not(.stats-mode) .daily-watch-countdown {
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+      .layout {
+        gap: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .sidebar {
+        width: 222px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .paper-density-toggle {
+        display: none;
+      }
+
+      .filter-sidebar-toggle-row,
+      .filter-sidebar-toggle-row .filter-sidebar-toggle {
+        width: 100%;
+      }
+    }
   </style>
 </head>
-<body>
+<body class="paper-density-compact">
 
 <header>
   <div class="header-inner">
@@ -3378,6 +3679,10 @@
         <span>Filters</span>
         <span class="filter-sidebar-toggle-meta" id="filter-sidebar-summary">Sort, date, tags</span>
       </button>
+      <div class="paper-density-toggle" role="group" aria-label="Paper card density">
+        <button type="button" class="paper-density-button active" id="paper-density-compact" aria-pressed="true" onclick="setPaperDensity('compact')">Compact</button>
+        <button type="button" class="paper-density-button" id="paper-density-comfortable" aria-pressed="false" onclick="setPaperDensity('comfortable')">Comfortable</button>
+      </div>
     </div>
     <aside class="filter-sidebar" id="filter-sidebar-panel" aria-hidden="true" hidden>
       <div class="filter-sidebar-header">
@@ -3456,7 +3761,7 @@
   <!-- Main -->
   <main id="main">
 
-    <div class="top-level-panel" id="papers-panel" role="tabpanel" aria-labelledby="papers-tab" tabindex="0">
+    <div class="top-level-panel" id="papers-panel" role="tabpanel" aria-labelledby="papers-tab" tabindex="0" data-card-density="compact">
 
       <div class="category-disclaimer" id="category-disclaimer">
         <strong>Classification note.</strong> The paper shelves are intentionally coarse: Theoretical and Mechanical Analysis, Architecture and Algorithm Designs, and Applications Focused. Foundation status plus Loop Mechanism / focus / domain tags carry secondary structure.
@@ -4703,12 +5008,22 @@ function renderCard(paper, query) {
   const displayMechanismEntries = visibleEntries(tagEntries.filter(function(entry) { return entry.group === 'mechanism'; }));
   const displayFocusEntries = visibleEntries(tagEntries.filter(function(entry) { return entry.group === 'focus'; }));
   const displayDomainEntries = visibleEntries(tagEntries.filter(function(entry) { return entry.group === 'domain'; }));
+  const displayTagCount = displayMechanismEntries.length + displayFocusEntries.length + displayDomainEntries.length;
+  const hiddenCompactTagCount = Math.max(0, displayTagCount - 4);
+  const tagOverflowHtml = hiddenCompactTagCount
+    ? '<button type="button" class="paper-tag-overflow" aria-label="Show ' + hiddenCompactTagCount + ' more tags in comfortable density" onclick="showComfortablePaperDensity()">+' + hiddenCompactTagCount + ' tags</button>'
+    : '';
   const tagsHtml = (displayMechanismEntries.length || displayFocusEntries.length || displayDomainEntries.length)
     ? '<div class="paper-tags">'
       + displayMechanismEntries.map(function(entry) { return renderTag(entry, 'paper-tag-mechanism'); }).join('')
       + displayFocusEntries.map(function(entry) { return renderTag(entry, 'paper-tag-focus'); }).join('')
       + displayDomainEntries.map(function(entry) { return renderTag(entry, 'paper-tag-domain'); }).join('')
+      + tagOverflowHtml
       + '</div>'
+    : '';
+  const metricsHtml = renderMetricsHtml(paper);
+  const signalRowHtml = metricsHtml || tagsHtml
+    ? '<div class="paper-signal-row">' + metricsHtml + tagsHtml + '</div>'
     : '';
 
   return '<div class="paper-card"'
@@ -4726,8 +5041,7 @@ function renderCard(paper, query) {
     + '<span class="paper-venue ' + (paper.venueClass || 'venue-arxiv') + '">' + paper.venue + '</span>'
     + '</div>'
     + authorsHtml
-    + renderMetricsHtml(paper)
-    + tagsHtml
+    + signalRowHtml
     + (paper.desc ? '<div class="paper-desc">' + highlightQuery(paper.desc, query) + '</div>' : '')
     + '<div class="paper-links">' + linksHtml + '</div>'
     + '</div>';
@@ -4768,6 +5082,7 @@ let STATS_RANGE_LISTENERS_BOUND = false;
 let STATS_DAILY_RELEASES = [];
 let STATS_MONTHLY_RELEASES = [];
 let CURRENT_VIEW = 'category';
+let CURRENT_PAPER_DENSITY = 'compact';
 let FILTER_SIDEBAR_OPEN = false;
 let EXPANDED_TABLE_ROWS = new Set();
 let REPO_TODAY = '';
@@ -5349,6 +5664,39 @@ function updateViewToggleButtons() {
   updateFilterSidebarSummary();
 }
 
+/** Normalize paper card density to one of the supported display modes. */
+function normalizePaperDensity(density) {
+  return density === 'comfortable' ? 'comfortable' : 'compact';
+}
+
+/** Synchronize density toggle buttons with the active paper card density. */
+function updatePaperDensityButtons() {
+  setToggleButtonState('paper-density-compact', CURRENT_PAPER_DENSITY === 'compact');
+  setToggleButtonState('paper-density-comfortable', CURRENT_PAPER_DENSITY === 'comfortable');
+}
+
+/** Apply paper card density without rebuilding the current result set. */
+function applyPaperDensity() {
+  const papersPanel = document.getElementById('papers-panel');
+  if (papersPanel) papersPanel.dataset.cardDensity = CURRENT_PAPER_DENSITY;
+  document.body.classList.toggle('paper-density-compact', CURRENT_PAPER_DENSITY === 'compact');
+  document.body.classList.toggle('paper-density-comfortable', CURRENT_PAPER_DENSITY === 'comfortable');
+  updatePaperDensityButtons();
+}
+
+/** Set the requested paper card density and update the existing DOM in place. */
+function setPaperDensity(density) {
+  CURRENT_PAPER_DENSITY = normalizePaperDensity(density);
+  applyPaperDensity();
+}
+
+/** Expand compact cards and move focus to the persistent density control. */
+function showComfortablePaperDensity() {
+  setPaperDensity('comfortable');
+  const comfortableButton = document.getElementById('paper-density-comfortable');
+  if (comfortableButton) comfortableButton.focus();
+}
+
 function applyViewMode() {
   const layout = document.querySelector('.layout');
   const sectionsContainer = document.getElementById('sections-container');
@@ -5839,7 +6187,7 @@ function createCategorySection(node, pathParts, depth) {
     section.innerHTML =
       '<div class="category-header">'
       + '<span class="category-icon">' + (node.icon || "•") + '</span>'
-      + '<div>'
+      + '<div class="category-copy">'
       + '<div class="category-title">' + node.title + '</div>'
       + '<div class="category-desc">' + (node.desc || "") + '</div>'
       + '</div>'
@@ -5888,7 +6236,7 @@ function createBlogSection() {
   section.innerHTML =
     '<div class="category-header">'
     + '<span class="category-icon">✍️</span>'
-    + '<div>'
+    + '<div class="category-copy">'
     + '<div class="category-title">' + (BLOG_SECTION_META.title || 'Blogs') + '</div>'
     + '<div class="category-desc">' + (BLOG_SECTION_META.desc || 'Long-form technical posts, essays, and deep-dives about loop models.') + '</div>'
     + '</div>'
@@ -5971,6 +6319,7 @@ function buildDOM(data) {
   initScrollObserver();
   updateQuickFilterButtons();
   updateViewToggleButtons();
+  applyPaperDensity();
   applyViewMode();
   doSearch(document.getElementById("search").value || "");
   restoreTopLevelTabAfterCatalogLoad();

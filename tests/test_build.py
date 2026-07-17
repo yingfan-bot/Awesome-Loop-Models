@@ -1876,6 +1876,45 @@ process.stdout.write(JSON.stringify({
         self.assertIn("'<div class=\"paper-meta\">' + paperDisplayDate + '</div>'", render_snippet)
         self.assertNotIn("authorsStr + ' · ' + paper.year", render_snippet)
 
+    def test_card_density_defaults_to_compact_with_an_accessible_toggle(self):
+        """Desktop cards should default compact while preserving a comfortable option."""
+        html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+        self.assertIn('<body class="paper-density-compact">', html)
+        self.assertIn('id="papers-panel" role="tabpanel" aria-labelledby="papers-tab" tabindex="0" data-card-density="compact"', html)
+        self.assertIn('class="paper-density-toggle" role="group" aria-label="Paper card density"', html)
+        self.assertIn('id="paper-density-compact" aria-pressed="true" onclick="setPaperDensity(\'compact\')"', html)
+        self.assertIn('id="paper-density-comfortable" aria-pressed="false" onclick="setPaperDensity(\'comfortable\')"', html)
+        self.assertIn("let CURRENT_PAPER_DENSITY = 'compact';", html)
+        self.assertIn("function normalizePaperDensity(density) {", html)
+        self.assertIn("function applyPaperDensity() {", html)
+        self.assertIn("function setPaperDensity(density) {", html)
+        self.assertIn("function showComfortablePaperDensity() {", html)
+        self.assertIn("papersPanel.dataset.cardDensity = CURRENT_PAPER_DENSITY;", html)
+        self.assertIn("document.body.classList.toggle('paper-density-compact'", html)
+        self.assertIn("setToggleButtonState('paper-density-compact'", html)
+        self.assertIn("setToggleButtonState('paper-density-comfortable'", html)
+        self.assertIn("comfortableButton.focus();", html)
+
+        render_start = html.index("function renderCard(paper, query) {")
+        render_end = html.index("// ── State & Category Tree", render_start)
+        render_snippet = html[render_start:render_end]
+        self.assertIn('class="paper-signal-row"', render_snippet)
+        self.assertIn('class="paper-tag-overflow"', render_snippet)
+        self.assertIn("showComfortablePaperDensity()", render_snippet)
+
+        style = html[html.index("<style>"):html.index("</style>")]
+        self.assertIn("#papers-panel[data-card-density=\"compact\"] .paper-card", style)
+        self.assertIn("#papers-panel[data-card-density=\"compact\"] .paper-desc", style)
+        self.assertIn("#papers-panel[data-card-density=\"compact\"] .category-copy", style)
+        self.assertIn("#papers-panel[data-card-density=\"compact\"] .paper-card .link-btn", style)
+        self.assertIn("body:not(.stats-mode) > header", style)
+        self.assertNotIn("body.paper-density-compact:not(.stats-mode) > header", style)
+        self.assertIn("-webkit-line-clamp: 2;", style)
+        self.assertIn("@media (min-width: 769px)", style)
+        self.assertIn(".paper-density-toggle", style)
+        self.assertIn("max-width: 1640px;", style)
+        self.assertIn("width: 248px;", style)
+
     def test_table_view_rows_keep_compact_link_rendering_hooks(self):
         html = INDEX_HTML_PATH.read_text(encoding="utf-8")
         self.assertIn("function renderCompactPaperLinksHtml(paper)", html)
